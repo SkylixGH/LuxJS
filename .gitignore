@@ -108,7 +108,9 @@ dist
 **/package-lock.json
 
 # TypeScript Build Files
-**/build
+**/src/**/*.js
+**/src/**/*.d.ts
+**/typings
 
 # Distros
 **/dist

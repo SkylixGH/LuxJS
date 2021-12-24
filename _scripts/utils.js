@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { exec } from "child_process";
+const exec = require("child_process"); 
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const nonProjectPaths = [ "node_modules", "_scripts", ".git", "package-lock.json", "package.json", "tsconfig.json" ];

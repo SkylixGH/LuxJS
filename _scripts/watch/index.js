@@ -1,3 +1,3 @@
-import { getProjectDirs, runInDirs } from "../utils.js";
+const getProjectDirs, runInDirs = require("../utils.js"); 
 
 runInDirs(getProjectDirs(), "npx tsc --watch");

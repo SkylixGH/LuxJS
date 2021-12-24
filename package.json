@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "description": "",
-  "type": "module",
   "scripts": {
     "postinstall": "node _scripts/install",
     "watch": "node _scripts/watch",
@@ -11,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IlluxDev/ReFlux.git"
+    "url": "git+https://github.com/DevSkylix/ReFlux.git"
   },
-  "author": "ILLUXDEV",
+  "author": "SKYLIX",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/IlluxDev/ReFlux/issues"
+    "url": "https://github.com/DevSkylix/ReFlux/issues"
   },
-  "homepage": "https://github.com/IlluxDev/ReFlux#readme",
+  "homepage": "https://github.com/DevSkylix/ReFlux#readme",
   "dependencies": {
     "typescript": "^4.5.4"
   }

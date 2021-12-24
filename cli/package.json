@@ -1,7 +1,10 @@
 {
-    "name": "@illuxdev/reflux-cli",
+    "name": "@devskylix/reflux-cli",
     "version": "1.0.0-dev",
-    "main": "build/main",
+    "types": "typings",
+    "bin": {
+        "reflux": "dist/index.js"
+    },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^21.0.1",
         "@rollup/plugin-node-resolve": "^13.1.1",
@@ -10,6 +13,6 @@
         "typescript": "^4.5.4"
     },
     "dependencies": {
-        "@illuxdev/reflux-terminal": "file:../terminal"
+        "@devskylix/reflux-terminal": "file:../terminal"
     }
 }
