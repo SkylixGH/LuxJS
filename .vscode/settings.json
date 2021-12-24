@@ -1,5 +1,23 @@
 {
     "cSpell.words": [
         "devskylix"
+    ],
+    "grammarly.overrides": [
+        {
+            "files": [
+                "**/docs/server/terminal/README.md"
+            ],
+            "config": {
+                "audience": "expert",
+                "dialect": "american",
+                "domain": "technical",
+                "emotions": [
+                    "neutral"
+                ],
+                "goals": [
+                    "inform"
+                ]
+            }
+        }
     ]
 }

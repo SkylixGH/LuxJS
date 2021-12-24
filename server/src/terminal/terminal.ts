@@ -1,4 +1,8 @@
 import cliColor from "cli-color";
+import moment from "moment";
+
+let useBullet = true;
+let useStamp = true;
 
 /**
  * Log a formatted message into the console
@@ -7,7 +11,23 @@ import cliColor from "cli-color";
  * @param message Message
  */
 function log(tag: string, color: number, message: string) {
-    console.log(cliColor.xterm(color)(`[ ${tag} ]`) + " " + message);
+    console.log(" " + (useStamp ? cliColor.xterm(247)("[ " + moment().format("h:mm:ss a").toUpperCase() + " ] ") : "") + cliColor.xterm(color)(useBullet ? "•" : `[ ${tag} ]`) + " " + message);
+}
+
+/**
+ * Decide whether to use a bullet point or tag prefix
+ * @param mode Bullet mode
+ */
+export function setBulletMode(mode: boolean) {
+    useBullet = mode;
+}
+
+/**
+ * Decide whether to use a time stamp on messages or not
+ * @param mode Stamp mode
+ */
+export function setTimeStampMode(mode: boolean) {
+    useStamp = mode;
 }
 
 /**
@@ -23,7 +43,7 @@ export function info(message: string) {
  * @param message Message
  */
 export function error(message: string) {
-    log("ERROR", 124, message);
+    log("ERROR", 196, message);
 }
 
 /**
