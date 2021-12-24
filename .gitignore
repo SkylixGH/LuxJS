@@ -110,7 +110,6 @@ dist
 # TypeScript Build Files
 **/src/**/*.js
 **/src/**/*.d.ts
-**/typings
 
 # Distros
 **/dist
