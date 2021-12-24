@@ -1,0 +1,5 @@
+{
+    "name": "@illuxdev/reflux-cli",
+    "version": "1.0.0-dev",
+    "main": "build/main"
+}

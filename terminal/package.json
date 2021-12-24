@@ -1,0 +1,5 @@
+{
+    "name": "@illuxdev/reflux-terminal",
+    "main": "build/main.ts",
+    "version": "1.0.0-dev"
+}
