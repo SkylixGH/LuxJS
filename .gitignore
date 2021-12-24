@@ -109,3 +109,6 @@ dist
 
 # TypeScript Build Files
 **/build
+
+# Distros
+**/dist

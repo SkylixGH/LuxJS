@@ -1,5 +1,12 @@
 {
     "name": "@illuxdev/reflux-terminal",
     "main": "build/main.ts",
-    "version": "1.0.0-dev"
+    "version": "1.0.0-dev",
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^21.0.1",
+        "@rollup/plugin-node-resolve": "^13.1.1",
+        "@rollup/plugin-typescript": "^8.3.0",
+        "rollup": "^2.61.1",
+        "typescript": "^4.5.4"
+    }
 }

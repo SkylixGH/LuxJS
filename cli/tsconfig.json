@@ -3,5 +3,5 @@
     "compilerOptions": {
         "outDir": "build"
     },
-    "include": ["bin"]
+    "include": ["src"]
 }

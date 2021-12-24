@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "postinstall": "node _scripts/install",
-    "watch": "node _scripts/watch"
+    "watch": "node _scripts/watch",
+    "dist": "node _scripts/dist"
   },
   "repository": {
     "type": "git",
