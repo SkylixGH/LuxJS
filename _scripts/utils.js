@@ -1,13 +1,10 @@
-import path from "path";
-import fs from "fs";
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-const exec = require("child_process"); 
+const path = require("path");
+const fs = require("fs");
+const { exec } = require("child_process"); 
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const nonProjectPaths = [ "node_modules", "_scripts", ".git", "package-lock.json", "package.json", "tsconfig.json" ];
+const nonProjectPaths = [ "node_modules", "_scripts", ".git", "package-lock.json", "package.json", "tsconfig.json", ".vscode", ".idea" ];
 
-export function getProjectDirs() {
+exports.getProjectDirs = function getProjectDirs() {
     const projectDirs = [];
     const allDirContents = fs.readdirSync(path.join(__dirname, "../"));
 
@@ -20,7 +17,7 @@ export function getProjectDirs() {
     return projectDirs;
 }
 
-export function runInDirs(dirs, command) {
+exports.runInDirs = function runInDirs(dirs, command) {
     dirs.forEach(async (dir) => {
         const dirProcess = exec(command, {
             cwd: path.join(__dirname, "../", dir)

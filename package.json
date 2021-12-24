@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "postinstall": "node _scripts/install",
+    "postinstall": "cd server && npm i && cd ..",
     "watch": "node _scripts/watch",
     "dist": "node _scripts/dist"
   },
@@ -20,5 +20,8 @@
   "homepage": "https://github.com/DevSkylix/ReFlux#readme",
   "dependencies": {
     "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "ts-node": "^10.4.0"
   }
 }
