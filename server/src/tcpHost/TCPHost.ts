@@ -182,6 +182,7 @@ export default class TCPHost {
                     });
                 });
 
+                connection.accept();
                 this.emitter.emit("connection", connection);
             });
 
