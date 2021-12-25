@@ -2,7 +2,7 @@
   "name": "reflux",
   "private": true,
   "version": "0.0.0",
-  "description": "",
+  "description": "Build, test, and deploy powerful full-stack applications with support for real-time, rest communication, cross-platform applications, and MORE!",
   "scripts": {
     "postinstall": "cd server && npm i && cd ..",
     "watch": "node _scripts/watch",

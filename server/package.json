@@ -5,10 +5,12 @@
     "types": "typings",
     "devDependencies": {
         "@types/cli-color": "^2.0.2",
+        "@types/merge-deep": "^3.0.0",
         "typescript": "^4.5.4"
     },
     "dependencies": {
         "cli-color": "^2.0.1",
+        "merge-deep": "^3.0.3",
         "moment": "^2.29.1",
         "ws": "^8.4.0"
     }
