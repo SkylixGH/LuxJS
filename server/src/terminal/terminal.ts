@@ -10,8 +10,8 @@ let useStamp = true;
  * @param color Tag color
  * @param message Message
  */
-function log(tag: string, color: number, message: string) {
-    console.log(" " + (useStamp ? cliColor.xterm(247)("[ " + moment().format("h:mm:ss a").toUpperCase() + " ] ") : "") + cliColor.xterm(color)(useBullet ? "•" : `[ ${tag} ]`) + " " + message);
+function log(tag: string, color: number, message: string, fullColor = false) {
+    console.log(" " + (useStamp ? cliColor.xterm(fullColor ? color : 247)("[ " + moment().format("h:mm:ss a").toUpperCase() + " ] ") : "") + cliColor.xterm(color)(useBullet ? "•" : `[ ${tag} ]`) + " " + message);
 }
 
 /**
@@ -43,7 +43,7 @@ export function info(message: string) {
  * @param message Message
  */
 export function error(message: string) {
-    log("ERROR", 196, message);
+    log("ERROR", 197, message, true);
 }
 
 /**
