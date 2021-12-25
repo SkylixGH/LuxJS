@@ -50,7 +50,12 @@ export enum Errors {
     /**
      * The port and host name are already being used somewhere else
      */
-    addressInUse
+    addressInUse,
+
+    /**
+     * The client sent some JSON data as a string that was invalid
+     */
+    invalidJSONOnConnection
 };
 
 export default class TCPHost {
@@ -91,7 +96,7 @@ export default class TCPHost {
     public constructor(settings: Settings = {}) {
         this._settings = utils.mergeObject<Settings>({
             port: 80,
-            host: "0.0.0.0",
+            host: "localhost",
             ssl: false
         }, settings);  
 
@@ -162,11 +167,19 @@ export default class TCPHost {
             });
 
             this.webSocketServer.on("connection", webSocket => {
-                webSocket.on("message", () => {
+                const connection = new Connection(this.webSocketServer!, webSocket);
 
+                webSocket.on("message", (messageString) => {
+                    utils.jsonParse<any>(messageString.toString()).then(messageObject => {
+                        if (typeof messageObject.channel == "string" && typeof messageObject.contents == "object") {
+                            this.emitter.emit("message", connection, messageObject.contents, messageObject.channel);
+                            return;
+                        }
+                    }).catch((error) => {
+                        this.emitter.emit("error", Errors.invalidJSONOnConnection, error);
+                    });
                 });
 
-                const connection = new Connection(this.webSocketServer!, webSocket);
                 this.emitter.emit("connection", connection);
             });
 
@@ -197,7 +210,14 @@ export default class TCPHost {
      * @param event Event name
      * @param listener Event callback
      */
-    public on(event: "error", listener: (error: Errors) => void): string;
+    public on(event: "error", listener: (error: Errors, reason?: string) => void): string;
+
+    /**
+     * Listen for message events from all connections
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on<MessageType>(event: "message", listener: (connection: Connection, message: MessageType, channel: string) => void): string;
 
     public on(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "many");
@@ -215,7 +235,14 @@ export default class TCPHost {
      * @param event Event name
      * @param listener Event callback
      */
-    public once(event: "error", listener: (error: Errors) => void): string;
+    public once(event: "error", listener: (error: Errors, reason?: string) => void): string;
+
+    /**
+     * Listen for message events from all connections
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once<MessageType>(event: "message", listener: (connection: Connection, message: MessageType, channel: string) => void): string;
 
     public once(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "once");
