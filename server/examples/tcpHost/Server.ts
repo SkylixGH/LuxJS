@@ -36,6 +36,17 @@ server.on<GreetingMessage>("message", (conn, message, channel) => {
     }
 });
 
+server.on("connection", (conn) => {
+    terminal.info("New connection");
+    conn.on("message", (msg, channel) => {
+        terminal.info("New message, CHANNEL = " + channel + " MESSAGE = " + JSON.stringify(msg));
+    });
+
+    conn.on("error", (code, err) => {
+        terminal.error("Error response from connection, CODE = " + code + " REASON = " + err);
+    })
+});
+
 server.start().catch((error) => {
     terminal.error("An error occurred with the exit code: " + error);
     

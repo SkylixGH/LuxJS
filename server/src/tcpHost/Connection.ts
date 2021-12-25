@@ -1,6 +1,13 @@
 import { WebSocketServer, WebSocket } from 'ws';
 import { utils } from '../main';
 
+export enum Errors {
+    /**
+     * The JSON string sent from the client was invalid
+     */
+    invalidJSONResponse
+}
+
 export default class Connection {
     /**
      * The WebSocket server instance
@@ -29,9 +36,19 @@ export default class Connection {
      */
     public constructor(server: WebSocketServer, connection: WebSocket) {
         this._id = Math.random() + "";
-        this.emitter = new utils.EventHandler();
         this.webSocket = connection;
         this.server = server;
+        this.emitter = new utils.EventHandler();
+
+        this.webSocket.on("message", (messageString) => {
+            utils.jsonParse<any>(messageString.toString()).then((messageObject) => {
+                if (typeof messageObject.channel == "string" && typeof messageObject.contents == "object") {
+                    this.emitter.emit("message", messageObject.contents, messageObject.channel);
+                }
+            }).catch((error) => {
+                this.emitter.emit("error", Errors.invalidJSONResponse, error);
+            });
+        });
     }
 
     /**
@@ -47,5 +64,41 @@ export default class Connection {
      */
     public get id(): string {
         return this._id;
+    }
+
+    /**
+     * Listen for when messages are sent from the client
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on<MessageType>(event: "message", listener: (message: MessageType, channel: string) => void): string;
+
+    /**
+     * Listen for when the server has an error
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on(event: "error", listener: (error: Errors, reason?: string) => void): string;
+
+    public on(event: any, listener: any): string {
+        return this.emitter.addListener(event, listener, "many");
+    }
+
+    /**
+     * Listen for when messages are sent from the client
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once<MessageType>(event: "message", listener: (message: MessageType, channel: string) => void): string;
+
+    /**
+     * Listen for when the server has an error
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once(event: "error", listener: (error: Errors, reason?: string) => void): string;
+
+    public once(event: any, listener: any): string {
+        return this.emitter.addListener(event, listener, "once");
     }
 }

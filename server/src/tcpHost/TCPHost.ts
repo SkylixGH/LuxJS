@@ -219,6 +219,13 @@ export default class TCPHost {
      */
     public on<MessageType>(event: "message", listener: (connection: Connection, message: MessageType, channel: string) => void): string;
 
+    /**
+     * Listen for when clients connect to the server
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on(event: "connection", listener: (connection: Connection) => void): string;
+
     public on(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "many");
     }
@@ -236,6 +243,13 @@ export default class TCPHost {
      * @param listener Event callback
      */
     public once(event: "error", listener: (error: Errors, reason?: string) => void): string;
+
+    /**
+     * Listen for when clients connect to the server
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once(event: "connection", listener: (connection: Connection) => void): string;
 
     /**
      * Listen for message events from all connections
