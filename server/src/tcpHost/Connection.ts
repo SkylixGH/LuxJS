@@ -30,6 +30,11 @@ export default class Connection {
     private _id: string;
 
     /**
+     * Connection's life state
+     */
+    private _alive = true;
+
+    /**
      * A connection interaction utility
      * @param server Server instance
      * @param connection Connection instance
@@ -64,6 +69,27 @@ export default class Connection {
      */
     public get id(): string {
         return this._id;
+    }
+
+    /**
+     * Connection's life state
+     */
+    public get alive(): boolean {
+        return this._alive;
+    }
+
+    /**
+     * Send a message
+     * @param channel Channel to send a message in
+     * @param message Message contents
+     */
+    public send<MessageType>(channel: string, message: MessageType) {
+        if (this._alive) {
+            this.webSocket.send(JSON.stringify({
+                channel,
+                contents: message    
+            }));
+        }   
     }
 
     /**

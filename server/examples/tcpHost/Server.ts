@@ -44,7 +44,7 @@ server.on("connection", (conn) => {
 
     conn.on("error", (code, err) => {
         terminal.error("Error response from connection, CODE = " + code + " REASON = " + err);
-    })
+    });
 });
 
 server.start().catch((error) => {
