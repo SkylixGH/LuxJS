@@ -1,4 +1,7 @@
+import { WebSocketServer } from "ws";
 import { utils } from "../main";
+import http, { Server as HTTPServer } from "http";
+import https, { Server as HTTPSServer } from "https";
 
 export interface Settings {
     /**
@@ -27,6 +30,18 @@ export interface Settings {
     } | false;
 }
 
+export enum Errors {
+    /**
+     * The server is already running
+     */
+    alreadyRunning,
+
+    /**
+     * The server is already staring
+     */
+    alreadyStarting
+};
+
 export default class TCPHost {
     /**
      * The server's current settings
@@ -34,14 +49,29 @@ export default class TCPHost {
     private _settings: Settings;
 
     /**
-     * The servers listening state
+     * The server's listening state
      */
     private _alive: boolean = false;
 
     /**
+     * The server's booting state
+     */
+    private _starting: boolean = false;
+
+    /**
      * The event emitter
      */
-    private emitter: utils.EventHandler
+    private emitter: utils.EventHandler;
+
+    /**
+     * The true WebSocket server
+     */
+    private webSocketServer?: WebSocketServer;
+
+    /**
+     * The HTTP(s) server
+     */
+    private httpServer: HTTPServer | HTTPSServer;
 
     /**
      * TCP socket API host
@@ -54,6 +84,15 @@ export default class TCPHost {
             ssl: false
         }, settings);  
 
+        if (this._settings.ssl) {
+            this.httpServer = https.createServer({
+                cert: this._settings.ssl.certificate,
+                key: this._settings.ssl.key
+            });
+        } else {
+            this.httpServer = http.createServer();
+        }
+
         this.emitter = new utils.EventHandler();
     }
 
@@ -65,14 +104,43 @@ export default class TCPHost {
     }
 
     /**
-     * The servers listening state
+     * The server's listening state
      */
     public get alive(): boolean {
         return this._alive;
     }
 
-    public start() {
-        this.emitter.emit("ready", this._settings.port);
+    /**
+     * The server's booting state
+     */
+    public get starting(): boolean {
+        return this._starting;
+    }
+
+    /**
+     * Start the server
+     */
+    public start(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (this._alive) {
+                reject(Errors.alreadyRunning);
+                return;
+            }
+            
+            if (this._starting) {
+                reject(Errors.alreadyStarting);
+                return;
+            }
+
+            this._starting = true;
+            this.webSocketServer = new WebSocketServer({
+                server: this.httpServer
+            });
+
+            this.httpServer.listen(this._settings.port ?? undefined, this._settings.host, 10000, () => {
+                this.emitter.emit("ready", this._settings.port);
+            });
+        });
     }
 
     public removeListener(eventID: string) {
