@@ -83,13 +83,20 @@ export default class Connection {
      * @param channel Channel to send a message in
      * @param message Message contents
      */
-    public send<MessageType>(channel: string, message: MessageType) {
+    public send<MessageType>(channel: string, message: MessageType = {} as any) {
         if (this._alive) {
             this.webSocket.send(JSON.stringify({
                 channel,
                 contents: message    
             }));
         }   
+    }
+
+    /**
+     * Allow the client to send messages
+     */
+    public accept() {
+        this.send("_system:status:ready");
     }
 
     /**
