@@ -164,6 +164,8 @@ export default class TCPHost {
                     reject(Errors.addressInUse);
                     this.emitter.emit("error", Errors.addressInUse);
                 }
+
+                this._starting = false;
             });
 
             this.webSocketServer.on("connection", webSocket => {
@@ -184,6 +186,8 @@ export default class TCPHost {
             });
 
             this.httpServer.listen(this._settings.port ?? undefined, this._settings.host, 10000, () => {
+                this._starting = false;
+                this._alive = true;
                 resolve(this._settings.port!);
                 this.emitter.emit("ready", this._settings.port);
             });
