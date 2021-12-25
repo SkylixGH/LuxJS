@@ -2,6 +2,7 @@ import { WebSocketServer } from "ws";
 import { utils } from "../main";
 import http, { Server as HTTPServer } from "http";
 import https, { Server as HTTPSServer } from "https";
+import Connection from './Connection';
 
 export interface Settings {
     /**
@@ -160,28 +161,60 @@ export default class TCPHost {
                 }
             });
 
-            try {
-                this.httpServer.listen(this._settings.port ?? undefined, this._settings.host, 10000, () => {
-                    resolve(this._settings.port!);
-                    this.emitter.emit("ready", this._settings.port);
+            this.webSocketServer.on("connection", webSocket => {
+                webSocket.on("message", () => {
+
                 });
-            } catch (error) {
-            }
+
+                const connection = new Connection(this.webSocketServer!, webSocket);
+                this.emitter.emit("connection", connection);
+            });
+
+            this.httpServer.listen(this._settings.port ?? undefined, this._settings.host, 10000, () => {
+                resolve(this._settings.port!);
+                this.emitter.emit("ready", this._settings.port);
+            });
         });
     }
 
+    /**
+     * Remove an event listener
+     * @param eventID Event listener ID
+     */
     public removeListener(eventID: string) {
         this.emitter.removeListener(eventID);
     }
 
+    /**
+     * Listen for when the server is ready
+     * @param event Event name
+     * @param listener Event callback
+     */
     public on(event: "ready", listener: (port: Settings["port"]) => void): string;
+
+    /**
+     * Listen for when the server has an error
+     * @param event Event name
+     * @param listener Event callback
+     */
     public on(event: "error", listener: (error: Errors) => void): string;
 
     public on(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "many");
     }
 
+    /**
+     * Listen for when the server is ready
+     * @param event Event name
+     * @param listener Event callback
+     */
     public once(event: "ready", listener: (port: Settings["port"]) => void): string;
+
+    /**
+     * Listen for when the server has an error
+     * @param event Event name
+     * @param listener Event callback
+     */
     public once(event: "error", listener: (error: Errors) => void): string;
 
     public once(event: any, listener: any): string {
