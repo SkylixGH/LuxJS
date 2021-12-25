@@ -50,7 +50,12 @@ export enum Errors {
     /**
      * The port and host name are already being used somewhere else
      */
-    addressInUse
+    addressInUse,
+
+    /**
+     * The client sent some JSON data as a string that was invalid
+     */
+    invalidJSONOnConnection
 };
 
 export default class TCPHost {
@@ -91,7 +96,7 @@ export default class TCPHost {
     public constructor(settings: Settings = {}) {
         this._settings = utils.mergeObject<Settings>({
             port: 80,
-            host: "0.0.0.0",
+            host: "localhost",
             ssl: false
         }, settings);  
 
@@ -159,18 +164,31 @@ export default class TCPHost {
                     reject(Errors.addressInUse);
                     this.emitter.emit("error", Errors.addressInUse);
                 }
+
+                this._starting = false;
             });
 
             this.webSocketServer.on("connection", webSocket => {
-                webSocket.on("message", () => {
+                const connection = new Connection(this.webSocketServer!, webSocket);
 
+                webSocket.on("message", (messageString) => {
+                    utils.jsonParse<any>(messageString.toString()).then(messageObject => {
+                        if (typeof messageObject.channel == "string" && typeof messageObject.contents == "object") {
+                            this.emitter.emit("message", connection, messageObject.contents, messageObject.channel);
+                            return;
+                        }
+                    }).catch((error) => {
+                        this.emitter.emit("error", Errors.invalidJSONOnConnection, error);
+                    });
                 });
 
-                const connection = new Connection(this.webSocketServer!, webSocket);
+                connection.accept();
                 this.emitter.emit("connection", connection);
             });
 
             this.httpServer.listen(this._settings.port ?? undefined, this._settings.host, 10000, () => {
+                this._starting = false;
+                this._alive = true;
                 resolve(this._settings.port!);
                 this.emitter.emit("ready", this._settings.port);
             });
@@ -197,7 +215,21 @@ export default class TCPHost {
      * @param event Event name
      * @param listener Event callback
      */
-    public on(event: "error", listener: (error: Errors) => void): string;
+    public on(event: "error", listener: (error: Errors, reason?: string) => void): string;
+
+    /**
+     * Listen for message events from all connections
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on<MessageType>(event: "message", listener: (connection: Connection, message: MessageType, channel: string) => void): string;
+
+    /**
+     * Listen for when clients connect to the server
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on(event: "connection", listener: (connection: Connection) => void): string;
 
     public on(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "many");
@@ -215,7 +247,21 @@ export default class TCPHost {
      * @param event Event name
      * @param listener Event callback
      */
-    public once(event: "error", listener: (error: Errors) => void): string;
+    public once(event: "error", listener: (error: Errors, reason?: string) => void): string;
+
+    /**
+     * Listen for when clients connect to the server
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once(event: "connection", listener: (connection: Connection) => void): string;
+
+    /**
+     * Listen for message events from all connections
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once<MessageType>(event: "message", listener: (connection: Connection, message: MessageType, channel: string) => void): string;
 
     public once(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "once");
