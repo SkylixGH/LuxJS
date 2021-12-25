@@ -2,12 +2,13 @@ import { WebSocketServer } from "ws";
 import { utils } from "../main";
 import http, { Server as HTTPServer } from "http";
 import https, { Server as HTTPSServer } from "https";
+import Connection from './Connection';
 
 export interface Settings {
     /**
-     * Server port, use null for no port
+     * Server listening port
      */
-    port?: number | null;
+    port?: number;
 
     /**
      * Server host
@@ -39,7 +40,17 @@ export enum Errors {
     /**
      * The server is already staring
      */
-    alreadyStarting
+    alreadyStarting,
+
+    /**
+     * The host name provided to the server is invalid
+     */
+    invalidHostName,
+
+    /**
+     * The port and host name are already being used somewhere else
+     */
+    addressInUse
 };
 
 export default class TCPHost {
@@ -79,7 +90,7 @@ export default class TCPHost {
      */
     public constructor(settings: Settings = {}) {
         this._settings = utils.mergeObject<Settings>({
-            port: null,
+            port: 80,
             host: "0.0.0.0",
             ssl: false
         }, settings);  
@@ -119,8 +130,9 @@ export default class TCPHost {
 
     /**
      * Start the server
+     * @returns Promise containing the port
      */
-    public start(): Promise<void> {
+    public start(): Promise<number> {
         return new Promise((resolve, reject) => {
             if (this._alive) {
                 reject(Errors.alreadyRunning);
@@ -137,23 +149,73 @@ export default class TCPHost {
                 server: this.httpServer
             });
 
+            this.webSocketServer.once("error", (error: any) => {
+                if (error.code == "ENOTFOUND") {
+                    reject(Errors.invalidHostName);
+                    this.emitter.emit("error", Errors.invalidHostName);
+                }
+
+                if (error.code == "EADDRINUSE") {
+                    reject(Errors.addressInUse);
+                    this.emitter.emit("error", Errors.addressInUse);
+                }
+            });
+
+            this.webSocketServer.on("connection", webSocket => {
+                webSocket.on("message", () => {
+
+                });
+
+                const connection = new Connection(this.webSocketServer!, webSocket);
+                this.emitter.emit("connection", connection);
+            });
+
             this.httpServer.listen(this._settings.port ?? undefined, this._settings.host, 10000, () => {
+                resolve(this._settings.port!);
                 this.emitter.emit("ready", this._settings.port);
             });
         });
     }
 
+    /**
+     * Remove an event listener
+     * @param eventID Event listener ID
+     */
     public removeListener(eventID: string) {
         this.emitter.removeListener(eventID);
     }
 
+    /**
+     * Listen for when the server is ready
+     * @param event Event name
+     * @param listener Event callback
+     */
     public on(event: "ready", listener: (port: Settings["port"]) => void): string;
+
+    /**
+     * Listen for when the server has an error
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on(event: "error", listener: (error: Errors) => void): string;
 
     public on(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "many");
     }
 
+    /**
+     * Listen for when the server is ready
+     * @param event Event name
+     * @param listener Event callback
+     */
     public once(event: "ready", listener: (port: Settings["port"]) => void): string;
+
+    /**
+     * Listen for when the server has an error
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once(event: "error", listener: (error: Errors) => void): string;
 
     public once(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "once");
