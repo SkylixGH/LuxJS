@@ -42,7 +42,7 @@ export function jsonSerialize(jsonObject: object): Promise<string> {
     });
 }
 
-export class EventHandler{
+export class EventHandler {
     private storage: {
         [ index: string ]: {
             event: string,
