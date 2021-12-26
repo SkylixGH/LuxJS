@@ -1,12 +1,14 @@
 import { utils } from "../main";
-import http, { Server as HTTPServer } from "http";
+import http, { Server as HTTPServer, IncomingMessage, ServerResponse } from "http";
 import https, { Server as HTTPSServer } from "https";
+import url from "url";
+import Connection from "./Connection";
 
 export interface Settings {
     /**
-     * Port for the REST API, use null for no port
+     * Port for the REST API
      */
-    port?: number | null;
+    port?: number;
 
     /**
      * Server host name
@@ -74,18 +76,29 @@ export default class RESTHost {
     public constructor(settings: Settings = {}) {
         this.emitter = new utils.EventHandler();
         this._settings = utils.mergeObject<Settings>({
-            port: null,
+            port: 8080,
             host: "localhost",
             ssl: false
         }, settings);
+
+        const requestListener = (request: IncomingMessage, response: ServerResponse) => {
+            const connection = new Connection({
+                type: (request.method ?? "GET") as "GET" | "POST",
+                urlInfo: url.parse(request.url ?? "/", true)
+            }, request, response);
+
+            if (connection.method == "GET") {
+                this.emitter.emit("get", connection.pathName, connection);
+            }
+        }
 
         if (this._settings.ssl) {
             this.httpServer = https.createServer({
                 cert: this._settings.ssl.certificate,
                 key: this._settings.ssl.key
-            });
+            }, requestListener);
         } else {
-            this.httpServer = http.createServer();
+            this.httpServer = http.createServer(requestListener);
         }
     }
 
@@ -117,5 +130,35 @@ export default class RESTHost {
                 resolve();
             });
         });
+    }
+
+    /**
+     * Remove an event listener
+     * @param eventID Event ID
+     */
+    public removeListener(eventID: string) {
+        this.emitter.removeListener(eventID);
+    }
+
+    /**
+     * Listen for get requests
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on(event: "get", listener: (pathName: string, connection: Connection) => void): string;
+
+    public on(event: any, listener: any): string {
+        return this.emitter.addListener(event, listener, "many");
+    }
+
+    /**
+     * Listen for get requests
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once(event: "get", listener: (pathName: string, connection: Connection) => void): string;
+
+    public once(event: any, listener: any): string {
+        return this.emitter.addListener(event, listener, "once");
     }
 }
