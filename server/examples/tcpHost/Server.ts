@@ -1,8 +1,8 @@
 import { TCPHost, TCPHostErrors, terminal } from "../../src/main";
 
-interface GreetingMessage {
-    greeting?: string;
-    name?: string;
+interface SendMessage {
+    user?: string;
+    message?: string;
 }
 
 terminal.info("Starting server at port 9080");
@@ -30,16 +30,22 @@ server.on("error", (error, reason) => {
     }
 });
 
-server.on<GreetingMessage>("message", (conn, message, channel) => {
-    if (channel == "greet") {
-        terminal.info("Greeting from the client: " + `${message.greeting} ${message.name}!`);
-    }
-});
-
 server.on("connection", (conn) => {
     terminal.info("New connection");
-    conn.on("message", (msg, channel) => {
-        terminal.info("New message, CHANNEL = " + channel + " MESSAGE = " + JSON.stringify(msg));
+    server.emit("chat:new-user _server");
+
+    conn.on<SendMessage>("message", (msg, channel) => {
+        if (channel == "chat:send") {
+            terminal.info("[ CHAT ] " + msg.user + ": " + msg.message);
+            server.emit("chat:render _server", {
+                user: msg.user,
+                message: msg.message
+            });
+        }
+    });
+
+    conn.on("close", () => {
+        server.emit("chat:close-user _server");
     });
 
     conn.on("error", (code, err) => {

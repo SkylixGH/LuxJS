@@ -45,6 +45,11 @@ export default class Connection {
         this.server = server;
         this.emitter = new utils.EventHandler();
 
+        this.webSocket.on("close", () => {
+            this._alive = false;
+            this.emitter.emit("close");
+        });
+
         this.webSocket.on("message", (messageString) => {
             utils.jsonParse<any>(messageString.toString()).then((messageObject) => {
                 if (typeof messageObject.channel == "string" && typeof messageObject.contents == "object") {
@@ -87,7 +92,7 @@ export default class Connection {
         if (this._alive) {
             this.webSocket.send(JSON.stringify({
                 channel,
-                contents: message    
+                contents: { ...message }    
             }));
         }   
     }
@@ -113,6 +118,13 @@ export default class Connection {
      */
     public on(event: "error", listener: (error: Errors, reason?: string) => void): string;
 
+    /**
+     * Listen for when the connection between the server closes
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on(event: "close", listener: () => void): string;
+
     public on(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "many");
     }
@@ -130,6 +142,13 @@ export default class Connection {
      * @param listener Event callback
      */
     public once(event: "error", listener: (error: Errors, reason?: string) => void): string;
+
+    /**
+     * Listen for when the connection between the server closes
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once(event: "close", listener: () => void): string;
 
     public once(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "once");

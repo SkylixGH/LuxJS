@@ -90,6 +90,13 @@ export default class TCPHost {
     private httpServer: HTTPServer | HTTPSServer;
 
     /**
+     * All server connections that are alive
+     */
+    private _connections: {
+        [ index: string ]: Connection
+    } = {};
+
+    /**
      * TCP socket API host
      * @param settings Server settings
      */
@@ -134,6 +141,32 @@ export default class TCPHost {
     }
 
     /**
+     * All living connections
+     */
+    public get connections(): {
+        [ index: string ]: Connection
+    } {
+        return { ...this._connections };   
+    }
+
+    /**
+     * Send a message to all current connections
+     * @param channel Channel to send message in
+     * @param message The actual message
+     */
+    public emit<MessageType>(channel: string, message: MessageType = {} as any) {
+        const connections = this.connections;
+
+        for (const connectionID in connections) {
+            const connection = connections[connectionID];
+
+            if (connection.alive) {
+                connection.send(channel, message);
+            }
+        }
+    }
+
+    /**
      * Start the server
      * @returns Promise containing the port
      */
@@ -170,6 +203,7 @@ export default class TCPHost {
 
             this.webSocketServer.on("connection", webSocket => {
                 const connection = new Connection(this.webSocketServer!, webSocket);
+                this._connections[connection.id] = connection;
 
                 webSocket.on("message", (messageString) => {
                     utils.jsonParse<any>(messageString.toString()).then(messageObject => {
