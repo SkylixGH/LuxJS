@@ -29,6 +29,36 @@ export interface Settings {
          */
         key?: string;
     } | false;
+
+    /**
+     * All valid route paths
+     */
+    routes?: {
+        /**
+         * All GET routes
+         */
+        get?: string[];
+
+        /**
+         * All POST routes
+         */
+        post?: string[];
+    };
+
+    /**
+     * The max number of chunks a client can send
+     */
+    maxChunks?: {
+        /**
+         * The max chunks for a POST request
+         */
+        post?: number;
+
+        /**
+         * The max chunks for a GET request
+         */
+        get?: number;
+    }
 }
 
 export enum Errors {
@@ -78,18 +108,63 @@ export default class RESTHost {
         this._settings = utils.mergeObject<Settings>({
             port: 8080,
             host: "localhost",
-            ssl: false
+            ssl: false,
+            routes: {
+                get: [],
+                post: []
+            },
+            maxChunks: {
+                post: 10,
+                get: 10
+            }
         }, settings);
 
         const requestListener = (request: IncomingMessage, response: ServerResponse) => {
-            const connection = new Connection({
-                type: (request.method ?? "GET") as "GET" | "POST",
-                urlInfo: url.parse(request.url ?? "/", true)
-            }, request, response);
+            let chunks = 0;
+            let bodyData = "";
 
-            if (connection.method == "GET") {
-                this.emitter.emit("get", connection.pathName, connection);
-            }
+            request.on("data", (chunk) => {
+                chunks++;
+                
+                if (chunks > this._settings.maxChunks!.post!) {
+                    response.end();
+                    request.destroy();
+
+                    return;
+                }
+
+                bodyData += chunk.toString();
+            });
+
+            request.on("end", () => {
+                const connection = new Connection({
+                    type: (request.method ?? "GET") as "GET" | "POST",
+                    urlInfo: url.parse(request.url ?? "/", true),
+                    maxChunks: this._settings.maxChunks!
+                }, request, response, bodyData);
+    
+                let routeRequestPath = connection.pathName.split("/").join("/").substring(1);
+    
+                if (routeRequestPath.endsWith("/")) {
+                    routeRequestPath = routeRequestPath.slice(0, -1);
+                }
+    
+                if (connection.method == "GET") {
+                    if (this._settings.routes!.get?.includes(routeRequestPath)) {
+                        this.emitter.emit("get", routeRequestPath, connection);
+                    } else {
+                        response.statusCode = 404;
+                        response.end();
+                    }
+                } else {
+                    if (this._settings.routes!.post?.includes(routeRequestPath)) {
+                        this.emitter.emit("post", routeRequestPath, connection);
+                    } else {
+                        response.statusCode = 404;
+                        response.end();
+                    }
+                } 
+            });
         }
 
         if (this._settings.ssl) {
@@ -147,6 +222,13 @@ export default class RESTHost {
      */
     public on(event: "get", listener: (pathName: string, connection: Connection) => void): string;
 
+    /**
+     * Listen for post requests
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on(event: "post", listener: (pathName: string, connection: Connection) => void): string;
+
     public on(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "many");
     }
@@ -157,6 +239,13 @@ export default class RESTHost {
      * @param listener Event callback
      */
     public once(event: "get", listener: (pathName: string, connection: Connection) => void): string;
+
+    /**
+     * Listen for post requests
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once(event: "post", listener: (pathName: string, connection: Connection) => void): string;
 
     public once(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "once");

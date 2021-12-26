@@ -1,7 +1,7 @@
 import { UrlWithParsedQuery } from "url";
 import { IncomingMessage } from 'http';
 import { ServerResponse } from 'http';
-import { utils } from "../main";
+import { RESTHostSettings, utils } from "../main";
 
 export enum Errors {
     /**
@@ -25,6 +25,11 @@ export interface Settings {
      * The request method
      */
     type: "GET" | "POST";
+
+    /**
+     * Max chunk info
+     */
+    maxChunks: RESTHostSettings["maxChunks"];
 }
 
 export default class Connection {
@@ -59,18 +64,28 @@ export default class Connection {
     private response: ServerResponse;
 
     /**
+     * Response body
+     */
+    private _body: string;
+
+    /**
      * A request connection
      * @param settings Request connection
      * @param request The HTTP request
      * @param response The HTTP response
+     * @param body Body data
      */
-    public constructor(settings: Settings, request: IncomingMessage, response: ServerResponse) {
+    public constructor(settings: Settings, request: IncomingMessage, response: ServerResponse, body: string) {
         this.response = response;
         this.request = request;
+        this._body = body;
 
         this._settings = settings;
         this._method = this._settings.type;
         this._pathName = this._settings.urlInfo.pathname ?? "/";
+
+        this.request.on("close", () => this._closed = true);
+        this.response.on("close", () => this._closed = true);
     }
 
     /**
@@ -78,6 +93,13 @@ export default class Connection {
      */
     public get settings(): Settings {
         return { ...this._settings };
+    }
+
+    /**
+     * Request body
+     */
+    public get body(): string {
+        return this._body;
     }
 
     /**
@@ -99,6 +121,14 @@ export default class Connection {
      */
     public get closed(): boolean {
         return this._closed;
+    }
+
+    /**
+     * End the response
+     */
+    public end() {
+        this.response.end();
+        this._closed = true;
     }
 
     /**
