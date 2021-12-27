@@ -1,13 +1,14 @@
 {
   "name": "reflux",
   "private": true,
-  "version": "1.0.0-dev",
+  "version": "1.0.0-dev.1",
   "description": "Build, test, and deploy powerful full-stack applications with support for real-time, rest communication, cross-platform applications, and MORE!",
   "scripts": {
     "postinstall": "cd server && npm i && cd ..client && npm i && cd ..",
     "watch": "node _scripts/watch",
     "dist": "node _scripts/dist",
-    "release": "node _scripts/publish"
+    "clean": "node _scripts/clean",
+    "release": "npm run dist && node _scripts/publish && npm run clean"
   },
   "repository": {
     "type": "git",
