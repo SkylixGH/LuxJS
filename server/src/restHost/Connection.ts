@@ -144,7 +144,7 @@ export default class Connection {
     }
 
     /**
-     * Send a JSOn object as the response
+     * Send a JSON object as the response
      * @param jsonData The JSON response
      * @returns A promise for when the response was written
      */
