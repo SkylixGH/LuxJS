@@ -1,0 +1,12 @@
+{
+  "name": "@skylixgh/reflux-client",
+  "version": "1.0.0-dev",
+  "description": "",
+  "main": "dist/main.js",
+  "types": "typings",
+  "author": "Skylix",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}

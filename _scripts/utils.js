@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const { exec } = require("child_process"); 
 
-const nonProjectPaths = [ "node_modules", "_scripts", ".git", "package-lock.json", "package.json", "tsconfig.json", ".vscode", ".idea" ];
+const nonProjectPaths = [ "node_modules", "_scripts", ".git", "package-lock.json", "package.json", "tsconfig.json", ".vscode", ".idea", "docs", ".vs" ];
 
 exports.getProjectDirs = function getProjectDirs() {
     const projectDirs = [];
