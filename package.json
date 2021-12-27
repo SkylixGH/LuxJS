@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "cd server && npm i && cd ..client && npm i && cd ..",
     "watch": "node _scripts/watch",
-    "dist": "node _scripts/dist"
+    "dist": "node _scripts/dist",
+    "release": "node _scripts/publish"
   },
   "repository": {
     "type": "git",
