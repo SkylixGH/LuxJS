@@ -22,10 +22,13 @@ api.on("get", (pathName, conn) => {
 api.on("post", (pathName, conn) => {
     terminal.info("New post request on " + pathName);
     terminal.info(conn.body);
-    conn.end();
+    conn.sendJSON({
+        status: "received"
+    });
 });
 
 api.on("get", (path, conn) => {
+    console.log(conn.query);
     if (path == "version") {
         conn.sendJSON({
             version: "0.0.0"

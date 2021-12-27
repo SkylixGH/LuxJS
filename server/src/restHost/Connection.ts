@@ -69,6 +69,11 @@ export default class Connection {
     private _body: string;
 
     /**
+     * Request query parameters
+     */
+    private _query: { [ index: string ]: string | string[] | undefined };
+
+    /**
      * A request connection
      * @param settings Request connection
      * @param request The HTTP request
@@ -79,7 +84,7 @@ export default class Connection {
         this.response = response;
         this.request = request;
         this._body = body;
-
+        this._query = { ...settings.urlInfo.query ?? {} };
         this._settings = settings;
         this._method = this._settings.type;
         this._pathName = this._settings.urlInfo.pathname ?? "/";
@@ -100,6 +105,13 @@ export default class Connection {
      */
     public get body(): string {
         return this._body;
+    }
+
+    /**
+     * Request query parameters
+     */
+    public get query(): { [ index: string ]: string | string[] | undefined } {
+        return this._query;
     }
 
     /**
