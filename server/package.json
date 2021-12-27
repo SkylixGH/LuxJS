@@ -1,7 +1,7 @@
 {
     "name": "@skylixgh/reflux-server",
     "main": "src/main.js",
-    "version": "1.0.0-dev.1",
+    "version": "1.0.0-dev.2",
     "devDependencies": {
         "@types/cli-color": "^2.0.2",
         "@types/merge-deep": "^3.0.0",
