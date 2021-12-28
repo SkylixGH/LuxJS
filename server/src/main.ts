@@ -4,6 +4,7 @@ import TCPHost, { Settings as TCPHostSettings, Errors as TCPHostErrors } from ".
 import TCPHostConnection, { Errors as TCPHostConnectionErrors} from "./tcpHost/Connection";
 import RESTHost, { Errors as RESTHostErrors, Settings as RESTHostSettings} from "./restHost/RESTHost";
 import RESTHostConnection, { Settings as RESTHostConnectionSettings, Errors as RESTHostConnectionErrors } from "./restHost/Connection";
+import Commands, { Settings as CommandsSettings, Command as CommandsCommand } from './commands/Commands';
 
 export { 
     terminal, 
@@ -20,5 +21,9 @@ export {
     RESTHostSettings,
     RESTHostConnection,
     RESTHostConnectionSettings,
-    RESTHostConnectionErrors
+    RESTHostConnectionErrors,
+
+    Commands,
+    CommandsSettings,
+    CommandsCommand
 };

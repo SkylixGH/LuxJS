@@ -1,5 +1,6 @@
 import { utils } from "../src/main";
 import { BrowserWindow, app } from "electron";
+import electronIsDev from "electron-is-dev";
 
 export interface Settings {
     /**
@@ -118,7 +119,9 @@ export default class GUIWindow {
                 this.window.show();
             });
 
-            this.window.loadURL("https://google.com");
+            if (electronIsDev) {
+                
+            }
         }
 
         if (!this._appReady) {
