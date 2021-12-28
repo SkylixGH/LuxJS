@@ -107,6 +107,12 @@ export default class Commands {
                 if (command.caller.trigger + "" == parsed._[0]) {
                     const invalidFlags = [] as string[];
                     const missingFlags = [] as string[];
+                    const typeErrorFlags = {} as {
+                        [ index: string ]: {
+                            received: string;
+                            expected: string;
+                        };
+                    };
 
                     for (const flagName in flags) {
                         if (!command.flags![flagName]) {
@@ -121,7 +127,36 @@ export default class Commands {
                             }
                     }
 
-                    if (invalidFlags.length == 0) {
+                    for (const flagName in flags) {
+                        flags[flagName] += "";
+
+                        if (!invalidFlags.includes(flagName)) {
+                            const commandFlag = command.flags![flagName];
+                            let receivedType = "";
+
+                            if (commandFlag.type == "string" && typeof flags[flagName] == "string") {
+                                receivedType = "string";
+                            }
+
+                            if (commandFlag.type == "boolean") {
+                                if (flags[flagName].toLowerCase() == "true") {
+                                    receivedType = "boolean";
+                                } else if (flags[flagName].toLowerCase() == "false") {
+                                    receivedType = "boolean";
+                                } else {
+                                    if (!isNaN(flags[flagName])) {
+                                        receivedType = "number";
+                                    } else {
+                                        
+                                    }
+                                }
+                            }
+
+                            console.log(receivedType);
+                        }
+                    }
+
+                    if (invalidFlags.length == 0 && missingFlags.length == 0 && typeErrorFlags == {}) {
                         command.execute!(parsed._, {});
                     } else {
                         let leftOverSpace = (process.stdout.columns - "────────────".length - 2 - 6 - 4) / 2;
