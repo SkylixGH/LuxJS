@@ -1,5 +1,6 @@
 import { utils } from "../main";
 import yargs from "yargs";
+import cliColor from 'cli-color';
 
 export interface Settings {
     
@@ -84,6 +85,18 @@ export default class Commands {
             $0: string;
         };
 
+        const flags = {} as any;
+
+        for (const flagName in parsed) {
+            if (flagName != "$0" && flagName != "_") {
+                flags[flagName] = parsed[flagName];
+            }
+        }
+
+        parsed._.forEach((arg, index) => {
+            parsed._[index] = arg + "";
+        });
+
         let callerType = "flag";
         if (parsed._.length > 0) {
             callerType = "trigger";
@@ -92,11 +105,44 @@ export default class Commands {
         if (callerType === "trigger") {
             this._commands.forEach(command => {
                 if (command.caller.trigger + "" == parsed._[0]) {
-                    command.execute([], {});
+                    const invalidFlags = [] as string[];
+
+                    for (const flagName in flags) {
+                        if (!command.flags![flagName]) {
+                            invalidFlags.push(flagName);
+                        }
+                    }
+
+                    if (invalidFlags.length == 0) {
+                        command.execute(parsed._, {});
+                    } else {
+                        let leftOverSpace = (process.stdout.columns - "────────────".length - 2 - 6 - 4) / 2;
+                        if (leftOverSpace < 0) {
+                            leftOverSpace = 0;
+                        }
+
+                        console.log(cliColor.xterm(247)("────────────   ") + "Help" + cliColor.xterm(238)("   " + "─".repeat(leftOverSpace)));
+                        console.log(cliColor.xterm(197)("[ ERROR ] ") + "Command misuse - " + cliColor.xterm(197)("The following will be information on how the command was used incorrectly"));
+
+                        if (invalidFlags.length > 0) {
+                            this.renderInvalidFlagsError(invalidFlags);
+                        }
+                    }
                 }
             });
         } else {
             console.log("Flag trigger un-defined");
         }
+    }
+
+    /**
+     * Render error for invalid flags
+     */
+    public renderInvalidFlagsError(invalid: string[]) {
+        console.log(cliColor.xterm(197)("[ ERROR ] ") + "Unexpected flag provided - " + cliColor.xterm(197)("The following flags were not expected for this command"));
+
+        invalid.forEach((flag, index) => {
+            console.log(`   ${cliColor.xterm(247)(`[ ${index + 1} ]`)} --${flag} - ${cliColor.xterm(197)("This flag was not expected")}`);
+        });
     }
 }
