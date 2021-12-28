@@ -29,7 +29,7 @@ export interface Command {
     /**
      * On command execute
      */
-    execute: (args: string[], flags: { [ index: string ]: any }) => void;
+    execute?: (args: string[], flags: { [ index: string ]: any }) => void;
 }
 
 export default class Commands {
@@ -106,6 +106,7 @@ export default class Commands {
             this._commands.forEach(command => {
                 if (command.caller.trigger + "" == parsed._[0]) {
                     const invalidFlags = [] as string[];
+                    const missingFlags = [] as string[];
 
                     for (const flagName in flags) {
                         if (!command.flags![flagName]) {
@@ -113,8 +114,15 @@ export default class Commands {
                         }
                     }
 
+                    for (const commandFlagKey in command.flags) {
+                        if (command.flags[commandFlagKey].required)
+                            if (!flags[commandFlagKey]) {
+                                missingFlags.push(commandFlagKey);
+                            }
+                    }
+
                     if (invalidFlags.length == 0) {
-                        command.execute(parsed._, {});
+                        command.execute!(parsed._, {});
                     } else {
                         let leftOverSpace = (process.stdout.columns - "────────────".length - 2 - 6 - 4) / 2;
                         if (leftOverSpace < 0) {
@@ -127,6 +135,10 @@ export default class Commands {
                         if (invalidFlags.length > 0) {
                             this.renderInvalidFlagsError(invalidFlags);
                         }
+
+                        if (missingFlags.length > 0) {
+                            this.renderMissingFlagsError(missingFlags);
+                        }
                     }
                 }
             });
@@ -137,12 +149,21 @@ export default class Commands {
 
     /**
      * Render error for invalid flags
+     * @param invalid Invalid flags
      */
     public renderInvalidFlagsError(invalid: string[]) {
-        console.log(cliColor.xterm(197)("[ ERROR ] ") + "Unexpected flag provided - " + cliColor.xterm(197)("The following flags were not expected for this command"));
+        console.log(cliColor.xterm(197)("[ ERROR ] ") + "Unexpected flag(s) provided - " + cliColor.xterm(197)("The following flags were not expected for this command"));
 
         invalid.forEach((flag, index) => {
             console.log(`   ${cliColor.xterm(247)(`[ ${index + 1} ]`)} ${cliColor.xterm(247)("--")}${flag} - ${cliColor.xterm(197)("This flag was not expected")}`);
         });
+    }
+
+    /**
+     * Render error for flags that were required
+     * @param missing Missing flags
+     */
+    public renderMissingFlagsError(missing: string[]) {
+        console.log(cliColor.xterm(197)("[ ERROR ] ") + "Required flag(s) not provided - " + cliColor.xterm(197)("The following flags were required for executing this command but not provided"));
     }
 }
