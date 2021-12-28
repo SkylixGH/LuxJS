@@ -20,7 +20,7 @@ export interface Command {
      */
     flags?: {
         [ index: string ]: {
-            type?: "array" | "string" | "boolean" | "number" | "object" | "raw";
+            type?: "array" | "string" | "boolean" | "number" | "object";
             required?: boolean;
             default?: any;
         };
@@ -128,26 +128,28 @@ export default class Commands {
                     }
 
                     for (const flagName in flags) {
-                        flags[flagName] += "";
-
                         if (!invalidFlags.includes(flagName)) {
                             const commandFlag = command.flags![flagName];
                             let receivedType = "";
 
-                            if (commandFlag.type == "string" && typeof flags[flagName] == "string") {
-                                receivedType = "string";
-                            }
-
                             if (commandFlag.type == "boolean") {
-                                if (flags[flagName].toLowerCase() == "true") {
+                                if (typeof flags[flagName] == "boolean") {
                                     receivedType = "boolean";
-                                } else if (flags[flagName].toLowerCase() == "false") {
+                                } else if (flags[flagName].toString().toLowerCase() == "true") {
+                                    receivedType = "boolean";
+                                } else if (flags[flagName].toString().toLowerCase() == "false") {
                                     receivedType = "boolean";
                                 } else {
                                     if (!isNaN(flags[flagName])) {
                                         receivedType = "number";
                                     } else {
-                                        
+                                        if (Array.isArray(flags[flagName])) {
+                                            receivedType = "array";
+                                        } else if (typeof flags[flagName] == "object") {
+                                            receivedType = "object";
+                                        } else {
+                                            receivedType = "string";
+                                        }
                                     }
                                 }
                             }
