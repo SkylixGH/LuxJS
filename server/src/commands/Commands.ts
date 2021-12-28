@@ -142,7 +142,7 @@ export default class Commands {
         console.log(cliColor.xterm(197)("[ ERROR ] ") + "Unexpected flag provided - " + cliColor.xterm(197)("The following flags were not expected for this command"));
 
         invalid.forEach((flag, index) => {
-            console.log(`   ${cliColor.xterm(247)(`[ ${index + 1} ]`)} --${flag} - ${cliColor.xterm(197)("This flag was not expected")}`);
+            console.log(`   ${cliColor.xterm(247)(`[ ${index + 1} ]`)} ${cliColor.xterm(247)("--")}${flag} - ${cliColor.xterm(197)("This flag was not expected")}`);
         });
     }
 }
