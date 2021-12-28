@@ -10,7 +10,9 @@ bin.installCommand({
         flag: false
     },
     flags: {
-
+        meow: {
+            required: true
+        }
     }
 }, (args, flags) => {
     console.log("TEXT >", args, flags);

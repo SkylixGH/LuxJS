@@ -20,7 +20,7 @@ export interface Command {
      */
     flags?: {
         [ index: string ]: {
-            type: "array" | "string" | "boolean" | "number" | "object";
+            type?: "array" | "string" | "boolean" | "number" | "object" | "raw";
             required?: boolean;
             default?: any;
         };
@@ -165,5 +165,9 @@ export default class Commands {
      */
     public renderMissingFlagsError(missing: string[]) {
         console.log(cliColor.xterm(197)("[ ERROR ] ") + "Required flag(s) not provided - " + cliColor.xterm(197)("The following flags were required for executing this command but not provided"));
+
+        missing.forEach((flag, index) => {
+            console.log(`   ${cliColor.xterm(247)(`[ ${index + 1} ]`)} ${cliColor.xterm(247)("--")}${flag} - ${cliColor.xterm(197)("This flag was required")}`);
+        });
     }
 }
