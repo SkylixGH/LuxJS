@@ -19,4 +19,4 @@ bin.installCommand({
     console.log("TEXT >", args, flags);
 });
 
-bin.execute("test arg1 arg2 1 --meow.cats=true");
+bin.execute("test arg1 arg2 1 --meow.e=true");

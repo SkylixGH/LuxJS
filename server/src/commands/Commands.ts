@@ -102,81 +102,93 @@ export default class Commands {
             callerType = "trigger";
         }
 
+        const handleCommandLogic = (command: Command) => {
+            const invalidFlags = [] as string[];
+            const missingFlags = [] as string[];
+            const typeErrorFlags = {} as {
+                [ index: string ]: {
+                    received: string;
+                    expected: string;
+                };
+            };
+
+            for (const flagName in flags) {
+                if (!command.flags![flagName]) {
+                    invalidFlags.push(flagName);
+                }
+            }
+
+            for (const commandFlagKey in command.flags) {
+                if (command.flags[commandFlagKey].required)
+                    if (!flags[commandFlagKey]) {
+                        missingFlags.push(commandFlagKey);
+                    }
+            }
+
+            for (const flagName in flags) {
+                if (!invalidFlags.includes(flagName)) {
+                    const commandFlag = command.flags![flagName];
+                    let receivedType = "";
+
+                    if (commandFlag.type == "boolean") {
+                        if (typeof flags[flagName] == "boolean") {
+                            receivedType = "boolean";
+                        } else if (flags[flagName].toString().toLowerCase() == "true") {
+                            receivedType = "boolean";
+                        } else if (flags[flagName].toString().toLowerCase() == "false") {
+                            receivedType = "boolean";
+                        } else {
+                            if (!isNaN(flags[flagName])) {
+                                receivedType = "number";
+                            } else {
+                                if (Array.isArray(flags[flagName])) {
+                                    receivedType = "array";
+                                } else if (typeof flags[flagName] == "object") {
+                                    receivedType = "object";
+                                } else {
+                                    receivedType = "string";
+                                }
+                            }
+                        }
+                    }
+
+                    if (receivedType != commandFlag.type) {
+                        typeErrorFlags[flagName] = {
+                            received: receivedType,
+                            expected: commandFlag.type ?? "boolean"
+                        }
+                    }
+                }
+            }
+
+            if (invalidFlags.length == 0 && missingFlags.length == 0 && Object.keys(typeErrorFlags).length == 0) {
+                command.execute!(parsed._, { ...flags });
+            } else {
+                let leftOverSpace = (process.stdout.columns - "────────────".length - 2 - 6 - 4) / 2;
+                if (leftOverSpace < 0) {
+                    leftOverSpace = 0;
+                }
+
+                console.log(cliColor.xterm(247)("────────────   ") + "Help" + cliColor.xterm(238)("   " + "─".repeat(leftOverSpace)));
+
+                if (invalidFlags.length > 0) {
+                    this.renderInvalidFlagsError(invalidFlags);
+                }
+
+                if (missingFlags.length > 0) {
+                    this.renderMissingFlagsError(missingFlags);
+                }
+
+                if (Object.keys(typeErrorFlags).length > 0) {
+                    this.renderTypeErrorFlagsError(typeErrorFlags);
+                }
+            }
+        }
+
         if (callerType === "trigger") {
             this._commands.forEach(command => {
                 if (command.caller.trigger + "" == parsed._[0]) {
-                    const invalidFlags = [] as string[];
-                    const missingFlags = [] as string[];
-                    const typeErrorFlags = {} as {
-                        [ index: string ]: {
-                            received: string;
-                            expected: string;
-                        };
-                    };
-
-                    for (const flagName in flags) {
-                        if (!command.flags![flagName]) {
-                            invalidFlags.push(flagName);
-                        }
-                    }
-
-                    for (const commandFlagKey in command.flags) {
-                        if (command.flags[commandFlagKey].required)
-                            if (!flags[commandFlagKey]) {
-                                missingFlags.push(commandFlagKey);
-                            }
-                    }
-
-                    for (const flagName in flags) {
-                        if (!invalidFlags.includes(flagName)) {
-                            const commandFlag = command.flags![flagName];
-                            let receivedType = "";
-
-                            if (commandFlag.type == "boolean") {
-                                if (typeof flags[flagName] == "boolean") {
-                                    receivedType = "boolean";
-                                } else if (flags[flagName].toString().toLowerCase() == "true") {
-                                    receivedType = "boolean";
-                                } else if (flags[flagName].toString().toLowerCase() == "false") {
-                                    receivedType = "boolean";
-                                } else {
-                                    if (!isNaN(flags[flagName])) {
-                                        receivedType = "number";
-                                    } else {
-                                        if (Array.isArray(flags[flagName])) {
-                                            receivedType = "array";
-                                        } else if (typeof flags[flagName] == "object") {
-                                            receivedType = "object";
-                                        } else {
-                                            receivedType = "string";
-                                        }
-                                    }
-                                }
-                            }
-
-                            console.log(receivedType);
-                        }
-                    }
-
-                    if (invalidFlags.length == 0 && missingFlags.length == 0 && typeErrorFlags == {}) {
-                        command.execute!(parsed._, {});
-                    } else {
-                        let leftOverSpace = (process.stdout.columns - "────────────".length - 2 - 6 - 4) / 2;
-                        if (leftOverSpace < 0) {
-                            leftOverSpace = 0;
-                        }
-
-                        console.log(cliColor.xterm(247)("────────────   ") + "Help" + cliColor.xterm(238)("   " + "─".repeat(leftOverSpace)));
-                        console.log(cliColor.xterm(197)("[ ERROR ] ") + "Command misuse - " + cliColor.xterm(197)("The following will be information on how the command was used incorrectly"));
-
-                        if (invalidFlags.length > 0) {
-                            this.renderInvalidFlagsError(invalidFlags);
-                        }
-
-                        if (missingFlags.length > 0) {
-                            this.renderMissingFlagsError(missingFlags);
-                        }
-                    }
+                    handleCommandLogic(command);
                 }
             });
         } else {
@@ -188,7 +200,7 @@ export default class Commands {
      * Render error for invalid flags
      * @param invalid Invalid flags
      */
-    public renderInvalidFlagsError(invalid: string[]) {
+    private renderInvalidFlagsError(invalid: string[]) {
         console.log(cliColor.xterm(197)("[ ERROR ] ") + "Unexpected flag(s) provided - " + cliColor.xterm(197)("The following flags were not expected for this command"));
 
         invalid.forEach((flag, index) => {
@@ -200,11 +212,25 @@ export default class Commands {
      * Render error for flags that were required
      * @param missing Missing flags
      */
-    public renderMissingFlagsError(missing: string[]) {
+    private renderMissingFlagsError(missing: string[]) {
         console.log(cliColor.xterm(197)("[ ERROR ] ") + "Required flag(s) not provided - " + cliColor.xterm(197)("The following flags were required for executing this command but not provided"));
 
         missing.forEach((flag, index) => {
             console.log(`   ${cliColor.xterm(247)(`[ ${index + 1} ]`)} ${cliColor.xterm(247)("--")}${flag} - ${cliColor.xterm(197)("This flag was required")}`);
         });
+    }
+
+    /**
+     * Render an error for all flags with a type error
+     * @param typeErrors Type error flags to
+     */
+    private renderTypeErrorFlagsError(typeErrors: any) {
+        console.log(cliColor.xterm(197)("[ ERROR ] ") + "Invalid type provided for flag(s) - " + cliColor.xterm(197)("The following flags received invalid data types"));
+    
+        let index = 0;
+        for (const flagName in typeErrors) {
+            console.log(`   ${cliColor.xterm(247)(`[ ${index + 1} ]`)} ${cliColor.xterm(247)("--")}${flagName} - ${cliColor.xterm(197)(`This flag received a(n) ${typeErrors[flagName].received} but expected a(n) ${typeErrors[flagName].expected} instead`)}`);
+            index++;
+        }
     }
 }
