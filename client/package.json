@@ -5,6 +5,9 @@
   "main": "src/main.js",
   "author": "Skylix",
   "license": "MIT",
+  "scripts": {
+    "postinstall": "cd examples/catViewerApp && npm i && cd .."
+  },
   "devDependencies": {
     "typescript": "^4.5.4"
   },
