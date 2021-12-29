@@ -5,7 +5,25 @@ import pkg from "../package.json";
 import dev from './commands/dev/dev';
 
 export interface AppConfig {
+    /**
+     * The application configs
+     */
+    app: {
+        /**
+         * The platform your application should run on
+         */
+        type: "desktop" | "mobile";
+    }
 
+    /**
+     * The development server config
+     */
+    server?: {
+        /**
+         * The port that the development server will use
+         */
+        port?: number;
+    }
 }
 
 const bin = new Command();
