@@ -1,7 +1,16 @@
 import path from "path";
-import { terminal } from "../../src/main";
+import { terminal, utils } from "../../src/main";
 import fse from "fs-extra";
 import { AppConfig } from "../bin";
+
+const defaultConfig: AppConfig = {
+    app: {
+        type: "desktop"
+    },
+    server: {
+        port: "auto"
+    }
+};
 
 /**
  * Read the app config
@@ -53,7 +62,7 @@ export default function getConfig(pathName: string = "./reflux.client.ts"): Prom
                 return;
             }
 
-            resolve(configModule.default);
+            resolve(utils.mergeObject(defaultConfig, configModule.default));
         }).catch((error) => {
             terminal.error("An error occurred while reading the configuration");
             const errorLines = error.message.split("\n") as string[];

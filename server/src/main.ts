@@ -35,5 +35,7 @@ export {
 
     Commands,
     CommandsSettings,
-    CommandsCommand
+    CommandsCommand,
+
+    AppConfig
 };

@@ -20,9 +20,9 @@ export interface AppConfig {
      */
     server?: {
         /**
-         * The port that the development server will use
+         * The port that the development server will use, "auto" any for a automatic port selection starting from 3000
          */
-        port?: number;
+        port?: number | "auto";
     }
 }
 
