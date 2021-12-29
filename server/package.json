@@ -1,7 +1,7 @@
 {
     "name": "@skylixgh/luxjs-server",
     "main": "src/main.js",
-    "version": "1.0.0-dev.2",
+    "version": "1.0.0-dev",
     "bin": {
         "reflux": "bin/_bin.js",
         "reflux-dev": "bin/_bin.js"
