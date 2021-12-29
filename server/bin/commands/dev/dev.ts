@@ -13,7 +13,7 @@ interface CommandOptions {
 export default function dev(bin: Command) {
     bin
         .command("dev [path]")
-        .option("--config <path>", "The path to your application's configuration file", "reflux.client.ts")
+        .option("--config <path>", "The path to your application's configuration file")
         .description("Start a development server")
         .action((pathName: string | undefined, options: CommandOptions) => {
             getConfig(options.config).then((config) => {
