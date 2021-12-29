@@ -4,5 +4,6 @@
         "declaration": true,
         "sourceMap": true
     },
-    "include": ["./"]
+    "include": ["./"],
+    "exclude": ["bin"]
 }

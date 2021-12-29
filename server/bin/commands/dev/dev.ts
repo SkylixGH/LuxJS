@@ -17,6 +17,7 @@ export default function dev(bin: Command) {
         .description("Start a development server")
         .action((pathName: string | undefined, options: CommandOptions) => {
             getConfig(options.config).then((config) => {
+                console.log(config);
                 terminal.info("Starting your development server");
             });
         });

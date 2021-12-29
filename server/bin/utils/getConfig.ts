@@ -25,18 +25,17 @@ export default function getConfig(pathName: string = "./reflux.client.ts"): Prom
 
         if (!fse.existsSync(configPath)) {
             if (configPath.endsWith(".js")) {
-                console.log(path.join(process.cwd(), configPath.slice(0, -2) + "ts"))
-                if (!fse.existsSync(path.join(process.cwd(), configPath.slice(0, -2) + "ts"))) {
+                if (!fse.existsSync(path.join(process.cwd(), pathName.slice(0, -2) + "ts"))) {
                     renderNoExistError();
                 } else {
-                    configPath = path.join(process.cwd(), configPath.slice(0, -2) + "ts");
+                    configPath = path.join(process.cwd(), pathName.slice(0, -2) + "ts");
                     resolvedConfig = true;
                 }
             } else if (configPath.endsWith(".ts")) {
-                if (!fse.existsSync(path.join(process.cwd(), configPath.slice(0, -2) + "js"))) {
+                if (!fse.existsSync(path.join(process.cwd(), pathName.slice(0, -2) + "js"))) {
                     renderNoExistError();
                 } else {
-                    configPath = path.join(process.cwd(), configPath.slice(0, -2) + "js");
+                    configPath = path.join(process.cwd(), pathName.slice(0, -2) + "js");
                     resolvedConfig = true;
                 }
             }
@@ -47,6 +46,21 @@ export default function getConfig(pathName: string = "./reflux.client.ts"): Prom
         }
 
         terminal.info("Reading you configuration...");
-        resolve({});
+
+        import(configPath).then((configModule) => {
+            if (!configModule.hasOwnProperty("default")) {
+                terminal.error("The configuration did not provide an export names default");
+                return;
+            }
+
+            resolve(configModule.default);
+        }).catch((error) => {
+            terminal.error("An error occurred while reading the configuration");
+            const errorLines = error.message.split("\n") as string[];
+
+            errorLines.forEach(line => {
+                terminal.error("|  " + line);
+            });
+        });
     });
 }

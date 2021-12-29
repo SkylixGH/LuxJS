@@ -4,7 +4,7 @@
   "version": "1.0.0-dev.2",
   "description": "Build, test, and deploy powerful full-stack applications with support for real-time, rest communication, cross-platform applications, and MORE!",
   "scripts": {
-    "postinstall": "cd server && npm i && cd ..client && npm i && cd ..",
+    "postinstall": "cd server && npm i && cd ../client && npm i && cd ..",
     "watch": "node _scripts/watch",
     "dist": "node _scripts/dist",
     "clean": "node _scripts/clean",
