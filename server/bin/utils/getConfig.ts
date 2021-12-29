@@ -17,7 +17,7 @@ const defaultConfig: AppConfig = {
  * @param pathName The config path relative to the CLI CWD
  * @returns A promise for when the reading was successful which will contain a config as an object, rejections will not be called
  */
-export default function getConfig(pathName: string = "./reflux.client.ts"): Promise<AppConfig> {
+export default function getConfig(pathName: string = "./lux.client.ts"): Promise<AppConfig> {
     return new Promise((resolve) => {
         // TODO: Create and use new terminal file debug logger
         let configPath = path.join(process.cwd(), pathName);
