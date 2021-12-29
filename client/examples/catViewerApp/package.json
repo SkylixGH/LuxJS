@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/back/_main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node ../../../server/bin/_bin.js dev"
   },
   "author": "Skylix",
   "license": "MIT",
