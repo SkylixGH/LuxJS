@@ -12,7 +12,7 @@ import { AppConfig } from "../bin/bin";
  * @param config Your configuration
  * @returns Your configuration
  */
-export function reFluxDefineConfig(config: AppConfig) {
+export function luxJSDefineConfig(config: AppConfig) {
     return config;
 }
 
