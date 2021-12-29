@@ -3,8 +3,7 @@
     "main": "src/main.js",
     "version": "1.0.0-dev",
     "bin": {
-        "reflux": "bin/_bin.js",
-        "reflux-dev": "bin/_bin.js"
+        "luxjs": "bin/_bin.js"
     },
     "devDependencies": {
         "@types/cli-color": "^2.0.2",
