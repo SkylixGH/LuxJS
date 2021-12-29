@@ -12,11 +12,11 @@ bin.installCommand({
     flags: {
         meow: {
             required: true,
-            type: "boolean"
+            type: "string"
         }
     }
 }, (args, flags) => {
     console.log("TEXT >", args, flags);
 });
 
-bin.execute("test arg1 arg2 1 --meow.e=true");
+bin.execute("test arg1 arg2 1 --meow true");
