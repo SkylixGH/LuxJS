@@ -27,6 +27,11 @@ export default function dev(bin: Command) {
                 if (config.app.type == "desktop") {
                     startDesktopDevServer(path.join(process.cwd(), pathName)).then((port) => {
                         terminal.success("The development server has loaded on port " + port);
+
+                        startDesktopDevApp(path.join(process.cwd(), pathName), port).then(() => {
+                            terminal.success("The development app has been loaded");
+                            terminal.success("App is fully ready for being developed");
+                        });
                     });
                 } else {
                     terminal.error("EUNIMP: Cannot deploy mobile applications on this version of LuxJS. Either update your LuxJS service or wait for an update");
@@ -38,9 +43,9 @@ export default function dev(bin: Command) {
 /**
  * Start a development server for desktop apps
  * @param rootPath The app's root path
- * @returns Promise for is the server started correctly
+ * @returns Promise for is the server started correctly, this will contain the server's listening port
  */
-function startDesktopDevServer(rootPath: string) {
+function startDesktopDevServer(rootPath: string): Promise<number> {
     return new Promise((resolve, reject) => {
         const devServer = spawn("node", [ "./subProc/desktop/vite.js", rootPath ], {
             cwd: __dirname
@@ -55,9 +60,40 @@ function startDesktopDevServer(rootPath: string) {
                 const startReg = /  > Local: http:\/\/localhost:(.*?)\/\n/;
 
                 if (startReg.test(data)) {
-                    resolve(startReg.exec(data)![1]);
+                    resolve(+startReg.exec(data)![1]);
                 }
             }
+        });
+    });
+}
+
+/**
+ * Start the ElectronJS app in dev
+ * @param rootPath The app root
+ * @param port Port of the dev server 
+ * @returns A promise for when the app has been started
+ */
+function startDesktopDevApp(rootPath: string, serverPort: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+        const devApp = spawn("node", [ "./subProc/desktop/electron.js", rootPath, serverPort + "" ], {
+            cwd: __dirname
+        });
+
+        let ready = false;
+
+        devApp.stdout.on("data", (d) => {
+            const data = d.toString().split("\n") as string[];
+
+            data.forEach(line => {
+                try {
+                    const message = JSON.parse(line) as any;
+
+                    if (!ready && message.boot && message.boot.done) {
+                        ready = true;
+                        resolve();
+                    }
+                } catch (error) {};
+            });
         });
     });
 }

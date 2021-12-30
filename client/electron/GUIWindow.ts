@@ -1,5 +1,5 @@
 import { utils } from "../src/main";
-import { BrowserWindow, app } from "electron";
+import { BrowserWindow, app, dialog } from "electron";
 import electronIsDev from "electron-is-dev";
 
 export interface Settings {
@@ -117,10 +117,21 @@ export default class GUIWindow {
 
             this.window.on("ready-to-show", () => {
                 this.window.show();
+
+                console.log(JSON.stringify({
+                    boot: {
+                        done: true
+                    }
+                }));
             });
 
             if (electronIsDev) {
-                
+                this.window.loadURL("http://localhost:" + process.argv[2]);
+            } else {
+                dialog.showMessageBox({
+                    title: "Failed to load",
+                    message: "Failed to load UI"
+                });
             }
         }
 
