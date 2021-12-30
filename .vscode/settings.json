@@ -7,7 +7,8 @@
         "Skylix",
         "skylixgh",
         "tsbuildinfo",
-        "vite"
+        "vite",
+        "vitejs"
     ],
     "grammarly.overrides": [
         {

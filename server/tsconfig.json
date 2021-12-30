@@ -5,5 +5,5 @@
         "sourceMap": true
     },
     "include": ["./"],
-    "exclude": ["bin"]
+    "exclude": ["bin", "examples"]
 }
