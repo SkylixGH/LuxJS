@@ -46,5 +46,5 @@ export interface Theme {
  * @returns The theme's ID for when uninstalling it
  */
 export function installTheme(theme: Theme): string {
-    
+    return "un imp"
 }

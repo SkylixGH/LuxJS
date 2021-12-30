@@ -9,6 +9,7 @@
   "author": "Skylix",
   "license": "MIT",
   "dependencies": {
+    "@skylixgh/luxjs-client": "file:../..",
     "@skylixgh/luxjs-server": "file:../../../server",
     "@vitejs/plugin-react": "^1.1.3",
     "react": "^17.0.2",
