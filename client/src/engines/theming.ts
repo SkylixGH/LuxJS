@@ -24,7 +24,9 @@ export interface Theme {
     /**
      * The theme's color palette
      */
-    palette: {};
+    palette: {
+        [ index: string ]: string;
+    };
 
     /**
      * The theme's version number
@@ -59,7 +61,7 @@ export interface ThemeCSSPrettySettings {
     newLineChar?: string;
 }
 
-let themeStore = {} as {
+let themeStore = JSON.parse(localStorage.getItem("__luxjs__themes__") ?? "{}") as  {
     [ index: string ]: {
         [ index: string ]: Theme;
     };
@@ -144,11 +146,25 @@ export function installTheme(theme: Theme): Promise<void> {
         }
 
         themeStore[theme.author][theme.name] = theme;
+        localStorage.setItem("__luxjs__themes__", JSON.stringify(themeStore));
+
         resolve();
     });
 }
 
 export enum ThemeLoadErrors {
+    /**
+     * A theme on that author was not installed
+     */
+    nameNotFound,
+
+    /**
+     * There are no themes using that author currently installed
+     */
+    authorNotFound
+}
+
+export enum ThemeRemoveErrors {
     /**
      * A theme on that author was not installed
      */
@@ -189,4 +205,47 @@ export function loadTheme(author: string, name: string): Promise<void> {
         themeStorageElement.innerHTML = buildCSSFromPalette(themeStore[author][name].palette);
         themeRenderingArea.appendChild(themeStorageElement);
     });
+}
+
+/**
+ * Uninstall a theme from local storage 
+ * @param author Theme author
+ * @param name Theme name
+ * @returns Promise for if the theme was uninstalled
+ */
+export function removeTheme(author: string, name: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        if (themeStore[author] == undefined) {
+            reject(ThemeRemoveErrors.authorNotFound);
+            return;
+        }
+
+        if (themeStore[author][name] == undefined) {
+            reject(ThemeRemoveErrors.nameNotFound);
+            return;
+        }
+
+        const newThemeStore = {} as typeof themeStore;
+
+        for (const author in themeStore) {
+            if (!themeStore[author].hasOwnProperty(name)) {
+                if (newThemeStore[author] == undefined) {
+                    newThemeStore[author] = {};
+                }
+
+                newThemeStore[author][name] = themeStore[author][name];
+            }
+        }
+
+        themeStore = newThemeStore;
+        localStorage.setItem("__luxjs__themes__", JSON.stringify(themeStore));
+    });
+}
+
+/**
+ * Get all the installed themes
+ * @returns All the installed themes
+ */
+export function getInstalledThemes(): typeof themeStore {
+    return { ...JSON.parse(localStorage.getItem("__luxjs__themes__") ?? "{}") };
 }

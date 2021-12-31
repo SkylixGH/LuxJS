@@ -22,6 +22,7 @@ theming.installTheme({
     console.info("The DarkTheme was installed successfully");
 
     theming.loadTheme("Skylix-LuxJS", "Dark-Theme");
+    console.log(theming.getInstalledThemes());
 }).catch((errorCode) => {
     console.error("An error was thrown in promise:" + errorCode);
     console.error("Failed to install theme:", Object.keys(theming.ThemeInstallErrors).find(key => theming.ThemeInstallErrors[key as any] === errorCode)?.toUpperCase());

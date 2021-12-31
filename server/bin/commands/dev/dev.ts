@@ -23,10 +23,12 @@ export default function dev(bin: Command) {
         .action((pathName = "./", options: CommandOptions) => {
             getConfig(options.config).then((config) => {
                 terminal.info(`The app will now boot in development for ${config.app.type} platforms`);
+                terminal.info("The renderer process is starting in development");
 
                 if (config.app.type == "desktop") {
                     startDesktopDevServer(path.join(process.cwd(), pathName)).then((port) => {
                         terminal.success("The development server has loaded on port " + port);
+                        terminal.info("The desktop process is starting in development");
 
                         startDesktopDevApp(path.join(process.cwd(), pathName), port).then(() => {
                             terminal.success("The development app has been loaded");
