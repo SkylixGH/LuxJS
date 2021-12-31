@@ -107,9 +107,5 @@ dist
 **/yarn.lock
 **/package-lock.json
 
-# TypeScript Build Files
-**/src/**/*.js
-**/src/**/*.d.ts
-
 # Distros
 **/dist
