@@ -1,27 +1,27 @@
 {
-  "name": "cat-viewer-app",
-  "version": "0.0.0",
-  "description": "",
-  "main": "src/back/_main.js",
-  "scripts": {
-    "dev": "node ../../../server/bin/_bin.js dev"
-  },
-  "author": "Skylix",
-  "license": "MIT",
-  "dependencies": {
-    "@skylixgh/luxjs-client": "file:../..",
-    "@skylixgh/luxjs-server": "file:../../../server",
-    "@vitejs/plugin-react": "^1.1.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "typescript": "^4.5.4"
-  },
-  "devDependencies": {
-    "@types/react": "^17.0.38",
-    "@types/react-dom": "^17.0.11",
-    "electron": "^16.0.5",
-    "electron-builder": "^22.14.5",
-    "sass": "^1.45.1",
-    "vite": "^2.7.7"
-  }
+    "name": "cat-viewer-app",
+    "version": "0.0.0",
+    "description": "",
+    "main": "src/back/_main.js",
+    "scripts": {
+        "dev": "node ../../../server/bin/_bin.js dev"
+    },
+    "author": "Skylix",
+    "license": "MIT",
+    "dependencies": {
+        "@skylixgh/luxjs-client": "file:../..",
+        "@skylixgh/luxjs-server": "file:../../../server",
+        "@vitejs/plugin-react": "^1.1.3",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "typescript": "^4.5.4"
+    },
+    "devDependencies": {
+        "@types/react": "^17.0.38",
+        "@types/react-dom": "^17.0.11",
+        "electron": "^16.0.5",
+        "electron-builder": "^22.14.5",
+        "sass": "^1.45.1",
+        "vite": "^2.7.7"
+    }
 }

@@ -6,8 +6,8 @@ const electron = require("electron");
  * @[2] App root dir
  * @[3] Dev server port
  */
-const proc = spawn(electron, [ ".", process.argv[3] ], {
-    cwd: process.argv[2]
+const proc = spawn(electron, [".", process.argv[3]], {
+    cwd: process.argv[2],
 });
 
 proc.stdout.on("data", (d) => process.stdout.write(d.toString()));

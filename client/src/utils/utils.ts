@@ -6,6 +6,9 @@ import deepMerge from "deepmerge";
  * @param secondaryObject The object replacing properties from the base object
  * @returns The merged object
  */
-export function mergeObject<ObjectType>(baseObject: ObjectType, secondaryObject: ObjectType): ObjectType {
+export function mergeObject<ObjectType>(
+    baseObject: ObjectType,
+    secondaryObject: ObjectType
+): ObjectType {
     return deepMerge(baseObject, secondaryObject);
 }

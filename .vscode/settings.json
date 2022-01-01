@@ -13,19 +13,13 @@
     ],
     "grammarly.overrides": [
         {
-            "files": [
-                "**/docs/server/terminal/README.md"
-            ],
+            "files": ["**/docs/server/terminal/README.md"],
             "config": {
                 "audience": "expert",
                 "dialect": "american",
                 "domain": "technical",
-                "emotions": [
-                    "neutral"
-                ],
-                "goals": [
-                    "inform"
-                ]
+                "emotions": ["neutral"],
+                "goals": ["inform"]
             }
         }
     ]

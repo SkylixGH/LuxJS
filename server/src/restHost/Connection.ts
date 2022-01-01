@@ -1,6 +1,6 @@
 import { UrlWithParsedQuery } from "url";
-import { IncomingMessage } from 'http';
-import { ServerResponse } from 'http';
+import { IncomingMessage } from "http";
+import { ServerResponse } from "http";
 import { RESTHostSettings, utils } from "../main";
 
 export enum Errors {
@@ -12,7 +12,7 @@ export enum Errors {
     /**
      * The response has already been closed
      */
-    responseClosed
+    responseClosed,
 }
 
 export interface Settings {
@@ -71,7 +71,7 @@ export default class Connection {
     /**
      * Request query parameters
      */
-    private _query: { [ index: string ]: string | string[] | undefined };
+    private _query: { [index: string]: string | string[] | undefined };
 
     /**
      * A request connection
@@ -80,17 +80,22 @@ export default class Connection {
      * @param response The HTTP response
      * @param body Body data
      */
-    public constructor(settings: Settings, request: IncomingMessage, response: ServerResponse, body: string) {
+    public constructor(
+        settings: Settings,
+        request: IncomingMessage,
+        response: ServerResponse,
+        body: string
+    ) {
         this.response = response;
         this.request = request;
         this._body = body;
-        this._query = { ...settings.urlInfo.query ?? {} };
+        this._query = { ...(settings.urlInfo.query ?? {}) };
         this._settings = settings;
         this._method = this._settings.type;
         this._pathName = this._settings.urlInfo.pathname ?? "/";
 
-        this.request.on("close", () => this._closed = true);
-        this.response.on("close", () => this._closed = true);
+        this.request.on("close", () => (this._closed = true));
+        this.response.on("close", () => (this._closed = true));
     }
 
     /**
@@ -110,7 +115,7 @@ export default class Connection {
     /**
      * Request query parameters
      */
-    public get query(): { [ index: string ]: string | string[] | undefined } {
+    public get query(): { [index: string]: string | string[] | undefined } {
         return this._query;
     }
 
@@ -151,13 +156,16 @@ export default class Connection {
     public sendJSON<ObjectType>(jsonData: ObjectType): Promise<void> {
         return new Promise((resolve, reject) => {
             if (!this._closed) {
-                utils.jsonSerialize(jsonData as unknown as object).then((jsonString) => {
-                    this.response.write(jsonString);
-                    this.response.end();
-                    resolve();
-                }).catch((error) => {
-                    reject(Errors.invalidJSONObject); 
-                });
+                utils
+                    .jsonSerialize(jsonData as unknown as object)
+                    .then((jsonString) => {
+                        this.response.write(jsonString);
+                        this.response.end();
+                        resolve();
+                    })
+                    .catch((error) => {
+                        reject(Errors.invalidJSONObject);
+                    });
 
                 return;
             }

@@ -1,5 +1,9 @@
 import { utils } from "../main";
-import http, { Server as HTTPServer, IncomingMessage, ServerResponse } from "http";
+import http, {
+    Server as HTTPServer,
+    IncomingMessage,
+    ServerResponse,
+} from "http";
 import https, { Server as HTTPSServer } from "https";
 import url from "url";
 import Connection from "./Connection";
@@ -18,17 +22,19 @@ export interface Settings {
     /**
      * Server SSL certificate
      */
-    ssl?: {
-        /**
-         * The certificate itself
-         */
-        certificate?: string;
+    ssl?:
+        | {
+              /**
+               * The certificate itself
+               */
+              certificate?: string;
 
-        /**
-         * The SSL certificate's ket
-         */
-        key?: string;
-    } | false;
+              /**
+               * The SSL certificate's ket
+               */
+              key?: string;
+          }
+        | false;
 
     /**
      * All valid route paths
@@ -58,7 +64,7 @@ export interface Settings {
          * The max chunks for a GET request
          */
         get?: number;
-    }
+    };
 }
 
 export enum Errors {
@@ -70,7 +76,7 @@ export enum Errors {
     /**
      * The server is already booting
      */
-    alreadyStarting
+    alreadyStarting,
 }
 
 export default class RESTHost {
@@ -105,27 +111,33 @@ export default class RESTHost {
      */
     public constructor(settings: Settings = {}) {
         this.emitter = new utils.EventHandler();
-        this._settings = utils.mergeObject<Settings>({
-            port: 8080,
-            host: "localhost",
-            ssl: false,
-            routes: {
-                get: [],
-                post: []
+        this._settings = utils.mergeObject<Settings>(
+            {
+                port: 8080,
+                host: "localhost",
+                ssl: false,
+                routes: {
+                    get: [],
+                    post: [],
+                },
+                maxChunks: {
+                    post: 10,
+                    get: 10,
+                },
             },
-            maxChunks: {
-                post: 10,
-                get: 10
-            }
-        }, settings);
+            settings
+        );
 
-        const requestListener = (request: IncomingMessage, response: ServerResponse) => {
+        const requestListener = (
+            request: IncomingMessage,
+            response: ServerResponse
+        ) => {
             let chunks = 0;
             let bodyData = "";
 
             request.on("data", (chunk) => {
                 chunks++;
-                
+
                 if (chunks > this._settings.maxChunks!.post!) {
                     response.end();
                     request.destroy();
@@ -137,41 +149,56 @@ export default class RESTHost {
             });
 
             request.on("end", () => {
-                const connection = new Connection({
-                    type: (request.method ?? "GET") as "GET" | "POST",
-                    urlInfo: url.parse(request.url ?? "/", true),
-                    maxChunks: this._settings.maxChunks!
-                }, request, response, bodyData);
-    
-                let routeRequestPath = connection.pathName.split("/").join("/").substring(1);
-    
+                const connection = new Connection(
+                    {
+                        type: (request.method ?? "GET") as "GET" | "POST",
+                        urlInfo: url.parse(request.url ?? "/", true),
+                        maxChunks: this._settings.maxChunks!,
+                    },
+                    request,
+                    response,
+                    bodyData
+                );
+
+                let routeRequestPath = connection.pathName
+                    .split("/")
+                    .join("/")
+                    .substring(1);
+
                 if (routeRequestPath.endsWith("/")) {
                     routeRequestPath = routeRequestPath.slice(0, -1);
                 }
-    
+
                 if (connection.method == "GET") {
-                    if (this._settings.routes!.get?.includes(routeRequestPath)) {
+                    if (
+                        this._settings.routes!.get?.includes(routeRequestPath)
+                    ) {
                         this.emitter.emit("get", routeRequestPath, connection);
                     } else {
                         response.statusCode = 404;
                         response.end();
                     }
                 } else {
-                    if (this._settings.routes!.post?.includes(routeRequestPath)) {
+                    if (
+                        this._settings.routes!.post?.includes(routeRequestPath)
+                    ) {
                         this.emitter.emit("post", routeRequestPath, connection);
                     } else {
                         response.statusCode = 404;
                         response.end();
                     }
-                } 
+                }
             });
-        }
+        };
 
         if (this._settings.ssl) {
-            this.httpServer = https.createServer({
-                cert: this._settings.ssl.certificate,
-                key: this._settings.ssl.key
-            }, requestListener);
+            this.httpServer = https.createServer(
+                {
+                    cert: this._settings.ssl.certificate,
+                    key: this._settings.ssl.key,
+                },
+                requestListener
+            );
         } else {
             this.httpServer = http.createServer(requestListener);
         }
@@ -201,9 +228,14 @@ export default class RESTHost {
 
             this._starting = true;
 
-            this.httpServer.listen(this._settings.port ?? undefined, this._settings.host!, 10000, () => {
-                resolve();
-            });
+            this.httpServer.listen(
+                this._settings.port ?? undefined,
+                this._settings.host!,
+                10000,
+                () => {
+                    resolve();
+                }
+            );
         });
     }
 
@@ -220,14 +252,20 @@ export default class RESTHost {
      * @param event Event name
      * @param listener Event callback
      */
-    public on(event: "get", listener: (pathName: string, connection: Connection) => void): string;
+    public on(
+        event: "get",
+        listener: (pathName: string, connection: Connection) => void
+    ): string;
 
     /**
      * Listen for post requests
      * @param event Event name
      * @param listener Event callback
      */
-    public on(event: "post", listener: (pathName: string, connection: Connection) => void): string;
+    public on(
+        event: "post",
+        listener: (pathName: string, connection: Connection) => void
+    ): string;
 
     public on(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "many");
@@ -238,14 +276,20 @@ export default class RESTHost {
      * @param event Event name
      * @param listener Event callback
      */
-    public once(event: "get", listener: (pathName: string, connection: Connection) => void): string;
+    public once(
+        event: "get",
+        listener: (pathName: string, connection: Connection) => void
+    ): string;
 
     /**
      * Listen for post requests
      * @param event Event name
      * @param listener Event callback
      */
-    public once(event: "post", listener: (pathName: string, connection: Connection) => void): string;
+    public once(
+        event: "post",
+        listener: (pathName: string, connection: Connection) => void
+    ): string;
 
     public once(event: any, listener: any): string {
         return this.emitter.addListener(event, listener, "once");

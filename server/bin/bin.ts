@@ -2,7 +2,7 @@
 
 import { Command } from "commander";
 import pkg from "../package.json";
-import dev from './commands/dev/dev';
+import dev from "./commands/dev/dev";
 
 export interface AppConfig {
     /**
@@ -27,8 +27,8 @@ export interface AppConfig {
              * Other dirs related to Electron that should cause an app reload
              */
             externalDirs?: string[];
-        }
-    }
+        };
+    };
 
     /**
      * The development server config
@@ -38,7 +38,7 @@ export interface AppConfig {
          * The port that the development server will use, "auto" any for a automatic port selection starting from 3000
          */
         port?: number | "auto";
-    }
+    };
 }
 
 const bin = new Command();

@@ -7,7 +7,7 @@ interface SendMessage {
 
 terminal.info("Starting server at port 9080");
 const server = new TCPHost({
-    port: 9080
+    port: 9080,
 });
 
 const eventL = server.on("ready", (port) => {
@@ -24,7 +24,7 @@ server.on("error", (error, reason) => {
             terminal.error("Address already in use");
             break;
 
-        default: 
+        default:
             terminal.error("No error description found, REASON = " + reason);
             break;
     }
@@ -39,7 +39,7 @@ server.on("connection", (conn) => {
             terminal.info("[ CHAT ] " + msg.user + ": " + msg.message);
             server.emit("chat:render _server", {
                 user: msg.user,
-                message: msg.message
+                message: msg.message,
             });
         }
     });
@@ -49,13 +49,18 @@ server.on("connection", (conn) => {
     });
 
     conn.on("error", (code, err) => {
-        terminal.error("Error response from connection, CODE = " + code + " REASON = " + err);
+        terminal.error(
+            "Error response from connection, CODE = " +
+                code +
+                " REASON = " +
+                err
+        );
     });
 });
 
 server.start().catch((error) => {
     terminal.error("An error occurred with the exit code: " + error);
-    
+
     switch (error) {
         case TCPHostErrors.invalidHostName:
             terminal.error("Invalid host name");

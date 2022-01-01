@@ -1,22 +1,23 @@
 import { Commands, CommandsCommand } from "../../src/main";
 
-const bin = new Commands({
-    
-});
+const bin = new Commands({});
 
-bin.installCommand({
-    caller: {
-        trigger: "test",
-        flag: false
+bin.installCommand(
+    {
+        caller: {
+            trigger: "test",
+            flag: false,
+        },
+        flags: {
+            meow: {
+                required: true,
+                type: "string",
+            },
+        },
     },
-    flags: {
-        meow: {
-            required: true,
-            type: "string"
-        }
+    (args, flags) => {
+        console.log("TEXT >", args, flags);
     }
-}, (args, flags) => {
-    console.log("TEXT >", args, flags);
-});
+);
 
 bin.execute("test arg1 arg2 1 --meow true");
