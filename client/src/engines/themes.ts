@@ -18,13 +18,15 @@ const defaultDarkTheme: Theme = {
         radius_medium: "4px",
         radius_hard: "8px",
 
-        surface_primary: "#121212",
-        surface_secondary: "#181818",
-        surface_tertiary: "#202020",
+        surface_primary: "rgb(27, 27, 27)",
+        surface_secondary: "#202020",
+        surface_tertiary: "#212121",
 
+        dynamic_primaryAlt: "rgba(255, 255, 255, 3%)",
         dynamic_primary: "rgba(255, 255, 255, 7%)",
         dynamic_secondary: "rgba(255, 255, 255, 12%)",
         dynamic_tertiary: "rgba(255, 255, 255, 17%)",
+        dynamic_quaternary: "rgba(255, 255, 255, 20%)",
 
         accent_primary: "#FFFFFF",
         accent_secondary: "#E2E2E2",

@@ -11,8 +11,14 @@
     width: 100vw;
     height: 100vh;
     color: var(--text_primary);
+    user-select: none;
 
     * {
         box-sizing: border-box;
+    }
+
+    ::selection {
+        background: var(--accent_primary);
+        color: var(--textOnAccent_primary);
     }
 }

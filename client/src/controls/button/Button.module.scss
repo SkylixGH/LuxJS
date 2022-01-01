@@ -11,6 +11,7 @@
     transition: 200ms;
     outline: none;
     font-family: "__luxjs__regular__";
+    user-select: none;
 
     &:hover {
         transition: 100ms;
