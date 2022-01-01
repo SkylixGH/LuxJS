@@ -47,7 +47,35 @@ const defaultLightTheme: Theme = {
     ...meta,
     type: "light",
     name: "Light",
-    palette: {},
+    palette: {
+        text_primary: "#000000",
+        text_secondary: "#555555",
+
+        radius_light: "2px",
+        radius_medium: "4px",
+        radius_hard: "8px",
+
+        surface_primary: "#F9F9F9",
+        surface_secondary: "#FFFFFF",
+        surface_tertiary: "#F1F1F1",
+
+        dynamic_primary: "rgba(0, 0, 0, 6%)",
+        dynamic_secondary: "rgba(0, 0, 0, 9%)",
+        dynamic_tertiary: "rgba(0, 0, 0, 12%)",
+
+        accent_primary: "#121212",
+        accent_secondary: "#303030",
+        accent_tertiary: "#454545",
+
+        textOnAccent_primary: "#FFFFFF",
+        textOnAccent_secondary: "#999999",
+
+        error_primary: "#B02719",
+        error_secondary: "#9D2216",
+
+        textOnError_primary: "#FFFFFF",
+        textOnError_secondary: "#F1F1F1"
+    },
 };
 
 export { defaultLightTheme };
