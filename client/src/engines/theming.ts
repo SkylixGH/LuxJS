@@ -112,11 +112,6 @@ export function buildCSSFromPalette(
 
 export enum ThemeInstallErrors {
     /**
-     * A theme under that author already exists
-     */
-    themeExists,
-
-    /**
      * The name of the theme contains spaces
      */
     nameContainsSpaces,
@@ -134,11 +129,6 @@ export enum ThemeInstallErrors {
  */
 export function installTheme(theme: Theme): Promise<void> {
     return new Promise((resolve, reject) => {
-        if (themeStore[theme.author] && themeStore[theme.author][theme.name]) {
-            reject(ThemeInstallErrors.themeExists);
-            return;
-        }
-
         if (theme.name.includes(" ")) {
             reject(ThemeInstallErrors.nameContainsSpaces);
             return;
