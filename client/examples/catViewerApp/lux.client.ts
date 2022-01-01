@@ -4,7 +4,7 @@ export default luxJSDefineConfig({
     app: {
         type: "desktop",
         desktop: {
-            externalDirs: [ "../../electron" ]
-        }
-    }
+            externalDirs: ["../../electron"],
+        },
+    },
 });

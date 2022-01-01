@@ -1,11 +1,11 @@
-import { WebSocketServer, WebSocket } from 'ws';
-import { utils } from '../main';
+import { WebSocketServer, WebSocket } from "ws";
+import { utils } from "../main";
 
 export enum Errors {
     /**
      * The JSON string sent from the client was invalid
      */
-    invalidJSONResponse
+    invalidJSONResponse,
 }
 
 export default class Connection {
@@ -51,13 +51,27 @@ export default class Connection {
         });
 
         this.webSocket.on("message", (messageString) => {
-            utils.jsonParse<any>(messageString.toString()).then((messageObject) => {
-                if (typeof messageObject.channel == "string" && typeof messageObject.contents == "object") {
-                    this.emitter.emit("message", messageObject.contents, messageObject.channel);
-                }
-            }).catch((error) => {
-                this.emitter.emit("error", Errors.invalidJSONResponse, error);
-            });
+            utils
+                .jsonParse<any>(messageString.toString())
+                .then((messageObject) => {
+                    if (
+                        typeof messageObject.channel == "string" &&
+                        typeof messageObject.contents == "object"
+                    ) {
+                        this.emitter.emit(
+                            "message",
+                            messageObject.contents,
+                            messageObject.channel
+                        );
+                    }
+                })
+                .catch((error) => {
+                    this.emitter.emit(
+                        "error",
+                        Errors.invalidJSONResponse,
+                        error
+                    );
+                });
         });
     }
 
@@ -88,13 +102,18 @@ export default class Connection {
      * @param channel Channel to send a message in
      * @param message Message contents
      */
-    public send<MessageType>(channel: string, message: MessageType = {} as any) {
+    public send<MessageType>(
+        channel: string,
+        message: MessageType = {} as any
+    ) {
         if (this._alive) {
-            this.webSocket.send(JSON.stringify({
-                channel,
-                contents: { ...message }    
-            }));
-        }   
+            this.webSocket.send(
+                JSON.stringify({
+                    channel,
+                    contents: { ...message },
+                })
+            );
+        }
     }
 
     /**
@@ -109,14 +128,20 @@ export default class Connection {
      * @param event Event name
      * @param listener Event callback
      */
-    public on<MessageType>(event: "message", listener: (message: MessageType, channel: string) => void): string;
+    public on<MessageType>(
+        event: "message",
+        listener: (message: MessageType, channel: string) => void
+    ): string;
 
     /**
      * Listen for when the server has an error
      * @param event Event name
      * @param listener Event callback
      */
-    public on(event: "error", listener: (error: Errors, reason?: string) => void): string;
+    public on(
+        event: "error",
+        listener: (error: Errors, reason?: string) => void
+    ): string;
 
     /**
      * Listen for when the connection between the server closes
@@ -134,14 +159,20 @@ export default class Connection {
      * @param event Event name
      * @param listener Event callback
      */
-    public once<MessageType>(event: "message", listener: (message: MessageType, channel: string) => void): string;
+    public once<MessageType>(
+        event: "message",
+        listener: (message: MessageType, channel: string) => void
+    ): string;
 
     /**
      * Listen for when the server has an error
      * @param event Event name
      * @param listener Event callback
      */
-    public once(event: "error", listener: (error: Errors, reason?: string) => void): string;
+    public once(
+        event: "error",
+        listener: (error: Errors, reason?: string) => void
+    ): string;
 
     /**
      * Listen for when the connection between the server closes

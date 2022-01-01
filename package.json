@@ -1,29 +1,31 @@
 {
-  "name": "reflux",
-  "private": true,
-  "version": "1.0.0-dev",
-  "description": "Build, test, and deploy powerful full-stack applications with support for real-time, rest communication, cross-platform applications, and MORE!",
-  "scripts": {
-    "postinstall": "cd server && npm i && cd ../client && npm i && cd ..",
-    "watch": "node _scripts/watch",
-    "dist": "node _scripts/dist",
-    "clean": "node _scripts/clean",
-    "release": "npm run dist && node _scripts/publish && npm run clean"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DevSkylix/ReFlux.git"
-  },
-  "author": "SKYLIX",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/DevSkylix/ReFlux/issues"
-  },
-  "homepage": "https://github.com/DevSkylix/ReFlux#readme",
-  "dependencies": {
-    "typescript": "^4.5.4"
-  },
-  "devDependencies": {
-    "ts-node": "^10.4.0"
-  }
+    "name": "reflux",
+    "private": true,
+    "version": "1.0.0-dev",
+    "description": "Build, test, and deploy powerful full-stack applications with support for real-time, rest communication, cross-platform applications, and MORE!",
+    "scripts": {
+        "postinstall": "cd server && npm i && cd ../client && npm i && cd ..",
+        "watch": "node _scripts/watch",
+        "dist": "node _scripts/dist",
+        "clean": "node _scripts/clean",
+        "release": "npm run dist && node _scripts/publish && npm run clean",
+        "prettier": "prettier --write ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DevSkylix/ReFlux.git"
+    },
+    "author": "SKYLIX",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/DevSkylix/ReFlux/issues"
+    },
+    "homepage": "https://github.com/DevSkylix/ReFlux#readme",
+    "dependencies": {
+        "typescript": "^4.5.4"
+    },
+    "devDependencies": {
+        "prettier": "^2.5.1",
+        "ts-node": "^10.4.0"
+    }
 }

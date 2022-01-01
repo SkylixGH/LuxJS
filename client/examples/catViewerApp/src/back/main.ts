@@ -1,7 +1,14 @@
 import { GUIWindow } from "../../../../electron";
 
 const window = new GUIWindow({
-    // Config
+    size: {
+        width: {
+            default: 1200,
+        },
+        height: {
+            default: 600, 
+        },
+    },
 });
 
 window.start();

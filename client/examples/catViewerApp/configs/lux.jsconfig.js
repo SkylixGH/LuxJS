@@ -3,6 +3,6 @@
  */
 exports.default = {
     app: {
-        type: "desktop"
-    }
+        type: "desktop",
+    },
 };

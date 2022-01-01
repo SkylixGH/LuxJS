@@ -3,7 +3,5 @@
  * @returns Promise for if the check passed
  */
 export default function packagesInstalled(): Promise<void> {
-    return new Promise((resolve, reject) => {
-
-    });
-}   
+    return new Promise((resolve, reject) => {});
+}

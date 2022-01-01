@@ -6,7 +6,10 @@ import mergeDeep from "merge-deep";
  * @param replacementObject The object that will replace properties from the base object
  * @returns The merged object
  */
-export function mergeObject<ObjectType>(baseObject: ObjectType, replacementObject: ObjectType): ObjectType {
+export function mergeObject<ObjectType>(
+    baseObject: ObjectType,
+    replacementObject: ObjectType
+): ObjectType {
     return mergeDeep({ ...baseObject }, { ...replacementObject });
 }
 
@@ -44,28 +47,32 @@ export function jsonSerialize(jsonObject: object): Promise<string> {
 
 export class EventHandler {
     private storage: {
-        [ index: string ]: {
-            event: string,
-            listener: CallableFunction,
-            callType: "once" | "many"
+        [index: string]: {
+            event: string;
+            listener: CallableFunction;
+            callType: "once" | "many";
         };
     } = {
-        "id1": {
+        id1: {
             event: "test",
             listener: () => {
                 console.log("Hello world");
             },
-            callType: "many"
-        }
+            callType: "many",
+        },
     };
 
-    public addListener(eventName: string, listenerCallback: CallableFunction, callType: "once" | "many") {
+    public addListener(
+        eventName: string,
+        listenerCallback: CallableFunction,
+        callType: "once" | "many"
+    ) {
         const key = Math.random() + "";
 
         this.storage[key] = {
             event: eventName,
             listener: listenerCallback,
-            callType
+            callType,
         };
 
         return key;

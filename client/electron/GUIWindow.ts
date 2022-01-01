@@ -1,6 +1,7 @@
 import * as utils from "../src/utils/utils";
-import { BrowserWindow, app, dialog } from "electron";
+import { BrowserWindow, app, dialog, Menu } from "electron";
 import electronIsDev from "electron-is-dev";
+import * as remote from "@electron/remote/main";
 
 export interface Settings {
     /**
@@ -46,7 +47,7 @@ export interface Settings {
              */
             max?: number;
         };
-    }
+    };
 }
 
 export default class GUIWindow {
@@ -70,25 +71,28 @@ export default class GUIWindow {
      * @param settings Window settings
      */
     public constructor(settings: Settings) {
-        this._settings = utils.mergeObject<Settings>({
-            size: {
-                width: {
-                    default: 1800,
-                    min: 500,
-                    max: Infinity
+        this._settings = utils.mergeObject<Settings>(
+            {
+                size: {
+                    width: {
+                        default: 1800,
+                        min: 500,
+                        max: Infinity,
+                    },
+                    height: {
+                        default: 900,
+                        min: 400,
+                        max: Infinity,
+                    },
                 },
-                height: {
-                    default: 900,
-                    min: 400,
-                    max: Infinity
-                }
-            }
-        }, settings);
+            },
+            settings
+        );
 
         this._appReady = app.isReady();
 
         if (!this._appReady) {
-            app.on("ready", () => this._appReady = true);
+            app.on("ready", () => (this._appReady = true));
         }
     }
 
@@ -105,6 +109,8 @@ export default class GUIWindow {
      */
     public start() {
         const jobForAppReady = () => {
+            remote.initialize();
+
             this.window = new BrowserWindow({
                 width: this._settings.size!.width!.default,
                 height: this._settings.size!.height!.default,
@@ -113,17 +119,29 @@ export default class GUIWindow {
                 maxHeight: this._settings.size!.height!.max,
                 maxWidth: this._settings.size!.width!.max,
                 show: false,
-                title: "Loading..."
+                title: "Loading...",
+                frame: false,
+                webPreferences: {
+                    nodeIntegration: true,
+                    contextIsolation: false,
+                    webSecurity: false,
+                    webviewTag: true,
+                },
             });
+
+            this.window.webContents.openDevTools();
+            remote.enable(this.window.webContents);
 
             this.window.on("ready-to-show", () => {
                 this.window.show();
 
-                console.log(JSON.stringify({
-                    boot: {
-                        done: true
-                    }
-                }));
+                console.log(
+                    JSON.stringify({
+                        boot: {
+                            done: true,
+                        },
+                    })
+                );
             });
 
             if (electronIsDev) {
@@ -131,10 +149,10 @@ export default class GUIWindow {
             } else {
                 dialog.showMessageBox({
                     title: "Failed to load",
-                    message: "Failed to load UI"
+                    message: "Failed to load UI",
                 });
             }
-        }
+        };
 
         if (!this._appReady) {
             app.on("ready", () => jobForAppReady());

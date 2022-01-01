@@ -25,7 +25,7 @@ export interface Theme {
      * The theme's color palette
      */
     palette: {
-        [ index: string ]: string;
+        [index: string]: string;
     };
 
     /**
@@ -61,9 +61,11 @@ export interface ThemeCSSPrettySettings {
     newLineChar?: string;
 }
 
-let themeStore = JSON.parse(localStorage.getItem("__luxjs__themes__") ?? "{}") as  {
-    [ index: string ]: {
-        [ index: string ]: Theme;
+let themeStore = JSON.parse(
+    localStorage.getItem("__luxjs__themes__") ?? "{}"
+) as {
+    [index: string]: {
+        [index: string]: Theme;
     };
 };
 
@@ -72,7 +74,10 @@ let themeStore = JSON.parse(localStorage.getItem("__luxjs__themes__") ?? "{}") a
  * @param theme The theme palette
  * @param pretty Make the output pretty
  */
-export function buildCSSFromPalette(theme: { [ index: string ]: string }, pretty: boolean | ThemeCSSPrettySettings = false): string {
+export function buildCSSFromPalette(
+    theme: { [index: string]: string },
+    pretty: boolean | ThemeCSSPrettySettings = false
+): string {
     let result = ":root {";
     let prettySettings = null as ThemeCSSPrettySettings | null;
 
@@ -81,10 +86,13 @@ export function buildCSSFromPalette(theme: { [ index: string ]: string }, pretty
     }
 
     if (pretty) {
-        prettySettings = utils.mergeObject<ThemeCSSPrettySettings>({
-            indentChar: "    ",
-            newLineChar: "\n"
-        }, pretty);
+        prettySettings = utils.mergeObject<ThemeCSSPrettySettings>(
+            {
+                indentChar: "    ",
+                newLineChar: "\n",
+            },
+            pretty
+        );
     }
 
     if (prettySettings) {
@@ -104,11 +112,6 @@ export function buildCSSFromPalette(theme: { [ index: string ]: string }, pretty
 
 export enum ThemeInstallErrors {
     /**
-     * A theme under that author already exists
-     */
-    themeExists,
-
-    /**
      * The name of the theme contains spaces
      */
     nameContainsSpaces,
@@ -116,7 +119,7 @@ export enum ThemeInstallErrors {
     /**
      * The name of the author contains spaces
      */
-    authorContainsSpaces
+    authorContainsSpaces,
 }
 
 /**
@@ -126,11 +129,6 @@ export enum ThemeInstallErrors {
  */
 export function installTheme(theme: Theme): Promise<void> {
     return new Promise((resolve, reject) => {
-        if (themeStore[theme.author] && themeStore[theme.author][theme.name]) {
-            reject(ThemeInstallErrors.themeExists);
-            return;
-        }
-
         if (theme.name.includes(" ")) {
             reject(ThemeInstallErrors.nameContainsSpaces);
             return;
@@ -161,7 +159,7 @@ export enum ThemeLoadErrors {
     /**
      * There are no themes using that author currently installed
      */
-    authorNotFound
+    authorNotFound,
 }
 
 export enum ThemeRemoveErrors {
@@ -173,7 +171,7 @@ export enum ThemeRemoveErrors {
     /**
      * There are no themes using that author currently installed
      */
-    authorNotFound
+    authorNotFound,
 }
 
 /**
@@ -202,13 +200,15 @@ export function loadTheme(author: string, name: string): Promise<void> {
             themeRenderingArea.querySelector("__luxjs__theme__css")?.remove();
         }
 
-        themeStorageElement.innerHTML = buildCSSFromPalette(themeStore[author][name].palette);
+        themeStorageElement.innerHTML = buildCSSFromPalette(
+            themeStore[author][name].palette
+        );
         themeRenderingArea.appendChild(themeStorageElement);
     });
 }
 
 /**
- * Uninstall a theme from local storage 
+ * Uninstall a theme from local storage
  * @param author Theme author
  * @param name Theme name
  * @returns Promise for if the theme was uninstalled
