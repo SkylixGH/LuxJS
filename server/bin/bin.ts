@@ -13,6 +13,21 @@ export interface AppConfig {
          * The platform your application should run on
          */
         type: "desktop" | "mobile";
+
+        /**
+         * Desktop app configuration
+         */
+        desktop?: {
+            /**
+             * The Electron's root dir path
+             */
+            electronRoot?: string;
+
+            /**
+             * Other dirs related to Electron that should cause an app reload
+             */
+            externalDirs?: string[];
+        }
     }
 
     /**

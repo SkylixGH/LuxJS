@@ -5,7 +5,11 @@ import { AppConfig } from "../bin";
 
 const defaultConfig: AppConfig = {
     app: {
-        type: "desktop"
+        type: "desktop",
+        desktop: {
+            electronRoot: "./src/back",
+            externalDirs: []
+        }
     },
     server: {
         port: "auto"
