@@ -1,0 +1,38 @@
+._ {
+    background: var(--dynamic_secondary);
+    border-radius: var(--radius_medium);
+    border: none;
+    color: var(--text_primary);
+    padding: 0 10px;
+    height: 30px;
+    min-width: 120px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 200ms;
+    outline: none;
+    font-family: "__luxjs__regular__";
+
+    &:hover {
+        transition: 100ms;
+        background: var(--dynamic_tertiary);
+
+        &:active {
+            background: var(--dynamic_primary);
+            color: var(--text_secondary);
+        }
+    }
+}
+
+._accent {
+    background: var(--accent_primary);
+    color: var(--textOnAccent_primary);
+    
+    &:hover {
+        background: var(--accent_secondary);
+
+        &:active {
+            color: var(--textOnAccent_secondary);
+            background: var(--accent_tertiary);
+        }
+    }
+}

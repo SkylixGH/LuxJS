@@ -1,0 +1,51 @@
+._ {
+    -webkit-app-region: drag;
+    width: 100vw;
+    height: 40px;
+    background: var(--surface_primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.left {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+.leftTitle {
+    font-family: "__luxjs__regular__";
+    font-size: 12px;
+}
+
+.right {
+    -webkit-app-region: no-drag;
+}
+
+.rightWinButtons {
+    display: flex;
+    height: 40px;
+    margin-right: -10px;
+
+    button {
+        height: 32px;
+        width: 45px;
+        transition: 200ms;
+        background: transparent;
+        color: var(--text_primary);
+        border: none;
+        font-size: 16px;
+
+        &:hover {
+            transition: 100ms;
+            background: var(--dynamic_secondary);
+
+            &:active {
+                background: var(--dynamic_primary);
+                color: var(--text_secondary);
+            }
+        }
+    }
+}

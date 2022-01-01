@@ -1,0 +1,18 @@
+@font-face {
+    font-family: "__luxjs__regular__";
+    src: url("./assets/__luxjs__regular__.ttf");
+}
+
+._ {
+    background: var(--surface_secondary);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    color: var(--text_primary);
+
+    * {
+        box-sizing: border-box;
+    }
+}

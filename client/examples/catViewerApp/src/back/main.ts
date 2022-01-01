@@ -6,7 +6,7 @@ const window = new GUIWindow({
             default: 1200,
         },
         height: {
-            default: 600,
+            default: 600, 
         },
     },
 });
