@@ -1,11 +1,12 @@
 const { spawn } = require("child_process");
+const electron = require("electron");
 
 /**
  * Process Argv Parameters
  * @[2] App root dir
  * @[3] Dev server port
  */
-const proc = spawn(process.platform == "win32" ? "npx.cmd" : "npx", [ "electron", ".", process.argv[3] ], {
+const proc = spawn(electron, [ ".", process.argv[3] ], {
     cwd: process.argv[2]
 });
 

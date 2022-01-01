@@ -112,7 +112,8 @@ export default class GUIWindow {
                 minWidth: this._settings.size!.width!.min,
                 maxHeight: this._settings.size!.height!.max,
                 maxWidth: this._settings.size!.width!.max,
-                show: false
+                show: false,
+                title: "Loading..."
             });
 
             this.window.on("ready-to-show", () => {

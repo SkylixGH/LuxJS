@@ -89,13 +89,12 @@ function startDesktopDevServer(rootPath: string): Promise<number> {
 function startDesktopDevApp(rootPath: string, serverPort: number, electronDirs: string[]): Promise<void> {
     return new Promise((resolve, reject) => {
         let devApp: ChildProcess;
+        let ready = false;
 
         const startDevApp = () => {
             devApp = spawn("node", [ "./subProc/desktop/electron.js", rootPath, serverPort + "" ], {
                 cwd: __dirname
             });
-    
-            let ready = false;
     
             devApp.stdout!.on("data", (d) => {
                 const data = d.toString().split("\n") as string[];
@@ -108,11 +107,17 @@ function startDesktopDevApp(rootPath: string, serverPort: number, electronDirs: 
                             ready = true;
                             resolve();
                         }
-                    } catch (error) {
-                        line.length > 0 && ready && terminal.info("[ Electron ] " + line);
-                    };
+                    } catch (error) {}
                 });
             });
+
+            devApp.stderr?.on("data", (d) => {
+                const data = d.toString().split("\n") as string[];
+
+                data.forEach(line => {
+                    terminal.error("[ Electron ] " + line);
+                });
+            })
         }
 
         startDevApp();
@@ -144,7 +149,7 @@ function startDesktopDevApp(rootPath: string, serverPort: number, electronDirs: 
 
         watchers.forEach(watcher => {
             watcher.on("all", () => {
-                devApp.kill();
+                devApp?.kill("SIGTERM");
                 startDevApp();
             });
         });
