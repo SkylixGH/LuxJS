@@ -36,3 +36,35 @@
         }
     }
 }
+
+._text {
+    background: transparent;
+    color: var(--text_secondary);
+
+    &:hover {
+        background: var(--dynamic_primary);
+        color: var(--text_primary);
+
+        &:active {
+            background: var(--dynamic_primary);
+            color: var(--text_primary);
+            opacity: 0.7;
+        }
+    }
+}
+
+._outline {
+    background: transparent;
+    border: 1px solid var(--dynamic_secondary);
+
+    &:hover {
+        background: var(--dynamic_primary);
+        border-color: var(--dynamic_tertiary);
+
+        &:active {
+            color: var(--text_primary);
+            background: transparent;
+            border-color: var(--dynamic_primary);
+        }
+    }
+}

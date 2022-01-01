@@ -9,19 +9,33 @@ interface Props {
     children: string;
 
     /**
-     * If the button should be accent themed
+     * The button's mode
      */
-    accent?: boolean;
+    mode?: "accent" | "default" | "outline" | "text";
 }
 
 const Button = React.forwardRef((props: Props, ref) => {
     props = utils.mergeObject<Props>({
         children: "",
-        accent: false
+        mode: "default"
     }, props);
 
     return (
-        <button className={`${styles._} ${props.accent ? styles._accent : ""}`}>{props.children}</button>
+        <button className={`${styles._} ${(() => {
+            switch (props.mode) {
+                case "accent":
+                    return styles._accent;
+
+                case "default":
+                    return "";
+
+                case "outline":
+                    return styles._outline;
+
+                case "text": 
+                    return styles._text;
+            }
+        })()}`}>{props.children}</button>
     );
 });
 

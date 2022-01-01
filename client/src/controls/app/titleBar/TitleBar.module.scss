@@ -15,9 +15,16 @@
     padding: 10px;
 }
 
-.leftTitle {
+.leftTitle, .middleText {
     font-family: "__luxjs__regular__";
     font-size: 12px;
+}
+
+.middleText {
+    position: fixed;
+    left: 50vw;
+    top: calc(40px / 2);
+    transform: translate(-50%, -50%);
 }
 
 .right {
@@ -30,21 +37,77 @@
     margin-right: -10px;
 
     button {
-        height: 32px;
+        height: 40px;
         width: 45px;
         transition: 200ms;
         background: transparent;
         color: var(--text_primary);
         border: none;
         font-size: 16px;
+        -webkit-app-region: no-drag;
+        outline: none;
 
         &:hover {
             transition: 100ms;
-            background: var(--dynamic_secondary);
+            background: var(--dynamic_primary);
+
+            &:nth-child(3) {
+                background: var(--error_primary);
+                color: var(--textOnError_primary);
+            }
 
             &:active {
-                background: var(--dynamic_primary);
                 color: var(--text_secondary);
+
+                &:nth-child(3) {
+                    color: var(--textOnError_secondary);
+                    background: var(--error_secondary);
+                }
+            }
+        }
+    }
+}
+
+.leftMacButtons {
+    display: flex;
+    margin-left: -10px;
+
+    button {
+        display: flex;
+        width: 24px;
+        height: 40px;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        -webkit-app-region: no-drag;
+        outline: none;
+
+        &:after {
+            content: "";
+            display: flex;
+            width: 12px;
+            height: 12px;
+            background: var(--error_secondary); 
+            border-radius: var(--radius_hard);
+            transition: 200ms;
+        }
+
+        &:hover {
+            &:after {
+                transition: 100ms;
+            }
+
+            &:nth-child(1):after {
+                background: var(--error_primary);
+            }
+
+            &:nth-child(2):after {
+                background: var(--accent_primary);
+            }
+
+            &:nth-child(3):after {
+                background: var(--accent_primary);
             }
         }
     }

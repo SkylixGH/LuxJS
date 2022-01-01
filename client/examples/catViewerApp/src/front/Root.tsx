@@ -6,7 +6,9 @@ export default React.forwardRef((props: any, ref: any) => {
     return (
         <App title="Cat Viewer Demo">
             <Button>Default</Button>
-            <Button accent>Default</Button>
+            <Button mode="accent">Default</Button>
+            <Button mode="outline">Default</Button>
+            <Button mode="text">Default</Button>
         </App>
     );
 });

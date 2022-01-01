@@ -22,7 +22,25 @@ const TitleBar = function(props: Props) {
         <div className={`${styles._}`}>
             <div className={styles.left}>
                 { props.osMode == "win" && <span className={styles.leftTitle}>{props.title}</span> }
+
+                {props.osMode == "mac" && <div className={styles.leftMacButtons}>
+                    <button>
+                        
+                    </button>
+
+                    <button>
+                        
+                    </button>
+
+                    <button>
+                        
+                    </button>    
+                </div>}
             </div>
+
+            { props.osMode == "mac" && <div className={styles.middle}>
+                <span className={styles.middleText}>{props.title}</span>    
+            </div>}
 
             <div className={styles.right}>
                 { props.osMode == "win" && <div className={styles.rightWinButtons}>

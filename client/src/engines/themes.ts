@@ -31,7 +31,13 @@ const defaultDarkTheme: Theme = {
         accent_tertiary: "#CBCBCB",
 
         textOnAccent_primary: "#121212",
-        textOnAccent_secondary: "#555555"
+        textOnAccent_secondary: "#555555",
+
+        error_primary: "#B02719",
+        error_secondary: "#9D2216",
+
+        textOnError_primary: "#FFFFFF",
+        textOnError_secondary: "#F1F1F1"
     },
 };
 
