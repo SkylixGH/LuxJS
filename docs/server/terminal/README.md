@@ -1,4 +1,4 @@
-# Terminal: Module
+# Terminal: `module`
 This module contains methods for logging formatted messages into the console.
 
 ## Method: `setBulletMode`
