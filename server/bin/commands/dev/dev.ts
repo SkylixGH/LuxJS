@@ -94,7 +94,9 @@ function startDesktopDevApp(rootPath: string, serverPort: number): Promise<void>
                         ready = true;
                         resolve();
                     }
-                } catch (error) {};
+                } catch (error) {
+                    line.length > 0 && ready && terminal.info("[ Electron ] " + line);
+                };
             });
         });
     });

@@ -1,4 +1,4 @@
-import { utils } from "../src/main";
+import * as utils from "../src/utils/utils";
 import { BrowserWindow, app, dialog } from "electron";
 import electronIsDev from "electron-is-dev";
 
