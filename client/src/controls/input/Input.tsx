@@ -1,6 +1,9 @@
-import React from "react";
+import { Icon } from "@iconify/react";
+import React, { useRef, useState } from "react";
 import { utils } from "../../main";
 import styles from "./Input.module.scss";
+import dismiss16Regular from '@iconify/icons-fluent/dismiss-16-regular';
+import search16Regular from '@iconify/icons-fluent/search-16-regular';
 
 interface Props {
     /**
@@ -32,8 +35,12 @@ const Input = React.forwardRef((props: Props, ref) => {
         icon: false
     }, props);
 
+    const [ inputFocused, setInputFocused ] = useState(false);
+    const [ currentValue, setCurrentValue ] = useState("");
+    const inputRef = useRef<HTMLInputElement>(null);
+
     return (
-        <div className={styles._}>
+        <div onMouseDown={() => inputRef.current!.focus()} className={styles._}>
             <div style={{
                 height: props.height,
                 width: props.width
@@ -42,7 +49,20 @@ const Input = React.forwardRef((props: Props, ref) => {
                     { props.icon }
                 </div> }
 
-                <input placeholder={props.placeHolder} />
+                <input onFocus={() => setInputFocused(true)} onBlur={() => setInputFocused(false)} ref={inputRef} onInput={(event) => setCurrentValue(event.currentTarget.value)} placeholder={props.placeHolder} />
+                
+                <button tabIndex={-1} onClick={() => {
+                    setCurrentValue("");
+                    inputRef.current!.value = "";
+                }} onMouseDown={(event) => {
+                    event.preventDefault();
+                }} className={currentValue.length > 0 && inputFocused ? styles.buttonEnabled : ""}>
+                    <Icon icon={dismiss16Regular} />
+                </button>
+
+                <button tabIndex={-1}>
+                    <Icon icon={search16Regular} />
+                </button>
             </div>
         </div>
     );
