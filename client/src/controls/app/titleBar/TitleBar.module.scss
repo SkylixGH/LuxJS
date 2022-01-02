@@ -39,7 +39,6 @@
     button {
         height: 32px;
         width: 45px;
-        transition: 200ms;
         background: transparent;
         color: var(--text_primary);
         border: none;
@@ -48,20 +47,19 @@
         outline: none;
 
         &:hover {
-            transition: 100ms;
             background: var(--dynamic_primary);
 
             &:nth-child(3) {
-                background: var(--error_primary);
-                color: var(--textOnError_primary);
+                background: var(--accent_primary);
+                color: var(--textOnAccent_primary);
             }
 
             &:active {
                 color: var(--text_secondary);
 
                 &:nth-child(3) {
-                    color: var(--textOnError_secondary);
-                    background: var(--error_secondary);
+                    color: var(--textOnAccent_secondary);
+                    background: var(--accent_secondary);
                 }
             }
         }
