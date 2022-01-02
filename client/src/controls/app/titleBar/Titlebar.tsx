@@ -4,6 +4,8 @@ import dismiss16Regular from "@iconify/icons-fluent/dismiss-16-regular";
 import maximize16Regular from '@iconify/icons-fluent/maximize-16-regular';
 import restore16Regular from "@iconify/icons-fluent/restore-16-regular";
 import subtract16Regular from "@iconify/icons-fluent/subtract-16-regular";
+import { app } from "../../../main"
+import { useEffect } from "react";
 
 interface Props {
     /**
@@ -17,7 +19,19 @@ interface Props {
     osMode: "win" | "mac";
 }
 
+let eventListenersCreated = false;
+let onWindowStateChange = null as (() => void) | null;
+
 const TitleBar = function(props: Props) {
+    onWindowStateChange = () => {
+        console.log("STATE");
+    }
+
+    if (!eventListenersCreated) {
+        app.on("windowStateChange", () => onWindowStateChange && onWindowStateChange());
+        eventListenersCreated = true;
+    }
+
     return (
         <div className={`${styles._}`}>
             <div className={styles.left}>

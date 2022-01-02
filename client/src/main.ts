@@ -7,4 +7,4 @@ import * as app from "./engines/app";
 import Flex from './controls/flex/Flex';
 import Input from './controls/input/Input';
 
-export { utils, theming, themingThemes, Button, App, Flex, Input };
+export { utils, theming, themingThemes, app, Button, App, Flex, Input };
