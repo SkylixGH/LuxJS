@@ -64,6 +64,13 @@ if ((window as any).require) {
 }
 
 /**
+ * Minimize browser window
+ */
+export function minimizeWindow() {
+    browserWindow.minimize();
+}
+
+/**
  * Listen for window state changes
  * @param event Event name
  * @param listener Event callback

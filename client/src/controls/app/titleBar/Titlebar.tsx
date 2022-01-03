@@ -62,7 +62,7 @@ const TitleBar = function (props: Props) {
             <div className={styles.right}>
                 {props.osMode == "win" && (
                     <div className={styles.rightWinButtons}>
-                        <button>
+                        <button onClick={() => app.minimizeWindow()}>
                             <Icon
                                 style={{
                                     fontSize: "17px",
