@@ -1,4 +1,5 @@
 import { utils } from "../main";
+import { defaultDarkTheme } from "./themes";
 
 export interface Theme {
     /**
@@ -68,6 +69,9 @@ let themeStore = JSON.parse(
         [index: string]: Theme;
     };
 };
+
+let loadedTheme: Theme = defaultDarkTheme;
+const emitter = new utils.EventHandler();
 
 /**
  * Generate a theme using CSS variables from a theme palette
@@ -204,6 +208,9 @@ export function loadTheme(author: string, name: string): Promise<void> {
             themeStore[author][name].palette
         );
         themeRenderingArea.appendChild(themeStorageElement);
+        loadedTheme = themeStore[author][name];
+        emitter.emit("load");
+        resolve();
     });
 }
 
@@ -239,6 +246,7 @@ export function removeTheme(author: string, name: string): Promise<void> {
 
         themeStore = newThemeStore;
         localStorage.setItem("__luxjs__themes__", JSON.stringify(themeStore));
+        resolve();
     });
 }
 
@@ -248,4 +256,42 @@ export function removeTheme(author: string, name: string): Promise<void> {
  */
 export function getInstalledThemes(): typeof themeStore {
     return { ...JSON.parse(localStorage.getItem("__luxjs__themes__") ?? "{}") };
+}
+
+/**
+ * Get the currently loaded theme
+ * @returns The currently loaded theme
+ */
+export function getLoadedTheme(): Theme {
+    return { ...loadedTheme };
+}
+
+/**
+ * Listen for when a new theme is loaded
+ * @param event Event name
+ * @param listener Event callback
+ */
+export function on(event: "load", listener: () => void): string;
+
+export function on(event: string, listener: CallableFunction): string {
+    return emitter.addListener(event, listener, "many");
+}
+
+/**
+ * Listen for when a new theme is loaded
+ * @param event Event name
+ * @param listener Event callback
+ */
+export function once(event: "load", listener: () => void): string;
+
+export function once(event: string, listener: CallableFunction): string {
+    return emitter.addListener(event, listener, "once");
+}
+
+/**
+ * Remove an event listener
+ * @param eventID Event ID
+ */
+export function removeListener(eventID: string) {
+    emitter.removeListener(eventID);
 }

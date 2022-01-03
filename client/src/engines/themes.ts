@@ -39,7 +39,7 @@ const defaultDarkTheme: Theme = {
         error_secondary: "#9D2216",
 
         textOnError_primary: "#FFFFFF",
-        textOnError_secondary: "#F1F1F1"
+        textOnError_secondary: "#F1F1F1",
     },
 };
 
@@ -61,6 +61,7 @@ const defaultLightTheme: Theme = {
         surface_secondary: "#FFFFFF",
         surface_tertiary: "#F1F1F1",
 
+        dynamic_primaryAlt: "rgba(0, 0, 0, 3%)",
         dynamic_primary: "rgba(0, 0, 0, 6%)",
         dynamic_secondary: "rgba(0, 0, 0, 9%)",
         dynamic_tertiary: "rgba(0, 0, 0, 12%)",
@@ -76,7 +77,7 @@ const defaultLightTheme: Theme = {
         error_secondary: "#9D2216",
 
         textOnError_primary: "#FFFFFF",
-        textOnError_secondary: "#F1F1F1"
+        textOnError_secondary: "#F1F1F1",
     },
 };
 

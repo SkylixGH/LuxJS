@@ -16,10 +16,13 @@ interface Props {
 }
 
 const App = React.forwardRef((props: Props, ref) => {
-    props = utils.mergeObject<Props>({
-        children: <></>,
-        title: ""
-    }, props);
+    props = utils.mergeObject<Props>(
+        {
+            children: <></>,
+            title: "",
+        },
+        props
+    );
 
     document.title = props.title!;
 

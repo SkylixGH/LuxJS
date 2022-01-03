@@ -15,7 +15,8 @@
     padding: 10px;
 }
 
-.leftTitle, .middleText {
+.leftTitle,
+.middleText {
     font-family: "__luxjs__regular__";
     font-size: 12px;
 }
@@ -86,7 +87,7 @@
             display: flex;
             width: 12px;
             height: 12px;
-            background: var(--error_secondary); 
+            background: var(--error_secondary);
             border-radius: var(--radius_hard);
             transition: 200ms;
         }

@@ -7,8 +7,12 @@ let meta = {
     envMode: "browser" as "browser" | "electron",
     window: {
         focused: false,
-        state: "neutral" as "maximized" | "minimized" | "neutral" | "fullScreened"
-    }
+        state: "neutral" as
+            | "maximized"
+            | "minimized"
+            | "neutral"
+            | "fullScreened",
+    },
 };
 const emitter = new utils.EventHandler();
 
@@ -17,9 +21,12 @@ if ((window as any).require) {
 
     const getElectron = (mod: string): any => {
         return (window as any).require(mod);
-    }
+    };
 
-    browserWindow = (getElectron("@electron/remote").getCurrentWindow as typeof getCurrentWindowType)();
+    browserWindow = (
+        getElectron("@electron/remote")
+            .getCurrentWindow as typeof getCurrentWindowType
+    )();
 
     const applyWindowState = () => {
         if (browserWindow.isFullScreen()) {
@@ -33,7 +40,7 @@ if ((window as any).require) {
         }
 
         emitter.emit("windowStateChange");
-    }
+    };
 
     applyWindowState();
 
@@ -67,6 +74,10 @@ export function on(event: string, listener: CallableFunction): string {
     return emitter.addListener(event, listener, "many");
 }
 
+export function once(event: string, listener: CallableFunction): string {
+    return emitter.addListener(event, listener, "once");
+}
+
 /**
  * Remove an event listener
  * @param eventID The event's ID
@@ -75,6 +86,4 @@ export function removeListener(eventID: string) {
     emitter.removeListener(eventID);
 }
 
-export {
-    meta
-};
+export { meta };

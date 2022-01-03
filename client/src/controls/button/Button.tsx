@@ -12,30 +12,44 @@ interface Props {
      * The button's mode
      */
     mode?: "accent" | "default" | "outline" | "text";
+
+    /**
+     * Button's click event
+     */
+    onClick?: () => void;
 }
 
 const Button = React.forwardRef((props: Props, ref) => {
-    props = utils.mergeObject<Props>({
-        children: "",
-        mode: "default"
-    }, props);
+    props = utils.mergeObject<Props>(
+        {
+            children: "",
+            mode: "default",
+            onClick: () => {},
+        },
+        props
+    );
 
     return (
-        <button className={`${styles._} ${(() => {
-            switch (props.mode) {
-                case "accent":
-                    return styles._accent;
+        <button
+            onClick={props.onClick!}
+            className={`${styles._} ${(() => {
+                switch (props.mode) {
+                    case "accent":
+                        return styles._accent;
 
-                case "default":
-                    return "";
+                    case "default":
+                        return "";
 
-                case "outline":
-                    return styles._outline;
+                    case "outline":
+                        return styles._outline;
 
-                case "text": 
-                    return styles._text;
-            }
-        })()}`}>{props.children}</button>
+                    case "text":
+                        return styles._text;
+                }
+            })()}`}
+        >
+            {props.children}
+        </button>
     );
 });
 
