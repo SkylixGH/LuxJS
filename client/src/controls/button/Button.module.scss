@@ -1,5 +1,5 @@
 ._ {
-    background: var(--dynamic_secondary);
+    background: var(--dynamic_primary);
     border-radius: var(--radius_medium);
     border: none;
     color: var(--text_primary);
@@ -15,10 +15,10 @@
 
     &:hover {
         transition: 100ms;
-        background: var(--dynamic_tertiary);
+        background: var(--dynamic_secondary);
 
         &:active {
-            background: var(--dynamic_primary);
+            background: var(--dynamic_primaryAlt);
             color: var(--text_secondary);
         }
     }

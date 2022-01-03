@@ -5,10 +5,11 @@ const window = new GUIWindow({
         width: {
             default: 1200,
         },
-        height: {
+        height: { 
             default: 600,
         },
-    },
-});
+    }, 
+});  
 
-window.start();
+window.start();   
+    

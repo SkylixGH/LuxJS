@@ -9,6 +9,10 @@
     padding: 10px;
 }
 
+._blurred {
+    background: var(--surface_secondary);
+}
+
 .left {
     display: flex;
     gap: 10px;
@@ -26,6 +30,10 @@
     left: 50vw;
     top: calc(40px / 2);
     transform: translate(-50%, -50%);
+}
+
+.leftTitleBlurred, .middleTextBlurred {
+    color: var(--text_secondary);
 }
 
 .right {
@@ -49,6 +57,7 @@
 
         &:hover {
             background: var(--dynamic_primary);
+            color: var(--text_primary);
 
             &:nth-child(3) {
                 background: var(--accent_primary);
@@ -64,6 +73,12 @@
                 }
             }
         }
+    }
+}
+
+.rightWinButtonsBlurred {
+    button {
+        color: var(--text_secondary);
     }
 }
 

@@ -15,8 +15,10 @@ let meta = {
     },
 };
 const emitter = new utils.EventHandler();
+let initSetupProcess = false;
 
-if ((window as any).require) {
+if ((window as any).require && !initSetupProcess) {
+    initSetupProcess = true;
     meta.envMode = "electron";
 
     const getElectron = (mod: string): any => {
@@ -50,10 +52,12 @@ if ((window as any).require) {
 
     browserWindow.on("focus", () => {
         meta.window.focused = true;
+        emitter.emit("windowFocusChange");
     });
 
     browserWindow.on("blur", () => {
         meta.window.focused = false;
+        emitter.emit("windowFocusChange");
     });
 
     browserWindow.on("maximize", () => applyWindowState());
@@ -71,11 +75,36 @@ export function minimizeWindow() {
 }
 
 /**
+ * Maximize the window
+ */
+export function maximizeWindow() {
+    browserWindow.maximize();
+}
+
+/**
+ * Restore the window
+ */
+export function restoreWindow() {
+    if (browserWindow.isFullScreen()) {
+        browserWindow.setFullScreen(false);
+    } else {
+        browserWindow.restore();
+    }
+}
+
+/**
  * Listen for window state changes
  * @param event Event name
  * @param listener Event callback
  */
 export function on(event: "windowStateChange", listener: () => void): string;
+
+/**
+ * Listen for when the window's focus state changes
+ * @param event Event name
+ * @param listener Event callback
+ */
+export function on(event: "windowFocusChange", listener: () => void): string;
 
 export function on(event: string, listener: CallableFunction): string {
     return emitter.addListener(event, listener, "many");
@@ -87,6 +116,13 @@ export function on(event: string, listener: CallableFunction): string {
  * @param listener Event callback
  */
 export function once(event: "windowStateChange", listener: () => void): string;
+
+/**
+ * Listen for when the window's focus state changes
+ * @param event Event name
+ * @param listener Event callback
+ */
+export function once(event: "windowFocusChange", listener: () => void): string;
 
 export function once(event: string, listener: CallableFunction): string {
     return emitter.addListener(event, listener, "once");
@@ -100,4 +136,10 @@ export function removeListener(eventID: string) {
     emitter.removeListener(eventID);
 }
 
-export { meta };
+/**
+ * Get app meta data as a copy
+ * @returns Meta data
+ */
+export function getMeta(): typeof meta {
+    return { ...meta };
+}

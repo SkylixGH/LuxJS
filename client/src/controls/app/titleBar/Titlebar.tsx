@@ -4,8 +4,9 @@ import dismiss16Regular from "@iconify/icons-fluent/dismiss-16-regular";
 import maximize16Regular from "@iconify/icons-fluent/maximize-16-regular";
 import restore16Regular from "@iconify/icons-fluent/restore-16-regular";
 import subtract16Regular from "@iconify/icons-fluent/subtract-16-regular";
+import fullScreenMinimize24Regular from "@iconify/icons-fluent/full-screen-minimize-24-regular";
 import { app } from "../../../main";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
     /**
@@ -20,48 +21,71 @@ interface Props {
 }
 
 let eventListenersCreated = false;
-let onWindowStateChange = null as (() => void) | null;
 
 const TitleBar = function (props: Props) {
-    onWindowStateChange = () => {
-        console.log("STATE");
-    };
+    const [ appMeta, setAppMeta ] = useState<ReturnType<typeof app.getMeta>>(app.getMeta());
+    const [ listeners, setListeners ] = useState<string[]>([]);
 
-    if (!eventListenersCreated) {
-        app.on(
-            "windowStateChange",
-            () => onWindowStateChange && onWindowStateChange()
-        );
-        eventListenersCreated = true;
+    function registerListeners() {
+        if (listeners.length == 0) {
+            console.log(listeners);
+            setListeners([app.on("windowStateChange", () => {
+                setAppMeta(app.getMeta());
+            })]);
+
+            listeners.push(app.on("windowFocusChange", () => {
+                setAppMeta(app.getMeta());
+            }));
+        }
     }
 
+    function handleSizeButton() {
+        if (appMeta.window.state == "fullScreened") {
+            app.restoreWindow();
+        } else if (appMeta.window.state == "maximized") {
+            app.restoreWindow();
+        } else {
+            app.maximizeWindow();
+        }
+    }
+
+    useEffect(() => {
+        registerListeners();
+
+        return () => {
+            listeners.forEach(app.removeListener);
+            listeners.length = 0;
+            registerListeners();
+        }
+    });
+
     return (
-        <div className={`${styles._}`}>
+        <div className={`${styles._} ${!appMeta.window.focused ? styles._blurred : ""}`}>
             <div className={styles.left}>
                 {props.osMode == "win" && (
-                    <span className={styles.leftTitle}>{props.title}</span>
+                    <span className={`${styles.leftTitle} ${!appMeta.window.focused ? styles.leftTitleBlurred : ""}`}>{props.title}</span>
                 )}
 
                 {props.osMode == "mac" && (
                     <div className={styles.leftMacButtons}>
-                        <button></button>
+                        <button onClick={() => app.minimizeWindow()}></button>
 
                         <button></button>
 
-                        <button></button>
+                        <button onClick={() => handleSizeButton()}></button>
                     </div>
                 )}
             </div>
 
             {props.osMode == "mac" && (
                 <div className={styles.middle}>
-                    <span className={styles.middleText}>{props.title}</span>
+                    <span className={`${styles.middleText} ${!appMeta.window.focused ? styles.middleTextBlurred : ""}`}>{props.title}</span>
                 </div>
             )}
 
             <div className={styles.right}>
                 {props.osMode == "win" && (
-                    <div className={styles.rightWinButtons}>
+                    <div className={`${styles.rightWinButtons} ${!appMeta.window.focused ? styles.rightWinButtonsBlurred : ""}`}>
                         <button onClick={() => app.minimizeWindow()}>
                             <Icon
                                 style={{
@@ -71,8 +95,10 @@ const TitleBar = function (props: Props) {
                             />
                         </button>
 
-                        <button>
-                            <Icon icon={maximize16Regular} />
+                        <button onClick={() => handleSizeButton()}>
+                            { appMeta?.window.state == "neutral" ? <Icon icon={maximize16Regular} /> : (appMeta.window.state == "fullScreened" ? <Icon style={{
+                                fontSize: "17px"
+                            }} icon={fullScreenMinimize24Regular} /> : <Icon icon={restore16Regular} />) }
                         </button>
 
                         <button>
@@ -84,5 +110,4 @@ const TitleBar = function (props: Props) {
         </div>
     );
 };
-
 export default TitleBar;

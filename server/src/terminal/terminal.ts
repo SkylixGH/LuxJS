@@ -1,5 +1,6 @@
 import cliColor from "cli-color";
 import moment from "moment";
+import readline from "readline";
 
 let useBullet = false;
 let useStamp = true;
@@ -70,4 +71,33 @@ export function warning(message: string) {
  */
 export function success(message: string) {
     log("Success", 82, message);
+}
+
+/**
+ * Read CLI input
+ * @param question The question statement
+ * @param callback The answer callback, return a string back to render an error
+ */
+export function readIn(question = "", callback: (answer: string) => (string | void)) {
+    const ask = () => {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+
+        rl.question(question + cliColor.xterm(82)(" > "), (ans) => {
+            const result = callback(ans);
+
+            if (result == undefined) {
+                rl.close();
+                return;
+            }
+
+            rl.close();
+            error(result!);
+            ask();
+        });
+    }
+
+    ask();
 }

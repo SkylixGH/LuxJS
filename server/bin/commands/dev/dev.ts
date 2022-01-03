@@ -5,6 +5,7 @@ import { spawn, ChildProcess } from "child_process";
 import path from "path";
 import chokidar, { FSWatcher } from "chokidar";
 import fs from "fs-extra";
+import pkg from "../../../package.json";
 
 interface CommandOptions {
     /**
@@ -69,6 +70,32 @@ export default function dev(bin: Command) {
                             terminal.success(
                                 "App is fully ready for being developed"
                             );
+
+                            const readInput = () => {                                
+                                terminal.readIn(undefined, (command) => {
+                                    const args = command.split(" ");
+
+                                    if (args.length == 0) {
+                                        return "Please enter a command or task name";
+                                    }
+
+                                    switch (args[0]) {
+                                        case "help":
+                                            terminal.warning("Help page unavailable");
+                                            break;
+
+                                        case "restart":
+                                            if (args.length < 2) {
+                                                return "Two arguments were expected, use help for more info"
+                                            }
+                                            break;
+                                    }
+
+                                    readInput();
+                                });
+                            }
+
+                            readInput();
                         });
                     });
                 } else {

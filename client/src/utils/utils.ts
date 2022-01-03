@@ -56,11 +56,11 @@ export class EventHandler {
         for (const eventID in { ...this.storage }) {
             const eventItem = this.storage[eventID];
 
-            if (eventItem.event == eventName) {
+            if (eventItem?.event == eventName) {
                 eventItem.listener(...eventArgs);
             }
 
-            if (eventItem.callType == "once") {
+            if (eventItem?.callType == "once") { 
                 this.removeListener(eventID);
             }
         }

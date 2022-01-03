@@ -1,7 +1,7 @@
 import React from "react";
 import { utils } from "../../main";
 import styles from "./App.module.scss";
-import TitleBar from "./titleBar/Titlebar";
+import TitleBar from "./titleBar/TitleBar";
 
 interface Props {
     /**
