@@ -1,7 +1,7 @@
 import cliColor from "cli-color";
 import moment from "moment";
 
-let useBullet = true;
+let useBullet = false;
 let useStamp = true;
 
 /**
@@ -18,8 +18,8 @@ function log(tag: string, color: number, message: string, fullColor = false) {
                       "[ " + moment().format("h:mm:ss a").toUpperCase() + " ] "
                   )
                 : "") +
-            cliColor.xterm(color)(useBullet ? "•" : `[ ${tag} ]`) +
-            " " +
+            cliColor.xterm(247)("[ ") + cliColor.xterm(color)(useBullet ? "•" :tag) +
+            cliColor.xterm(247)(" ] ") +
             message
     );
 }
@@ -45,7 +45,7 @@ export function setTimeStampMode(mode: boolean) {
  * @param message Message
  */
 export function info(message: string) {
-    log("INFO", 247, message);
+    log("Info", 247, message);
 }
 
 /**
@@ -53,7 +53,7 @@ export function info(message: string) {
  * @param message Message
  */
 export function error(message: string) {
-    log("ERROR", 197, message, true);
+    log("Error", 197, message);
 }
 
 /**
@@ -61,7 +61,7 @@ export function error(message: string) {
  * @param message Message
  */
 export function warning(message: string) {
-    log("WARNING", 172, message);
+    log("Warning", 172, message);
 }
 
 /**
@@ -69,5 +69,5 @@ export function warning(message: string) {
  * @param message Message
  */
 export function success(message: string) {
-    log("SUCCESS", 82, message);
+    log("Success", 82, message);
 }

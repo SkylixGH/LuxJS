@@ -19,7 +19,7 @@ import Commands, {
     Settings as CommandsSettings,
     Command as CommandsCommand,
 } from "./commands/Commands";
-import { AppConfig } from "../bin/bin";
+import { AppConfig } from "../bin/binResource";
 
 /**
  * Add typings support for IDE autocomplete in your configuration
