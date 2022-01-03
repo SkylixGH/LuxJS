@@ -1,4 +1,4 @@
-import { TCPHost, TCPHostErrors, terminal } from "../../src/main";
+import { RESTHost, TCPHost, TCPHostErrors, terminal } from "../../src/main";
 
 interface SendMessage {
     user?: string;
@@ -8,6 +8,21 @@ interface SendMessage {
 terminal.info("Starting server at port 9080");
 const server = new TCPHost({
     port: 9080,
+});
+
+const rest = new RESTHost({
+    port: 9090,
+    routes: {
+        get: [ "info" ]
+    }
+});
+
+rest.on("get", (pth, req) => {
+    terminal.info("New request on " + pth);
+
+    req.sendJSON({
+        version: "1.0"
+    });
 });
 
 const eventL = server.on("ready", (port) => {
@@ -57,6 +72,8 @@ server.on("connection", (conn) => {
         );
     });
 });
+
+rest.start();
 
 server.start().catch((error) => {
     terminal.error("An error occurred with the exit code: " + error);

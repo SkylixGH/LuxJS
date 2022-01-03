@@ -74,6 +74,13 @@ export function on(event: string, listener: CallableFunction): string {
     return emitter.addListener(event, listener, "many");
 }
 
+/**
+ * Listen for window state changes
+ * @param event Event name
+ * @param listener Event callback
+ */
+export function once(event: "windowStateChange", listener: () => void): string;
+
 export function once(event: string, listener: CallableFunction): string {
     return emitter.addListener(event, listener, "once");
 }

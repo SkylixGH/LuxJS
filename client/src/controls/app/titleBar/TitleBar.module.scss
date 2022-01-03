@@ -87,26 +87,31 @@
             display: flex;
             width: 12px;
             height: 12px;
-            background: var(--error_secondary);
+            border: 6px solid #FF5F57;
             border-radius: var(--radius_hard);
             transition: 200ms;
+            box-sizing: border-box;
+        }
+
+        &:nth-child(2):after {
+            border-color: #FFBD2E;
+        }
+
+        &:nth-child(3):after {
+            border-color: #28C940;
         }
 
         &:hover {
             &:after {
-                transition: 100ms;
+                transition: 0ms;
+                border-width: 2px;
             }
 
-            &:nth-child(1):after {
-                background: var(--error_primary);
-            }
-
-            &:nth-child(2):after {
-                background: var(--accent_primary);
-            }
-
-            &:nth-child(3):after {
-                background: var(--accent_primary);
+            &:active {
+                &:after {
+                    transition: 100ms;
+                    filter: brightness(0.5);
+                }
             }
         }
     }

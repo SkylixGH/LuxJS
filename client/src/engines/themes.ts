@@ -57,9 +57,9 @@ const defaultLightTheme: Theme = {
         radius_medium: "4px",
         radius_hard: "8px",
 
-        surface_primary: "#F9F9F9",
-        surface_secondary: "#FFFFFF",
-        surface_tertiary: "#F1F1F1",
+        surface_primary: "#F1F1F1",
+        surface_secondary: "#F9F9F9",
+        surface_tertiary: "#FFFFFF",
 
         dynamic_primaryAlt: "rgba(0, 0, 0, 3%)",
         dynamic_primary: "rgba(0, 0, 0, 6%)",
