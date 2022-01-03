@@ -41,8 +41,8 @@ const Input = React.forwardRef((props: Props, ref) => {
             icon: false,
         },
         props
-    );
-
+    ); 
+ 
     const [inputFocused, setInputFocused] = useState(false);
     const [currentValue, setCurrentValue] = useState("");
     const [currentTheme, setCurrentTheme] = useState<theming.Theme>(
@@ -50,18 +50,25 @@ const Input = React.forwardRef((props: Props, ref) => {
     );
     const inputRef = useRef<HTMLInputElement>(null);
     let listeners = [] as string[];
-
-    useEffect(() => {
+ 
+    function addListeners() {
         if (listeners.length == 0) {
             listeners.push(
                 theming.on("load", () => {
-                    setCurrentTheme(theming.getLoadedTheme());
-                })
+                    setCurrentTheme(theming.getLoadedTheme()); 
+                }) 
             );
-        }
+        } 
+    }
+
+    useEffect(() => {
+        addListeners();
 
         return () => {
             listeners.forEach(theming.removeListener);
+            listeners.length = 0;
+
+            addListeners();
         };
     });
 

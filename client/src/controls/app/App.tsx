@@ -28,7 +28,7 @@ const App = React.forwardRef((props: Props, ref) => {
 
     return (
         <div className={styles._}>
-            <TitleBar osMode="mac" title={props.title!} />
+            <TitleBar osMode="win" title={props.title!} />
 
             <div>{props.children}</div>
         </div>
