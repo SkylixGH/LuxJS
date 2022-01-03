@@ -29,8 +29,8 @@ const defaultDarkTheme: Theme = {
         dynamic_quaternary: "rgba(255, 255, 255, 20%)",
 
         accent_primary: "#FFFFFF",
-        accent_secondary: "#E2E2E2",
-        accent_tertiary: "#CBCBCB",
+        accent_secondary: "#FFFFFFAB",
+        accent_tertiary: "#FFFFFF90",
 
         textOnAccent_primary: "#121212",
         textOnAccent_secondary: "#555555",

@@ -59,13 +59,13 @@
     border: 1px solid var(--dynamic_secondary);
 
     &:hover {
-        background: var(--dynamic_primary);
-        border-color: var(--dynamic_tertiary);
+        background: transparent;
+        border-color: var(--accent_primary);
 
         &:active {
             color: var(--text_primary);
             background: transparent;
-            border-color: var(--dynamic_primary);
+            border-color: var(--accent_tertiary);
         }
     }
 }

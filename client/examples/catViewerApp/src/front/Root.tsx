@@ -28,6 +28,17 @@ export default React.forwardRef((props: any, ref: any) => {
                     <Button mode="accent" onClick={() => loadTheme("light")}>Light</Button>
                 </Flex>
 
+                <h3 style={{
+                    fontFamily: "__luxjs__regular__",
+                    margin: "10px 0"
+                }}>Buttons</h3>
+                <Flex gap="10px">
+                    <Button>Default</Button>
+                    <Button mode="accent">Accent</Button>
+                    <Button mode="outline">Outline</Button>
+                    <Button mode="text">Text</Button>
+                </Flex>
+
                 <Flex>
                     <Input
                         icon={{
