@@ -24,14 +24,13 @@ let eventListenersCreated = false;
 
 const TitleBar = function (props: Props) {
     const [ appMeta, setAppMeta ] = useState<ReturnType<typeof app.getMeta>>(app.getMeta());
-    const [ listeners, setListeners ] = useState<string[]>([]);
+    let listeners = [] as string[];
 
     function registerListeners() {
         if (listeners.length == 0) {
-            console.log(listeners);
-            setListeners([app.on("windowStateChange", () => {
+            listeners.push(app.on("windowStateChange", () => {
                 setAppMeta(app.getMeta());
-            })]);
+            }));
 
             listeners.push(app.on("windowFocusChange", () => {
                 setAppMeta(app.getMeta());
@@ -53,9 +52,8 @@ const TitleBar = function (props: Props) {
         registerListeners();
 
         return () => {
-            listeners.forEach(app.removeListener);
-            listeners.length = 0;
-            registerListeners();
+            listeners.forEach(id => app.removeListener(id));
+            listeners = [];
         }
     });
 
@@ -68,9 +66,9 @@ const TitleBar = function (props: Props) {
 
                 {props.osMode == "mac" && (
                     <div className={styles.leftMacButtons}>
-                        <button onClick={() => app.minimizeWindow()}></button>
-
                         <button></button>
+
+                        <button onClick={() => app.minimizeWindow()}></button>
 
                         <button onClick={() => handleSizeButton()}></button>
                     </div>

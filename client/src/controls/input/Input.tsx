@@ -66,9 +66,7 @@ const Input = React.forwardRef((props: Props, ref) => {
 
         return () => {
             listeners.forEach(theming.removeListener);
-            listeners.length = 0;
-
-            addListeners();
+            listeners = [];
         };
     });
 

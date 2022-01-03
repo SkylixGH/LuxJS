@@ -32,9 +32,9 @@ export default React.forwardRef((props: any, ref: any) => {
                     <Input
                         icon={{
                             dark: (
-                                <img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />
+                                <p>D</p>
                             ),
-                            light: <img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />,
+                            light: <p>L</p>
                         }}
                         placeHolder="Place holder text"
                     />
