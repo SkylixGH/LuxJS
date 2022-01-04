@@ -2,11 +2,31 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    overflow: auto;
-    max-height: 200px;
 
-    &::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
+    & > div {
+        overflow: auto;
+        max-height: 200px;
+        margin: 5px 5px 5px 0;
+    }
+
+    & > div::-webkit-scrollbar {
+        width: 15px;
+        height: 15px;
+    }
+
+    & > div::-webkit-scrollbar-track {
+        background: var(--surface_primary);
+        border-radius: var(--radius_medium)
+    }
+
+    & > div::-webkit-scrollbar-thumb {
+        background: var(--accent_primary);
+        border: 4px solid var(--surface_primary);
+        border-radius: var(--radius_hard);
+
+        &:hover {
+            background: var(--accent_secondary);
+        }
     }
 }
+;
