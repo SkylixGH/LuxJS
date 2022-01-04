@@ -22,12 +22,15 @@ export interface RefInstance {
 }
 
 const Toggle = React.forwardRef<RefInstance, Props>((props, ref) => {
-    props = utils.mergeObject<Props>({
-        defaultValue: false,
-        onChange: () => {},
-    }, props);
+    props = utils.mergeObject<Props>(
+        {
+            defaultValue: false,
+            onChange: () => {},
+        },
+        props
+    );
 
-    const [ currentValue, setCurrentValue ] = useState(props.defaultValue);
+    const [currentValue, setCurrentValue] = useState(props.defaultValue);
     const refClone = ref as { current: RefInstance };
     refClone.current = {} as any;
 
@@ -35,20 +38,27 @@ const Toggle = React.forwardRef<RefInstance, Props>((props, ref) => {
         if (refClone) {
             refClone.current.value = !currentValue;
         }
-    }, [ ref, currentValue ]);
+    }, [ref, currentValue]);
 
     return (
-        <div onClick={() => {
-            if (currentValue) {
-                setCurrentValue(false);
-                props.onChange!();
-                return;
-            }
+        <div
+            onClick={() => {
+                if (currentValue) {
+                    setCurrentValue(false);
+                    props.onChange!();
+                    return;
+                }
 
-            setCurrentValue(true);
-            props.onChange!();
-        }} className={`${styles._} ${currentValue ? styles._active : ""}`}>
-            <div className={`${styles.thumb} ${currentValue ? styles.thumbActive : ""}`} />
+                setCurrentValue(true);
+                props.onChange!();
+            }}
+            className={`${styles._} ${currentValue ? styles._active : ""}`}
+        >
+            <div
+                className={`${styles.thumb} ${
+                    currentValue ? styles.thumbActive : ""
+                }`}
+            />
         </div>
     );
 });

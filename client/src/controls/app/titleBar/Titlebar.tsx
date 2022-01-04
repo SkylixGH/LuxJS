@@ -23,18 +23,24 @@ interface Props {
 let eventListenersCreated = false;
 
 const TitleBar = function (props: Props) {
-    const [ appMeta, setAppMeta ] = useState<ReturnType<typeof app.getMeta>>(app.getMeta());
+    const [appMeta, setAppMeta] = useState<ReturnType<typeof app.getMeta>>(
+        app.getMeta()
+    );
     let listeners = [] as string[];
 
     function registerListeners() {
         if (listeners.length == 0) {
-            listeners.push(app.on("windowStateChange", () => {
-                setAppMeta(app.getMeta());
-            }));
+            listeners.push(
+                app.on("windowStateChange", () => {
+                    setAppMeta(app.getMeta());
+                })
+            );
 
-            listeners.push(app.on("windowFocusChange", () => {
-                setAppMeta(app.getMeta());
-            }));
+            listeners.push(
+                app.on("windowFocusChange", () => {
+                    setAppMeta(app.getMeta());
+                })
+            );
         }
     }
 
@@ -52,16 +58,28 @@ const TitleBar = function (props: Props) {
         registerListeners();
 
         return () => {
-            listeners.forEach(id => app.removeListener(id));
+            listeners.forEach((id) => app.removeListener(id));
             listeners = [];
-        }
+        };
     });
 
     return (
-        <div className={`${styles._} ${!appMeta.window.focused ? styles._blurred : ""}`}>
+        <div
+            className={`${styles._} ${
+                !appMeta.window.focused ? styles._blurred : ""
+            }`}
+        >
             <div className={styles.left}>
                 {props.osMode == "win" && (
-                    <span className={`${styles.leftTitle} ${!appMeta.window.focused ? styles.leftTitleBlurred : ""}`}>{props.title}</span>
+                    <span
+                        className={`${styles.leftTitle} ${
+                            !appMeta.window.focused
+                                ? styles.leftTitleBlurred
+                                : ""
+                        }`}
+                    >
+                        {props.title}
+                    </span>
                 )}
 
                 {props.osMode == "mac" && (
@@ -77,13 +95,27 @@ const TitleBar = function (props: Props) {
 
             {props.osMode == "mac" && (
                 <div className={styles.middle}>
-                    <span className={`${styles.middleText} ${!appMeta.window.focused ? styles.middleTextBlurred : ""}`}>{props.title}</span>
+                    <span
+                        className={`${styles.middleText} ${
+                            !appMeta.window.focused
+                                ? styles.middleTextBlurred
+                                : ""
+                        }`}
+                    >
+                        {props.title}
+                    </span>
                 </div>
             )}
 
             <div className={styles.right}>
                 {props.osMode == "win" && (
-                    <div className={`${styles.rightWinButtons} ${!appMeta.window.focused ? styles.rightWinButtonsBlurred : ""}`}>
+                    <div
+                        className={`${styles.rightWinButtons} ${
+                            !appMeta.window.focused
+                                ? styles.rightWinButtonsBlurred
+                                : ""
+                        }`}
+                    >
                         <button onClick={() => app.minimizeWindow()}>
                             <Icon
                                 style={{
@@ -94,9 +126,18 @@ const TitleBar = function (props: Props) {
                         </button>
 
                         <button onClick={() => handleSizeButton()}>
-                            { appMeta?.window.state == "neutral" ? <Icon icon={maximize16Regular} /> : (appMeta.window.state == "fullScreened" ? <Icon style={{
-                                fontSize: "17px"
-                            }} icon={fullScreenMinimize24Regular} /> : <Icon icon={restore16Regular} />) }
+                            {appMeta?.window.state == "neutral" ? (
+                                <Icon icon={maximize16Regular} />
+                            ) : appMeta.window.state == "fullScreened" ? (
+                                <Icon
+                                    style={{
+                                        fontSize: "17px",
+                                    }}
+                                    icon={fullScreenMinimize24Regular}
+                                />
+                            ) : (
+                                <Icon icon={restore16Regular} />
+                            )}
                         </button>
 
                         <button>

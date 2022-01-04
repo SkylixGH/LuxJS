@@ -14,18 +14,25 @@ interface Props {
     children: string;
 }
 
-export interface RefInstance {
-    
-}
+export interface RefInstance {}
 
 const TextBlock = React.forwardRef<RefInstance, Props>((props, ref) => {
-    props = utils.mergeObject<Props>({
-        children: "",
-        header: false
-    }, props);
+    props = utils.mergeObject<Props>(
+        {
+            children: "",
+            header: false,
+        },
+        props
+    );
 
     return (
-        <div className={`${styles._} ${props.header ? styles["_header-" + props.header] : ""}`}>{props.children}</div>
+        <div
+            className={`${styles._} ${
+                props.header ? styles["_header-" + props.header] : ""
+            }`}
+        >
+            {props.children}
+        </div>
     );
 });
 

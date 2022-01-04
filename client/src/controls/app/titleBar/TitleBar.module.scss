@@ -32,7 +32,8 @@
     transform: translate(-50%, -50%);
 }
 
-.leftTitleBlurred, .middleTextBlurred {
+.leftTitleBlurred,
+.middleTextBlurred {
     color: var(--text_secondary);
 }
 
@@ -102,18 +103,18 @@
             display: flex;
             width: 12px;
             height: 12px;
-            border: 6px solid #FF5F57;
+            border: 6px solid #ff5f57;
             border-radius: var(--radius_hard);
             transition: 200ms;
             box-sizing: border-box;
         }
 
         &:nth-child(2):after {
-            border-color: #FFBD2E;
+            border-color: #ffbd2e;
         }
 
         &:nth-child(3):after {
-            border-color: #28C940;
+            border-color: #28c940;
         }
 
         &:hover {

@@ -44,9 +44,7 @@ interface Props {
     };
 }
 
-export interface RefInstance {
-    
-}
+export interface RefInstance {}
 
 const Flex = React.forwardRef<RefInstance, Props>((props, ref) => {
     props = utils.mergeObject<Props>(

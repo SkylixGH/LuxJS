@@ -15,9 +15,7 @@ interface Props {
     title?: string;
 }
 
-export interface RefInstance {
-    
-}
+export interface RefInstance {}
 
 const App = React.forwardRef<RefInstance, Props>((props, ref) => {
     props = utils.mergeObject<Props>(

@@ -13,15 +13,15 @@ const server = new TCPHost({
 const rest = new RESTHost({
     port: 9090,
     routes: {
-        get: [ "info" ]
-    }
+        get: ["info"],
+    },
 });
 
 rest.on("get", (pth, req) => {
     terminal.info("New request on " + pth);
 
     req.sendJSON({
-        version: "1.0"
+        version: "1.0",
     });
 });
 

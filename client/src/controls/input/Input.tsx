@@ -1,5 +1,11 @@
 import { Icon } from "@iconify/react";
-import React, { ForwardRefRenderFunction, PropsWithChildren, useEffect, useRef, useState } from "react";
+import React, {
+    ForwardRefRenderFunction,
+    PropsWithChildren,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { theming, utils } from "../../main";
 import styles from "./Input.module.scss";
 import dismiss16Regular from "@iconify/icons-fluent/dismiss-16-regular";
@@ -32,9 +38,7 @@ interface Props {
         | false;
 }
 
-export interface RefInstance {
-
-}
+export interface RefInstance {}
 
 const Input = React.forwardRef<RefInstance, Props>((props, ref) => {
     props = utils.mergeObject<Props>(
@@ -45,8 +49,8 @@ const Input = React.forwardRef<RefInstance, Props>((props, ref) => {
             icon: false,
         },
         props
-    ); 
- 
+    );
+
     const [inputFocused, setInputFocused] = useState(false);
     const [currentValue, setCurrentValue] = useState("");
     const [currentTheme, setCurrentTheme] = useState<theming.Theme>(
@@ -54,15 +58,15 @@ const Input = React.forwardRef<RefInstance, Props>((props, ref) => {
     );
     const inputRef = useRef<HTMLInputElement>(null);
     let listeners = [] as string[];
- 
+
     function addListeners() {
         if (listeners.length == 0) {
             listeners.push(
                 theming.on("load", () => {
-                    setCurrentTheme(theming.getLoadedTheme()); 
-                }) 
+                    setCurrentTheme(theming.getLoadedTheme());
+                })
             );
-        } 
+        }
     }
 
     useEffect(() => {

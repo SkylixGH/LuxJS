@@ -71,7 +71,7 @@ export default function dev(bin: Command) {
                                 "App is fully ready for being developed"
                             );
 
-                            const readInput = () => {                                
+                            const readInput = () => {
                                 terminal.readIn(undefined, (command) => {
                                     const args = command.split(" ");
 
@@ -81,19 +81,21 @@ export default function dev(bin: Command) {
 
                                     switch (args[0]) {
                                         case "help":
-                                            terminal.warning("Help page unavailable");
+                                            terminal.warning(
+                                                "Help page unavailable"
+                                            );
                                             break;
 
                                         case "restart":
                                             if (args.length < 2) {
-                                                return "Two arguments were expected, use help for more info"
+                                                return "Two arguments were expected, use help for more info";
                                             }
                                             break;
                                     }
 
                                     readInput();
                                 });
-                            }
+                            };
 
                             readInput();
                         });

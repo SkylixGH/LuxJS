@@ -60,7 +60,7 @@ export class EventHandler {
                 eventItem.listener(...eventArgs);
             }
 
-            if (eventItem?.callType == "once") { 
+            if (eventItem?.callType == "once") {
                 this.removeListener(eventID);
             }
         }

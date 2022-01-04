@@ -10,9 +10,30 @@ import Toggle from "./controls/toggle/Toggle";
 import type { RefInstance as ToggleRefInstance } from "./controls/toggle/Toggle";
 import TextBlock from "./controls/text/TextBlock";
 import type { RefInstance as TextBlockRefInstance } from "./controls/text/TextBlock";
+import ScrollPane from "./controls/scrollPane/ScrollPane";
+import type { RefInstance as ScrollPaneRefInstance } from "./controls/scrollPane/ScrollPane";
 import * as utils from "./utils/utils";
 import * as theming from "./engines/theming";
 import * as themingThemes from "./engines/themes";
 import * as app from "./engines/app";
 
-export { utils, theming, themingThemes, app, Button, ButtonRefInstance, App, AppRefInstance, Flex, FlexRefInstance, Input, InputRefInstance, Toggle, ToggleRefInstance, TextBlock, TextBlockRefInstance };
+export {
+    utils,
+    theming,
+    themingThemes,
+    app,
+    Button,
+    ButtonRefInstance,
+    App,
+    AppRefInstance,
+    Flex,
+    FlexRefInstance,
+    Input,
+    InputRefInstance,
+    Toggle,
+    ToggleRefInstance,
+    TextBlock,
+    TextBlockRefInstance,
+    ScrollPane,
+    ScrollPaneRefInstance,
+};

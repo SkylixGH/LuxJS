@@ -8,23 +8,23 @@ function ask() {
         }
 
         const proc = exec(answer);
-    
+
         proc.stdout.on("data", (d) => {
             const lines = d.toString().split("\n");
-    
-            lines.forEach(line => {
+
+            lines.forEach((line) => {
                 terminal.info("[ Stdout ] " + line);
             });
         });
-    
+
         proc.stderr.on("data", (d) => {
             const lines = d.toString().split("\n");
-    
-            lines.forEach(line => {
+
+            lines.forEach((line) => {
                 terminal.info("[ Stderr ] " + line);
             });
         });
-    
+
         proc.on("exit", () => {
             ask();
         });

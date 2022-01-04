@@ -19,7 +19,8 @@ function log(tag: string, color: number, message: string, fullColor = false) {
                       "[ " + moment().format("h:mm:ss a").toUpperCase() + " ] "
                   )
                 : "") +
-            cliColor.xterm(247)("[ ") + cliColor.xterm(color)(useBullet ? "•" :tag) +
+            cliColor.xterm(247)("[ ") +
+            cliColor.xterm(color)(useBullet ? "•" : tag) +
             cliColor.xterm(247)(" ] ") +
             message
     );
@@ -78,11 +79,14 @@ export function success(message: string) {
  * @param question The question statement
  * @param callback The answer callback, return a string back to render an error
  */
-export function readIn(question = "", callback: (answer: string) => (string | void)) {
+export function readIn(
+    question = "",
+    callback: (answer: string) => string | void
+) {
     const ask = () => {
         const rl = readline.createInterface({
             input: process.stdin,
-            output: process.stdout
+            output: process.stdout,
         });
 
         rl.question(question + cliColor.xterm(82)(" > "), (ans) => {
@@ -97,7 +101,7 @@ export function readIn(question = "", callback: (answer: string) => (string | vo
             error(result!);
             ask();
         });
-    }
+    };
 
     ask();
 }

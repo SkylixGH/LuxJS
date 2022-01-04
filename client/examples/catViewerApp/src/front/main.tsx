@@ -7,14 +7,14 @@ theming.installTheme(themingThemes.defaultLightTheme).then(() => {
     // theming.loadTheme(themingThemes.defaultLightTheme.author, themingThemes.defaultLightTheme.name).then(() => {
     //     console.log("The light theme has been loaded");
     // });
-    console.log("[ Theme Loader ] Installed light")
+    console.log("[ Theme Loader ] Installed light");
 });
 
 theming
     .installTheme({
         ...themingThemes.defaultDarkTheme,
         palette: {
-            ...themingThemes.defaultDarkTheme.palette
+            ...themingThemes.defaultDarkTheme.palette,
         },
     })
     .then(() => {

@@ -19,9 +19,7 @@ interface Props {
     onClick?: () => void;
 }
 
-export interface RefInstance {
-    
-}
+export interface RefInstance {}
 
 const Button = React.forwardRef<RefInstance, Props>((props, ref) => {
     props = utils.mergeObject<Props>(
