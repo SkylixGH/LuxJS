@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { App, Button, theming, Toggle, ToggleRefInstance } from "../../../../src/main";
+import { App, Button, TextBlock, theming, Toggle, ToggleRefInstance } from "../../../../src/main";
 import "./styles/globals.scss";
 import Flex from "./../../../../src/controls/flex/Flex";
 import Input from "./../../../../src/controls/input/Input";
@@ -23,13 +23,9 @@ export default React.forwardRef((props: any, ref: any) => {
     return (
         <App title="Cat Viewer Demo">
             <Flex gap="10px" padding="20px" direction="column">
-                <h3 style={{
-                    fontFamily: "__luxjs__regular__",
-                    margin: "10px 0"
-                }}>Light Theme</h3>
+                <TextBlock header={1}>Light Mode</TextBlock>
                 <Flex gap="10px">
                     <Toggle defaultValue={true} ref={toggleRef} onChange={() => {
-                        console.log({ ...toggleRef });
                         if (toggleRef.current?.value) {
                             loadTheme("light");
                             return;
@@ -49,6 +45,13 @@ export default React.forwardRef((props: any, ref: any) => {
                     <Button mode="outline">Outline</Button>
                     <Button mode="text">Text</Button>
                 </Flex>
+
+                <TextBlock header={1}>Light Mode</TextBlock>
+                <TextBlock header={2}>Light Mode</TextBlock>
+                <TextBlock header={3}>Light Mode</TextBlock>
+                <TextBlock header={4}>Light Mode</TextBlock>
+                <TextBlock header={5}>Light Mode</TextBlock>
+                <TextBlock header={6}>Light Mode</TextBlock>
 
                 <Flex>
                     <Input

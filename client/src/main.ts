@@ -8,9 +8,11 @@ import Button from "./controls/button/Button";
 import type { RefInstance as ButtonRefInstance } from "./controls/button/Button";
 import Toggle from "./controls/toggle/Toggle";
 import type { RefInstance as ToggleRefInstance } from "./controls/toggle/Toggle";
+import TextBlock from "./controls/text/TextBlock";
+import type { RefInstance as TextBloxkRefInstance } from "./controls/text/TextBlock";
 import * as utils from "./utils/utils";
 import * as theming from "./engines/theming";
 import * as themingThemes from "./engines/themes";
 import * as app from "./engines/app";
 
-export { utils, theming, themingThemes, app, Button, ButtonRefInstance, App, AppRefInstance, Flex, FlexRefInstance, Input, InputRefInstance, Toggle, ToggleRefInstance };
+export { utils, theming, themingThemes, app, Button, ButtonRefInstance, App, AppRefInstance, Flex, FlexRefInstance, Input, InputRefInstance, Toggle, ToggleRefInstance, TextBlock, TextBloxkRefInstance };
