@@ -48,20 +48,20 @@ const ScrollPane = React.forwardRef<RefInstance, Props>((props, ref) => {
         height: "100px",
         maxWidth: "none",
         minWidth: "none",
-        maxHeight: "100px",
+        maxHeight: "none",
         minHeight: "none"
     }, props);
 
     return (
-        <div className={styles._}>
-            <div style={{
-                width: props.width,
-                height: props.height,
-                maxHeight: props.maxHeight,
-                maxWidth: props.maxWidth,
-                minWidth: props.minWidth,
-                minHeight: props.minHeight
-            }}>{props.children}</div>
+        <div style={{
+            width: props.width,
+            height: props.height,
+            maxHeight: props.maxHeight,
+            maxWidth: props.maxWidth,
+            minWidth: props.minWidth,
+            minHeight: props.minHeight
+        }} className={styles._}>
+            <div>{props.children}</div>
         </div>
     );
 });

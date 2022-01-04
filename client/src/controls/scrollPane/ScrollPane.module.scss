@@ -1,27 +1,28 @@
 ._ {
     width: 100%;
     display: flex;
+    overflow: auto;
     flex-direction: column;
 
     & > div {
-        overflow: auto;
-        max-height: 200px;
-        margin: 5px 5px 5px 0;
+        height: 100%;
+        width: 100%;
     }
 
-    & > div::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         width: 15px;
         height: 15px;
     }
 
-    & > div::-webkit-scrollbar-track {
+    &::-webkit-scrollbar-track {
         background: var(--surface_primary);
-        border-radius: var(--radius_medium)
+        border-radius: var(--radius_medium) 0 0 var(--radius_medium);
+        margin: 5px 0;
     }
 
-    & > div::-webkit-scrollbar-thumb {
+    &::-webkit-scrollbar-thumb {
         background: var(--accent_primary);
-        border: 4px solid var(--surface_primary);
+        border: 5px solid var(--surface_primary);
         border-radius: var(--radius_hard);
 
         &:hover {

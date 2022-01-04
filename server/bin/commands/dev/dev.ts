@@ -84,16 +84,18 @@ export default function dev(bin: Command) {
                                             terminal.warning(
                                                 "Help page unavailable"
                                             );
+
+                                            readInput();
                                             break;
 
                                         case "restart":
                                             if (args.length < 2) {
                                                 return "Two arguments were expected, use help for more info";
                                             }
+
+                                            readInput();
                                             break;
                                     }
-
-                                    readInput();
                                 });
                             };
 
