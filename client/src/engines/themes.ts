@@ -31,6 +31,12 @@ const defaultDarkTheme: Theme = {
         accent_primary: "#FFFFFF",
         accent_secondary: "#FFFFFFAB",
         accent_tertiary: "#FFFFFF90",
+        accent_quaternary: "#FFFFFF70",
+
+        // accent_primary: "#60CDFF",
+        // accent_secondary: "#60CDFFAB",
+        // accent_tertiary: "#60CDFF90",
+        // accent_quaternary: "#60CDFF70",
 
         textOnAccent_primary: "#121212",
         textOnAccent_secondary: "#555555",
@@ -67,8 +73,9 @@ const defaultLightTheme: Theme = {
         dynamic_tertiary: "rgba(0, 0, 0, 12%)",
 
         accent_primary: "#121212",
-        accent_secondary: "#303030",
-        accent_tertiary: "#454545",
+        accent_secondary: "#121212DD",
+        accent_tertiary: "#121212AB",
+        accent_quaternary: "#12121270",
 
         textOnAccent_primary: "#FFFFFF",
         textOnAccent_secondary: "#999999",

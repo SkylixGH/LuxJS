@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { ForwardRefRenderFunction, PropsWithChildren, useEffect, useRef, useState } from "react";
 import { theming, utils } from "../../main";
 import styles from "./Input.module.scss";
 import dismiss16Regular from "@iconify/icons-fluent/dismiss-16-regular";
@@ -32,7 +32,11 @@ interface Props {
         | false;
 }
 
-const Input = React.forwardRef((props: Props, ref) => {
+export interface RefInstance {
+
+}
+
+const Input = React.forwardRef<RefInstance, Props>((props, ref) => {
     props = utils.mergeObject<Props>(
         {
             placeHolder: "",

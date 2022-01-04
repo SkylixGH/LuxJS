@@ -15,7 +15,11 @@ interface Props {
     title?: string;
 }
 
-const App = React.forwardRef((props: Props, ref) => {
+export interface RefInstance {
+    
+}
+
+const App = React.forwardRef<RefInstance, Props>((props, ref) => {
     props = utils.mergeObject<Props>(
         {
             children: <></>,
@@ -28,7 +32,7 @@ const App = React.forwardRef((props: Props, ref) => {
 
     return (
         <div className={styles._}>
-            <TitleBar osMode="mac" title={props.title!} />
+            <TitleBar osMode="win" title={props.title!} />
 
             <div>{props.children}</div>
         </div>

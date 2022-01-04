@@ -1,10 +1,12 @@
-import React from "react";
-import { App, Button, theming } from "../../../../src/main";
+import React, { useRef } from "react";
+import { App, Button, theming, Toggle, ToggleRefInstance } from "../../../../src/main";
 import "./styles/globals.scss";
 import Flex from "./../../../../src/controls/flex/Flex";
 import Input from "./../../../../src/controls/input/Input";
 
 export default React.forwardRef((props: any, ref: any) => {
+    const toggleRef = useRef<ToggleRefInstance>(null);
+
     function loadTheme(type: "dark" | "light") {
         console.log("[ Theme Loader ] Loading theme " + type)
 
@@ -16,16 +18,25 @@ export default React.forwardRef((props: any, ref: any) => {
         theming.loadTheme("__DEFAULTS__", "Light");
     }
 
+    loadTheme("light");
+
     return (
         <App title="Cat Viewer Demo">
             <Flex gap="10px" padding="20px" direction="column">
                 <h3 style={{
                     fontFamily: "__luxjs__regular__",
                     margin: "10px 0"
-                }}>Theme</h3>
+                }}>Light Theme</h3>
                 <Flex gap="10px">
-                    <Button onClick={() => loadTheme("dark")}>Dark</Button>
-                    <Button mode="accent" onClick={() => loadTheme("light")}>Light</Button>
+                    <Toggle defaultValue={true} ref={toggleRef} onChange={() => {
+                        console.log({ ...toggleRef });
+                        if (toggleRef.current?.value) {
+                            loadTheme("light");
+                            return;
+                        }
+
+                        loadTheme("dark");
+                    }} />
                 </Flex>
 
                 <h3 style={{
