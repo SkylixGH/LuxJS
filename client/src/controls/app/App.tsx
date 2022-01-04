@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { app, utils } from "../../main";
 import styles from "./App.module.scss";
 import TitleBar from "./titleBar/TitleBar";
-import { getMeta } from './../../engines/app';
 
 interface Props {
     /**
@@ -24,6 +23,8 @@ export interface RefInstance {
 }
 
 const App = React.forwardRef<RefInstance, Props>((props, ref) => {
+    document.body.style.margin = "0px";
+
     props = utils.mergeObject<Props>(
         {
             children: <></>,
@@ -39,7 +40,7 @@ const App = React.forwardRef<RefInstance, Props>((props, ref) => {
         if (app.getMeta().envMode == "electron") {
             setBodyHeight(window.outerHeight - (document.body.offsetHeight > 40 ? 40 : 0) + "px");
         } else {
-            setBodyHeight(window.outerHeight + "px");
+            setBodyHeight(document.documentElement.scrollHeight + "px");
         }
     }
 
@@ -61,7 +62,7 @@ const App = React.forwardRef<RefInstance, Props>((props, ref) => {
 
     return (
         <div className={styles._}>
-            <TitleBar osMode="win" title={props.title!} />
+            { app.getMeta().envMode == "electron" ? <TitleBar osMode="win" title={props.title!} /> : null }
 
             <div style={{
                 height: bodyHeight ?? "0px"
