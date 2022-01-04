@@ -10,6 +10,13 @@ theming.installTheme(themingThemes.defaultLightTheme).then(() => {
     console.log("[ Theme Loader ] Installed light");
 });
 
+theming.installTheme(themingThemes.defaultGitHubTheme).then(() => {
+    theming.loadTheme(themingThemes.defaultGitHubTheme.author, themingThemes.defaultGitHubTheme.name).then(() => {
+        console.log("The light theme has been loaded");
+    });
+    console.log("[ Theme Loader ] Installed light");
+});
+
 theming
     .installTheme({
         ...themingThemes.defaultDarkTheme,
@@ -19,14 +26,14 @@ theming
     })
     .then(() => {
         console.log("[ Theme Loader ] Installed dark");
-        theming
-            .loadTheme(
-                themingThemes.defaultDarkTheme.author,
-                themingThemes.defaultDarkTheme.name
-            )
-            .then(() => {
-                console.log("The dark theme has been loaded");
-            });
+        // theming
+        //     .loadTheme(
+        //         themingThemes.defaultDarkTheme.author,
+        //         themingThemes.defaultDarkTheme.name
+        //     )
+        //     .then(() => {
+        //         console.log("The dark theme has been loaded");
+        //     });
     });
 
 ReactDOM.render(

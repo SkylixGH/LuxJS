@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { App, Button, Input, ScrollPane, TextBlock, Toggle } from "../../../../src/main";
+import { App, Button, Flex, Input, ScrollPane, TextBlock, theming, themingThemes, Toggle } from "../../../../src/main";
 import "./styles/globals.scss";
 
 export default React.forwardRef((props: any, ref: any) => {
@@ -76,14 +76,23 @@ export default React.forwardRef((props: any, ref: any) => {
     return (
         <App title="LuxJS Demo #1">
             <ScrollPane height="100%">
-                <TextBlock>Light Mode</TextBlock>
-                <Toggle />
+                <Flex padding="10px 30px" direction="column" gap="10px">
+                    <TextBlock>Light Mode</TextBlock>
+                    <Toggle onChange={(light) => {
+                        if (light) {
+                            theming.loadTheme(themingThemes.defaultLightTheme.author, themingThemes.defaultLightTheme.name);
+                            return;
+                        }
+
+                        theming.loadTheme(themingThemes.defaultDarkTheme.author, themingThemes.defaultDarkTheme.name);
+                    }} />
+                </Flex>
 
                 <div className="tabView">
                     <div className="tabs">
                         { tabs.map(tab => {
                             return (
-                                <Button mode={currentTab == tab.name ? "accent" : "default"} onClick={() => {
+                                <Button mode={currentTab == tab.name ? "outline" : "text"} onClick={() => {
                                     setCurrentTab(tab.name);
                                 }}>{ tab.name }</Button>
                             )

@@ -11,7 +11,7 @@ interface Props {
     /**
      * Listen for value changes
      */
-    onChange?: () => void;
+    onChange?: (value: boolean) => void;
 }
 
 export interface RefInstance {
@@ -30,6 +30,10 @@ const Toggle = React.forwardRef<RefInstance, Props>((props, ref) => {
         props
     );
 
+    if (ref == undefined) {
+        ref = {} as any;
+    }
+
     const [currentValue, setCurrentValue] = useState(props.defaultValue);
     const refClone = ref as { current: RefInstance };
     refClone.current = {} as any;
@@ -45,12 +49,12 @@ const Toggle = React.forwardRef<RefInstance, Props>((props, ref) => {
             onClick={() => {
                 if (currentValue) {
                     setCurrentValue(false);
-                    props.onChange!();
+                    props.onChange!(!currentValue);
                     return;
                 }
 
                 setCurrentValue(true);
-                props.onChange!();
+                props.onChange!(!currentValue);
             }}
             className={`${styles._} ${currentValue ? styles._active : ""}`}
         >
