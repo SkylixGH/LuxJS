@@ -49,6 +49,11 @@ const App = React.forwardRef<RefInstance, Props>((props, ref) => {
     }
 
     document.title = props.title!;
+
+    if (ref == undefined) {
+        ref = {} as any;
+    }
+
     const refClone = ref as { current: RefInstance };
     refClone.current = {} as any;
 
