@@ -20,8 +20,9 @@ const defaultDarkTheme: Theme = {
         radius_heavy: "25px",
 
         surface_primary: "#202020",
-        surface_secondary: "#272727",
+        surface_secondary: "#262626",
         surface_tertiary: "#303030",
+        surface_tertiaryAlt: "#292929",
 
         dynamic_primaryAlt: "rgba(255, 255, 255, 3%)",
         dynamic_primary: "rgba(255, 255, 255, 7%)",
@@ -67,7 +68,8 @@ const defaultLightTheme: Theme = {
 
         surface_primary: "#F1F1F1",
         surface_secondary: "#F9F9F9",
-        surface_tertiary: "#FFFFFF",
+        surface_tertiary: "rgb(245, 245, 245)",
+        surface_tertiaryAlt: "#FFFFFF",
 
         dynamic_primaryAlt: "rgba(0, 0, 0, 3%)",
         dynamic_primary: "rgba(0, 0, 0, 6%)",

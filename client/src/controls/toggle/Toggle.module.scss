@@ -1,12 +1,13 @@
 ._ {
     display: flex;
-    width: 40px;
+    width: 45px;
     border-radius: var(--radius_heavy);
-    height: 20px;
-    background: var(--dynamic_primary);
+    height: 25px;
     cursor: pointer;
     transition: 100ms;
     overflow: hidden;
+    align-items: center;
+    border: 1px solid var(--dynamic_tertiary);
 
     &:hover {
         background: var(--dynamic_secondary);
@@ -33,11 +34,11 @@
     display: flex;
     width: calc(50% - 6px);
     height: 14px;
-    margin: 3px;
     border: 3px solid transparent;
     background: var(--text_primary);
     border-radius: 100%;
     transition: 100ms;
+    margin-left: 4px;
 }
 
 .thumbActive {
