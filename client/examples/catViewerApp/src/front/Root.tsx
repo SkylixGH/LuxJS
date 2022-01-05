@@ -102,6 +102,21 @@ export default React.forwardRef((props: any, ref: any) => {
 
                         theming.loadTheme(themingThemes.defaultDarkTheme.author, themingThemes.defaultDarkTheme.name);
                     }} />
+
+                    <TextBlock>Send WS Message</TextBlock>
+                    <Toggle onChange={(val) => {
+                        if (val) {
+                            console.log(ws.alive);
+
+                            if (ws.alive) {
+                                ws.send("main", {
+                                    msg: {
+                                        target: "button"
+                                    }
+                                })
+                            }
+                        }
+                    }} />
                 </Flex>
 
                 <div className="tabView">

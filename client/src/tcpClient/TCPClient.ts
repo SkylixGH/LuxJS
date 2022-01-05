@@ -110,6 +110,8 @@ export default class TCPClient {
             }
 
             this.webSocket.onopen = (event) => {
+                this._starting = false;
+                this._alive = true;
                 resolve();
                 this.emitter.emit("ready");
             }
@@ -128,14 +130,14 @@ export default class TCPClient {
      * If the connection is alive
      */
     public get alive(): boolean {
-        return this.alive;
+        return this._alive;
     }
 
     /**
      * If the connection is starting
      */
     public get starting(): boolean {
-        return this.starting;
+        return this._starting;
     }
 
     /**
@@ -143,6 +145,20 @@ export default class TCPClient {
      */
     public get settings(): Settings {
         return { ...this._settings }; 
+    }
+
+    /**
+     * Send a message to the server
+     * @param channel The channel to send the message in
+     * @param message The actual message
+     */
+    public send<MessageType>(channel: string, message: MessageType = {} as any) {
+        if (this._alive) {
+            this.webSocket?.send(JSON.stringify({
+                channel,
+                contents: message
+            }));
+        }
     }
 
     /**
