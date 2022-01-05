@@ -111,7 +111,7 @@ const NavView = React.forwardRef<RefInstance, Props>((props, ref) => {
             </div> }
 
             <div className={styles.body}>
-                <ScrollPane height="100%">{props.children}</ScrollPane>
+                <ScrollPane width="100%" height="100%">{props.children}</ScrollPane>
             </div>
         </div>
     );

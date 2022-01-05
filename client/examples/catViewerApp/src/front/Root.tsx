@@ -21,6 +21,7 @@ ws.start().then(() => {
 export default React.forwardRef((props: any, ref: any) => {
     const [ tabContents, setTabContents ] = useState<JSX.Element | JSX.Element[] | null>(null);
     const [ currentTab, setCurrentTab ] = useState("Buttons");
+    const [ useSideBar, setUseSideBar ] = useState(true);
 
     const tabs = [
         {
@@ -106,7 +107,7 @@ export default React.forwardRef((props: any, ref: any) => {
 
     return (
         <App title="LuxJS Demo #1">
-            <NavView sideBar={{
+            <NavView sideBar={useSideBar ? {
                 body: [
                     {
                         label: "Home",
@@ -144,7 +145,7 @@ export default React.forwardRef((props: any, ref: any) => {
                     },
                     
                 ]
-            }} sideRail={[
+            } : undefined} sideRail={[
                 {
                     label: "Home",
                     icon: <Toggle />,
@@ -197,6 +198,10 @@ export default React.forwardRef((props: any, ref: any) => {
                 },
                 
             ]}>
+                <Flex padding="10px 30px">
+                    <TextBlock header={1}>Settings</TextBlock>
+                </Flex>
+
                 <Flex padding="10px 30px" direction="column" gap="10px">
                     <TextBlock>Light Mode</TextBlock>
                     <Toggle label="Toggle Light Theme" onChange={(light) => {
@@ -207,10 +212,15 @@ export default React.forwardRef((props: any, ref: any) => {
 
                         theming.loadTheme(themingThemes.defaultDarkTheme.author, themingThemes.defaultDarkTheme.name);
                     }} />
-                </Flex>
-            </NavView>
 
-            {/* <ScrollPane height="100%">
+                    <TextBlock>Side Bar</TextBlock>
+                    <Toggle defaultValue={true} label="Toggle Side Bar" onChange={(sb) => {
+                        setUseSideBar(sb);
+                    }} />
+
+                    <TextBlock header={1}>Tests</TextBlock>
+                </Flex>
+
                 <Flex padding="20px">
                     <TabView tabs={[
                         {
@@ -278,7 +288,7 @@ export default React.forwardRef((props: any, ref: any) => {
                         }) }
                     </div>
                 </div>
-            </ScrollPane> */}
+            </NavView>
         </App>
     );
 });
