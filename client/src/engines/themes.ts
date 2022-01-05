@@ -17,6 +17,7 @@ const defaultDarkTheme: Theme = {
         radius_light: "2px",
         radius_medium: "4px",
         radius_hard: "8px",
+        radius_heavy: "25px",
 
         surface_primary: "#202020",
         surface_secondary: "#272727",
@@ -62,6 +63,7 @@ const defaultLightTheme: Theme = {
         radius_light: "2px",
         radius_medium: "4px",
         radius_hard: "8px",
+        radius_heavy: "25px",
 
         surface_primary: "#F1F1F1",
         surface_secondary: "#F9F9F9",
@@ -101,6 +103,7 @@ const defaultPaleNightTheme: Theme = {
         radius_light: "2px",
         radius_medium: "4px",
         radius_hard: "8px",
+        radius_heavy: "25px",
 
         surface_primary: "#292D3E",
         surface_secondary: "#343748",
@@ -146,6 +149,7 @@ const defaultGitHubTheme: Theme = {
         radius_light: "2px",
         radius_medium: "4px",
         radius_hard: "8px",
+        radius_heavy: "25px",
 
         surface_primary: "#0d1117",
         surface_secondary: "#161b22",

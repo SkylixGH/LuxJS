@@ -8,10 +8,12 @@ import Button from "./controls/button/Button";
 import Toggle from "./controls/toggle/Toggle";
 import TextBlock from "./controls/text/TextBlock";
 import ScrollPane from "./controls/scrollPane/ScrollPane";
+import TabView from "./controls/tabView/TabView";
 import type { RefInstance as ButtonRefInstance } from "./controls/button/Button";
 import type { RefInstance as ToggleRefInstance } from "./controls/toggle/Toggle";
 import type { RefInstance as ScrollPaneRefInstance } from "./controls/scrollPane/ScrollPane";
 import type { RefInstance as TextBlockRefInstance } from "./controls/text/TextBlock";
+import type { RefInstance as TabViewRefInstance } from "./controls/tabView/TabView";
 import * as utils from "./utils/utils";
 import * as theming from "./engines/theming";
 import * as themingThemes from "./engines/themes";
@@ -29,6 +31,7 @@ export {
     // Control Components
     ScrollPane,
     TextBlock,
+    TabView,
     Toggle,
     Button,
     Input,
@@ -38,6 +41,7 @@ export {
     // Control Component Ref Interfaces
     ScrollPaneRefInstance,
     TextBlockRefInstance,
+    TabViewRefInstance,
     ToggleRefInstance,
     ButtonRefInstance,
     InputRefInstance,

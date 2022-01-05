@@ -1,0 +1,45 @@
+._ {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs {
+    padding: 10px;
+    gap: 10px;
+    display: flex;
+    overflow-y: auto;
+
+    button {
+        border: 1px solid var(--dynamic_tertiary);
+        background: transparent;
+        color: var(--text_primary);
+        font-family: "__luxjs__regular__";
+        min-width: 220px;
+        text-align: left;
+        padding: 8px 10px;
+        border-radius: var(--radius_medium);
+        transition: 200ms;
+        cursor: pointer;
+
+        &:hover {
+            transition: 100ms;
+            background: var(--dynamic_primary);
+            border-color: transparent;
+        }
+    }
+}
+
+.body {
+    padding: 10px;
+}
+
+.bodyPage {
+
+}
+
+.tabButtonActive {
+    background: var(--accent_primary) !important;
+    color: var(--textOnAccent_primary) !important;
+    border-color: transparent;
+    pointer-events: none;
+}

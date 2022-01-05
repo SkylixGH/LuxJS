@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { App, Button, Flex, Input, ScrollPane, TCPClient, TextBlock, theming, themingThemes, Toggle } from "../../../../src/main";
+import { App, Button, Flex, Input, ScrollPane, TabView, TCPClient, TextBlock, theming, themingThemes, Toggle } from "../../../../src/main";
 import "./styles/globals.scss";
 
 const ws = new TCPClient({
@@ -86,12 +86,48 @@ export default React.forwardRef((props: any, ref: any) => {
                     }} />
                 </>
             )
+        },
+        {
+            name: "Switches",
+            element: (
+                <Flex gap="10px" direction="column">
+                    <Toggle />
+                    <Toggle />
+                    <Toggle />
+                    <Toggle />
+                    <Toggle />
+                    <Toggle />
+                    <Toggle />
+                    <Toggle />
+                </Flex>
+            )
         }
     ]
 
     return (
         <App title="LuxJS Demo #1">
             <ScrollPane height="100%">
+                <Flex padding="20px">
+                    <TabView tabs={[
+                        {
+                            label: "First",
+                            content: (
+                                <>
+                                    <Button>First Page</Button>
+                                </>
+                            )
+                        }, 
+                        {
+                            label: "Second",
+                            content: (
+                                <>
+                                    <Button>Second Page</Button>
+                                </>
+                            )
+                        }
+                    ]} />
+                </Flex>
+
                 <Flex padding="10px 30px" direction="column" gap="10px">
                     <TextBlock>Light Mode</TextBlock>
                     <Toggle onChange={(light) => {
