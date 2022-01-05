@@ -10,11 +10,11 @@ theming.installTheme(themingThemes.defaultLightTheme).then(() => {
     console.log("[ Theme Loader ] Installed light");
 });
 
-theming.installTheme(themingThemes.defaultGitHubTheme).then(() => {
-    theming.loadTheme(themingThemes.defaultGitHubTheme.author, themingThemes.defaultGitHubTheme.name).then(() => {
+theming.installTheme(themingThemes.defaultPaleNightTheme).then(() => {
+    theming.loadTheme(themingThemes.defaultPaleNightTheme.author, themingThemes.defaultPaleNightTheme.name).then(() => {
         console.log("The light theme has been loaded");
     });
-    console.log("[ Theme Loader ] Installed light");
+    console.log("[ Theme Loader ] Installed PaleNight");
 });
 
 theming

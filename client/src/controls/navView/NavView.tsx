@@ -15,7 +15,22 @@ interface Props {
     sideBar?: {
         header?: any;
 
-        body?: any;
+        body: {
+            /**
+             * Item label
+             */
+            label: string;
+
+            /**
+             * Item action
+             */
+            action: () => void;
+
+            /**
+             * Make this a divider instead of an item
+             */
+            divider?: boolean;
+        }[];
 
         footer?: any;
     };
@@ -59,11 +74,11 @@ const NavView = React.forwardRef<RefInstance, Props>((props, ref) => {
 
     return (
         <div className={styles._}>
-            { props.sideRail && <div className={styles.sideRail}>
+            <div className={styles.sideRail}>
                 <div className={styles.sideRailHeader}></div>
 
                 <div className={styles.sideRailBody}>
-                    { props.sideRail.map((item, index) => {
+                    { props.sideRail?.map((item, index) => {
                         return (
                             <button key={ "sideRail-" + index }>
                                 { item.iconFillSpace ? <div className={styles.sideRailItemFillSpaceIcon}>
@@ -75,9 +90,25 @@ const NavView = React.forwardRef<RefInstance, Props>((props, ref) => {
                         )
                     }) }
                 </div>
-            </div> }
+            </div>
 
-            { props.sideBar && <div className={styles.sideBar}></div> }
+            { props.sideBar && <div className={styles.sideBar}>
+                <div className={styles.sideBarBody}>
+                    { props.sideBar.body!.map((item, index) => {
+                        return (
+                            <div className={styles.sideBarBodyItem} onClick={() => {
+                                item.action();
+                            }} key={ "sideBar-body-" + index }>
+                                <div className={styles.sideBarBodyItemIcon}>
+
+                                </div>
+
+                                <span className={styles.sideBarBodyItemLabel}>{item.label}</span>
+                            </div>
+                        );
+                    }) }
+                </div>
+            </div> }
 
             <div className={styles.body}>
                 <ScrollPane height="100%">{props.children}</ScrollPane>
