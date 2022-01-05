@@ -5,35 +5,42 @@ import type { RefInstance as FlexRefInstance } from "./controls/flex/Flex";
 import Input from "./controls/input/Input";
 import type { RefInstance as InputRefInstance } from "./controls/input/Input";
 import Button from "./controls/button/Button";
-import type { RefInstance as ButtonRefInstance } from "./controls/button/Button";
 import Toggle from "./controls/toggle/Toggle";
-import type { RefInstance as ToggleRefInstance } from "./controls/toggle/Toggle";
 import TextBlock from "./controls/text/TextBlock";
-import type { RefInstance as TextBlockRefInstance } from "./controls/text/TextBlock";
 import ScrollPane from "./controls/scrollPane/ScrollPane";
+import type { RefInstance as ButtonRefInstance } from "./controls/button/Button";
+import type { RefInstance as ToggleRefInstance } from "./controls/toggle/Toggle";
 import type { RefInstance as ScrollPaneRefInstance } from "./controls/scrollPane/ScrollPane";
+import type { RefInstance as TextBlockRefInstance } from "./controls/text/TextBlock";
 import * as utils from "./utils/utils";
 import * as theming from "./engines/theming";
 import * as themingThemes from "./engines/themes";
 import * as app from "./engines/app";
+import TCPClient from "./tcpClient/TCPClient";
 
 export {
-    utils,
-    theming,
+    // LuxJS Modules
     themingThemes,
+    TCPClient,
+    theming,
+    utils,
     app,
-    Button,
-    ButtonRefInstance,
-    App,
-    AppRefInstance,
-    Flex,
-    FlexRefInstance,
-    Input,
-    InputRefInstance,
-    Toggle,
-    ToggleRefInstance,
-    TextBlock,
-    TextBlockRefInstance,
+
+    // Control Components
     ScrollPane,
+    TextBlock,
+    Toggle,
+    Button,
+    Input,
+    Flex,
+    App,
+    
+    // Control Component Ref Interfaces
     ScrollPaneRefInstance,
+    TextBlockRefInstance,
+    ToggleRefInstance,
+    ButtonRefInstance,
+    InputRefInstance,
+    FlexRefInstance,
+    AppRefInstance,
 };
