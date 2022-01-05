@@ -1,10 +1,20 @@
-import { utils } from "../../../server/src/main";
+import { utils } from "../main";
 
 export interface Settings {
     /**
      * Server's port to connect to 
      */
     port: number;
+
+    /**
+     * Server host
+     */
+    host?: string;
+
+    /**
+     * Use a secure connection
+     */
+    ssl?: boolean;
 }
 
 export enum Errors {
@@ -62,8 +72,27 @@ export default class TCPClient {
     public constructor(settings: Settings) {
         this.emitter = new utils.EventHandler();
         this._settings = utils.mergeObject<Settings>({
-            port: 8080
+            port: 8080,
+            host: "localhost",
+            ssl: false
         }, settings);
+    }
+
+    /**
+     * Attach or re-attach event listeners to WebSocket
+     * @param readyCallback Callback for when ready
+     */
+    private attachWebSocketListeners(readyCallback: () => void) {
+        this.webSocket!.onopen = () => {
+            readyCallback();
+            this.emitter.emit("ready");
+        }
+
+        this.webSocket!.onmessage = (event) => {
+            this.emitter.emit("message", {
+                json: event.data
+            }, "main");
+        }
     }
 
     /**
@@ -72,7 +101,40 @@ export default class TCPClient {
      */
     public start(): Promise<void> {
         return new Promise((resolve, reject) => {
+            if (this._alive) {
+                reject(Errors.alreadyAlive);
+                return;
+            }
 
+            if (this._starting) {
+                reject(Errors.alreadyStarting);
+                return;
+            }
+
+            const buildConnectURI = () => {
+                return (this._settings.ssl ? "wss://" : "ws://") + this._settings.host + ":" + this._settings.port;
+            }
+
+            const webSocketCreatePromise = (): Promise<void> => {
+                return new Promise((resolveWebSocket, rejectWebSocket) => {
+                    try {
+                        this.webSocket = new WebSocket(buildConnectURI());
+
+                        resolveWebSocket();
+                    } catch (errorWebSocket) {
+                        rejectWebSocket(errorWebSocket);
+                    }
+                });
+            }
+
+            webSocketCreatePromise().then(() => {
+                this.attachWebSocketListeners(() => {
+                    resolve();
+                });
+            }).catch((error) => {
+                this._starting = false;
+                console.log(error);
+            });
         });
     }
 
@@ -95,5 +157,41 @@ export default class TCPClient {
      */
     public get settings(): Settings {
         return { ...this._settings }; 
+    }
+
+    /**
+     * Listen for server ready events
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on(event: "ready", listener: () => void): string;
+
+    /**
+     * Listen for message events from the server
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public on<MessageType>(event: "message", listener: (message: MessageType, channel: string) => void): string;
+
+    public on(event: any, listener: any): string {
+        return this.emitter.addListener(event, listener, "many");
+    }
+
+    /**
+     * Listen for server ready events
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once(event: "ready", listener: () => void): string;
+
+    /**
+     * Listen for message events from the server
+     * @param event Event name
+     * @param listener Event callback
+     */
+    public once<MessageType>(event: "message", listener: (message: MessageType, channel: string) => void): string;
+
+    public once(event: any, listener: any): string {
+        return this.emitter.addListener(event, listener, "once");
     }
 }
