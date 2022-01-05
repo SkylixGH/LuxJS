@@ -6,9 +6,11 @@ export interface Settings {
 }
 
 export default class TCPClient {
+    
+
     /**
      * This class is used to connect to TCP server
-     * @param settings TCP host client setttings
+     * @param settings TCP host client settings
      */
     public constructor(settings: Settings) {
 
