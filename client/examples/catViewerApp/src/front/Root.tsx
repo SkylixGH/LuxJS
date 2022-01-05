@@ -130,7 +130,7 @@ export default React.forwardRef((props: any, ref: any) => {
 
                 <Flex padding="10px 30px" direction="column" gap="10px">
                     <TextBlock>Light Mode</TextBlock>
-                    <Toggle onChange={(light) => {
+                    <Toggle label="Toggle Light Theme" onChange={(light) => {
                         if (light) {
                             theming.loadTheme(themingThemes.defaultLightTheme.author, themingThemes.defaultLightTheme.name);
                             return;

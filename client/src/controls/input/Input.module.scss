@@ -68,7 +68,7 @@
     &:focus-within {
         border-color: var(--dynamic_primary);
         border-bottom-color: var(--accent_primary);
-        background: transparent;
+        background: var(--surface_primary);
         box-shadow: inset 0 -1px 0px var(--accent_primary);
     }
 }

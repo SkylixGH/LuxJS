@@ -12,6 +12,16 @@ interface Props {
      * Listen for value changes
      */
     onChange?: (value: boolean) => void;
+
+    /**
+     * The side of the toggle switch were the label should render
+     */
+    labelPosition?: "right" | "left";
+
+    /**
+     * Toggle switch label
+     */
+    label?: string;
 }
 
 export interface RefInstance {
@@ -26,6 +36,8 @@ const Toggle = React.forwardRef<RefInstance, Props>((props, ref) => {
         {
             defaultValue: false,
             onChange: () => {},
+            labelPosition: "right",
+            label: null
         },
         props
     );
@@ -45,24 +57,30 @@ const Toggle = React.forwardRef<RefInstance, Props>((props, ref) => {
     }, [ref, currentValue]);
 
     return (
-        <div
-            onClick={() => {
-                if (currentValue) {
-                    setCurrentValue(false);
-                    props.onChange!(!currentValue);
-                    return;
-                }
+        <div className={styles._}>
+            { props.label && props.labelPosition == "left" && <span className={styles.label}>{props.label}</span> }
 
-                setCurrentValue(true);
-                props.onChange!(!currentValue);
-            }}
-            className={`${styles._} ${currentValue ? styles._active : ""}`}
-        >
             <div
-                className={`${styles.thumb} ${
-                    currentValue ? styles.thumbActive : ""
-                }`}
-            />
+                onClick={() => {
+                    if (currentValue) {
+                        setCurrentValue(false);
+                        props.onChange!(!currentValue);
+                        return;
+                    }
+
+                    setCurrentValue(true);
+                    props.onChange!(!currentValue);
+                }}
+                className={`${styles.toggle} ${currentValue ? styles.toggleActive : ""}`}
+            >
+                <div
+                    className={`${styles.thumb} ${
+                        currentValue ? styles.thumbActive : ""
+                    }`}
+                />
+            </div>
+
+            { props.label && props.labelPosition == "right" && <span className={styles.label}>{props.label}</span> }
         </div>
     );
 });
