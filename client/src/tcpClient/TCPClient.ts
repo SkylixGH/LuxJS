@@ -29,14 +29,9 @@ export enum Errors {
     alreadyStarting,
 
     /**
-     * The connection port or host name isn't valid
+     * The client failed to connect for an unknown reason
      */
-    failedToResolveHost,
-
-    /**
-     * Failed to connect to server because it violated CORS policy
-     */
-    corsPolicyError
+    failedToConnect
 }
 
 export default class TCPClient {
@@ -66,6 +61,11 @@ export default class TCPClient {
     private _starting = false;
 
     /**
+     * Error message caught from WebSocket
+     */
+    private _exitError?: CloseEvent;
+
+    /**
      * This class is used to connect to TCP server
      * @param settings TCP host client settings
      */
@@ -76,23 +76,6 @@ export default class TCPClient {
             host: "localhost",
             ssl: false
         }, settings);
-    }
-
-    /**
-     * Attach or re-attach event listeners to WebSocket
-     * @param readyCallback Callback for when ready
-     */
-    private attachWebSocketListeners(readyCallback: () => void) {
-        this.webSocket!.onopen = () => {
-            readyCallback();
-            this.emitter.emit("ready");
-        }
-
-        this.webSocket!.onmessage = (event) => {
-            this.emitter.emit("message", {
-                json: event.data
-            }, "main");
-        }
     }
 
     /**
@@ -115,26 +98,29 @@ export default class TCPClient {
                 return (this._settings.ssl ? "wss://" : "ws://") + this._settings.host + ":" + this._settings.port;
             }
 
-            const webSocketCreatePromise = (): Promise<void> => {
-                return new Promise((resolveWebSocket, rejectWebSocket) => {
-                    try {
-                        this.webSocket = new WebSocket(buildConnectURI());
-
-                        resolveWebSocket();
-                    } catch (errorWebSocket) {
-                        rejectWebSocket(errorWebSocket);
-                    }
-                });
+            const onErrorHandler = (error: any) => {
+                this._exitError = error;
+                reject(Errors.failedToConnect);
             }
 
-            webSocketCreatePromise().then(() => {
-                this.attachWebSocketListeners(() => {
-                    resolve();
-                });
-            }).catch((error) => {
-                this._starting = false;
-                console.log(error);
-            });
+            this.webSocket = new WebSocket(buildConnectURI());
+
+            this.webSocket.onclose = (error) => {
+                onErrorHandler(error);
+            }
+
+            this.webSocket.onopen = (event) => {
+                resolve();
+                this.emitter.emit("ready");
+            }
+
+            this.webSocket.onmessage = (event) => {
+                utils.jsonParse<any>(event.data).then((jsonOBJ) => {
+                    if (jsonOBJ.channel && jsonOBJ.contents && typeof jsonOBJ.channel == "string" && typeof jsonOBJ.contents == "object") {
+                        this.emitter.emit("message", jsonOBJ.contents, jsonOBJ.channel);
+                    }
+                }).catch(() => {});
+            }
         });
     }
 
@@ -157,6 +143,13 @@ export default class TCPClient {
      */
     public get settings(): Settings {
         return { ...this._settings }; 
+    }
+
+    /**
+     * The error details from WebSocket connection exit
+     */
+    public get exitError(): CloseEvent | null {
+        return this._exitError ? { ...this._exitError } : null;
     }
 
     /**

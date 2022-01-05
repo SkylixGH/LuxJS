@@ -1,6 +1,22 @@
 import React, { useState } from "react";
-import { App, Button, Flex, Input, ScrollPane, TextBlock, theming, themingThemes, Toggle } from "../../../../src/main";
+import { App, Button, Flex, Input, ScrollPane, TCPClient, TextBlock, theming, themingThemes, Toggle } from "../../../../src/main";
 import "./styles/globals.scss";
+
+const ws = new TCPClient({
+    port: 4040,
+    ssl: false
+});
+
+ws.on("message", (msg, channel) => {
+    console.log(`MSG = ${JSON.stringify(msg)} CHANNEL = ${channel}`);
+});
+
+ws.start().then(() => {
+    console.log("Connected");
+}).catch((errorCode) => {
+    console.log("[ WS ] Failed to connect: (" + errorCode + ")");
+    console.log("[ WS ] " + ws.exitError?.code);
+});
 
 export default React.forwardRef((props: any, ref: any) => {
     const [ tabContents, setTabContents ] = useState<JSX.Element | JSX.Element[] | null>(null);

@@ -13,6 +13,38 @@ export function mergeObject<ObjectType>(
     return deepMerge(baseObject, secondaryObject);
 }
 
+/**
+ * Parse a JSON string into an object
+ * @param jsonString The JSON as a string
+ * @returns A promise containing the JSON object
+ */
+ export function jsonParse<ObjectType>(jsonString: string): Promise<ObjectType> {
+    return new Promise((resolve, reject) => {
+        try {
+            const jsonObject = JSON.parse(jsonString);
+            resolve(jsonObject);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+/**
+ * Convert a JSON object into a string
+ * @param jsonObject JSON as an object
+ * @returns Promise containing JSON data as a string
+ */
+export function jsonSerialize(jsonObject: object): Promise<string> {
+    return new Promise((resolve, reject) => {
+        try {
+            const jsonString = JSON.stringify(jsonObject);
+            resolve(jsonString);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 export class EventHandler {
     private storage: {
         [index: string]: {
