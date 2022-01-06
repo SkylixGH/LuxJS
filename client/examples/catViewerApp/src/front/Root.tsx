@@ -237,8 +237,8 @@ export default React.forwardRef((props: any, ref: any) => {
                     icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
                 },                               
             ]}>
-                <Ring />
-                <Flex padding="10px 30px">
+                <Flex padding="10px 30px" direction="column" gap="10px">
+                    <Ring size={100} />
                     <TextBlock header={1}>Settings</TextBlock>
                 </Flex>
 
