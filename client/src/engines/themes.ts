@@ -19,8 +19,8 @@ const defaultDarkTheme: Theme = {
         radius_hard: "8px",
         radius_heavy: "25px",
 
-        surface_primary: "#202020",
-        surface_secondary: "#262626",
+        surface_primary: "#222222",
+        surface_secondary: "#272727",
         surface_tertiary: "#292929",
         surface_tertiaryAlt: "#313131",
 

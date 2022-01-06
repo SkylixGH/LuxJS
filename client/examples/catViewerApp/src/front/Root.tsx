@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { App, Button, Flex, Input, NavView, ScrollPane, TabView, TCPClient, TextBlock, ThemeRelativeElement, theming, themingThemes, Toggle } from "../../../../src/main";
+import { App, Button, Flex, Input, NavView, Ring, ScrollPane, TabView, TCPClient, TextBlock, ThemeRelativeElement, theming, themingThemes, Toggle } from "../../../../src/main";
 import "./styles/globals.scss";
 
 const ws = new TCPClient({
@@ -237,6 +237,7 @@ export default React.forwardRef((props: any, ref: any) => {
                     icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
                 },                               
             ]}>
+                <Ring />
                 <Flex padding="10px 30px">
                     <TextBlock header={1}>Settings</TextBlock>
                 </Flex>

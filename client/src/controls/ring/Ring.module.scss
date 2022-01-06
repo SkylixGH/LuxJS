@@ -1,0 +1,36 @@
+._ {
+
+}
+
+.svgRingValue {
+    transition: 0s stroke-dashoffset;
+    transform: rotate(-90deg);
+    stroke-width: 10px;
+    transform-origin: 50% 50%;
+    animation-name: s;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    z-index: 100;
+    stroke: var(--accent_primary);
+    stroke-linecap: round;
+    animation-name: __luxjs__ring__spin__;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes __luxjs__ring__spin__ {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.svgRingTrack {
+    stroke-width: 15px;
+    stroke: var(--dynamic_primary);
+}
