@@ -3,7 +3,10 @@ import styles from "./Ring.module.scss";
 import { utils } from "../../main";
 
 interface Props {
-    
+    /**
+     * Ring spinner size
+     */
+    size?: number;
 }
 
 export interface RefInstance {
@@ -12,11 +15,11 @@ export interface RefInstance {
 
 const Ring = React.forwardRef<RefInstance, Props>((props, ref) => {
     props = utils.mergeObject<Props>({
-    
+        size: 50
     }, props);
 
     let circumference = 0;
-    let loop: number;
+    let loop: any | null = null;
     const circleRef = useRef<SVGCircleElement>(null);
 
     function mathCircumference() {
@@ -30,12 +33,12 @@ const Ring = React.forwardRef<RefInstance, Props>((props, ref) => {
     }
     
     useEffect(() => {
-        if (circleRef) {
+        if (circleRef && !loop) {
             mathCircumference();
             let movingMode = "+" as "+" | "-";
             let currentPercent = 0;
 
-            setInterval(() => { 
+            loop = setInterval(() => { 
                 if (movingMode == "+" && currentPercent >= 80) {
                     movingMode = "-";
                 } else if (movingMode == "-" && currentPercent <= 0) {
@@ -53,10 +56,11 @@ const Ring = React.forwardRef<RefInstance, Props>((props, ref) => {
 
             circleRef.current!.style.strokeDasharray = `${circumference} ${circumference}`;
             circleRef.current!.style.strokeDashoffset = circumference + "";
-        }
+        } 
 
         return () => {
-            clearInterval(loop);
+            if (loop) clearInterval(loop);
+            loop = null;
         }
     }, [ circleRef ]);
 
@@ -64,27 +68,18 @@ const Ring = React.forwardRef<RefInstance, Props>((props, ref) => {
         <div className={styles._}>
             <svg
                 className={styles.svgRing}
-                width="120"
-                height="120">
-                
-                <circle
-                    className={styles.svgRingTrack}
-                    stroke="#777"
-                    stroke-width="4"
-                    fill="transparent"
-                    r="52"
-                    cx="60"
-                    cy="60"/>
+                width={props.size}
+                height={props.size}>
                 
                 <circle
                     ref={circleRef}
                     className={styles.svgRingValue}
                     stroke="white"
-                    stroke-width="4"
+                    strokeWidth={props.size! / 7}
                     fill="transparent"
-                    r="52"
-                    cx="60"
-                    cy="60"/>
+                    r={props.size! / 3}
+                    cx={props.size! / 2}
+                    cy={props.size! / 2}/>
             </svg>
         </div>
     );
