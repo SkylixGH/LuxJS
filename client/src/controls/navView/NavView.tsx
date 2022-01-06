@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./NavView.module.scss";
 import { utils } from "../../main";
 import ScrollPane from "../scrollPane/ScrollPane";
+import navigation16Regular from "@iconify/icons-fluent/navigation-16-regular";
+import { Icon } from "@iconify/react";
 
 interface Props {
     /**
@@ -72,10 +74,23 @@ const NavView = React.forwardRef<RefInstance, Props>((props, ref) => {
         sideRail: undefined
     }, props);
 
+    const [ sideBarOpen, setSideBarOpen ] = useState(false);
+
     return (
         <div className={styles._}>
             <div className={styles.sideRail}>
-                <div className={styles.sideRailHeader}></div>
+                <div className={styles.sideRailHeader}>
+                    <button onClick={() => {
+                        if (sideBarOpen) {
+                            setSideBarOpen(false);
+                            return;
+                        }
+
+                        setSideBarOpen(true);
+                    }}>
+                        <Icon icon={navigation16Regular} />
+                    </button>
+                </div>
 
                 <div className={styles.sideRailBody}>
                     { props.sideRail?.map((item, index) => {
@@ -92,7 +107,7 @@ const NavView = React.forwardRef<RefInstance, Props>((props, ref) => {
                 </div>
             </div>
 
-            { props.sideBar && <div className={styles.sideBar}>
+            { props.sideBar && <div className={`${styles.sideBar} ${!sideBarOpen ? styles.sideBarClosed : ""}`}>
                 <div className={styles.sideBarBody}>
                     { props.sideBar.body!.map((item, index) => {
                         return (

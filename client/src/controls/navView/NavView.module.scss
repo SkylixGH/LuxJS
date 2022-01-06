@@ -94,6 +94,29 @@
     }
 }
 
+.sideRailHeader {
+    button {
+        width: 35px;
+        height: 35px;
+        background: transparent;
+        color: var(--text_primary);
+        font-size: 16px;
+        transition: 200ms;
+        border: none;
+        border-radius: var(--radius_medium);
+        
+        &:hover {
+            transition: 100ms;
+            background: var(--dynamic_primary);
+
+            &:active {
+                background: var(--dynamic_secondary);
+                color: var(--text_secondary);
+            }
+        }
+    }
+}
+
 .sideRailItemIcon {
     width: 22px;
     height: 22px;
@@ -138,6 +161,22 @@
     padding: 10px;
     background: var(--surface_primary);
     margin: 10px;
+    transition: 200ms;
+
+    @media (max-width: 800px) {
+        position: absolute;
+        left: 50px;
+    }
+}
+
+.sideBarClosed {
+    width: 0;
+    max-width: 0;
+    min-width: 0;
+    opacity: 0;
+    pointer-events: none;
+    margin-left: -30px;
+    
 }
 
 .body {
