@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { App, Button, Flex, Input, NavView, ScrollPane, TabView, TCPClient, TextBlock, theming, themingThemes, Toggle } from "../../../../src/main";
+import { App, Button, Flex, Input, NavView, ScrollPane, TabView, TCPClient, TextBlock, ThemeRelativeElement, theming, themingThemes, Toggle } from "../../../../src/main";
 import "./styles/globals.scss";
 
 const ws = new TCPClient({
@@ -22,6 +22,7 @@ export default React.forwardRef((props: any, ref: any) => {
     const [ tabContents, setTabContents ] = useState<JSX.Element | JSX.Element[] | null>(null);
     const [ currentTab, setCurrentTab ] = useState("Buttons");
     const [ useSideBar, setUseSideBar ] = useState(true);
+    const [ winTitle, setSetWinTitle ] = useState("LuxJS Demo #1");
 
     const tabs = [
         {
@@ -106,7 +107,7 @@ export default React.forwardRef((props: any, ref: any) => {
     ]
 
     return (
-        <App title="LuxJS Demo #1">
+        <App title={winTitle}>
             <NavView sideBar={useSideBar ? {
                 body: [
                     {
@@ -217,6 +218,13 @@ export default React.forwardRef((props: any, ref: any) => {
                     <Toggle defaultValue={true} label="Toggle Side Bar" onChange={(sb) => {
                         setUseSideBar(sb);
                     }} />
+
+                    <TextBlock header={1}>Window Title</TextBlock>
+                    <Input onInput={(val) => {
+                        setSetWinTitle(val);
+                    }} placeHolder="Window's title" />
+
+                    <ThemeRelativeElement light={<p>Light</p>} dark={<p>Dark</p>} />
 
                     <TextBlock header={1}>Tests</TextBlock>
                 </Flex>

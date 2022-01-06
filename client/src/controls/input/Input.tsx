@@ -28,6 +28,11 @@ interface Props {
     width?: string;
 
     /**
+     * On input change event listener
+     */
+    onInput?: (value: string) => void;
+
+    /**
      * Icon element
      */
     icon?:
@@ -47,6 +52,7 @@ const Input = React.forwardRef<RefInstance, Props>((props, ref) => {
             height: "35px",
             width: "400px",
             icon: false,
+            onInput: () => {}
         },
         props
     );
@@ -99,9 +105,10 @@ const Input = React.forwardRef<RefInstance, Props>((props, ref) => {
                     onFocus={() => setInputFocused(true)}
                     onBlur={() => setInputFocused(false)}
                     ref={inputRef}
-                    onInput={(event) =>
-                        setCurrentValue(event.currentTarget.value)
-                    }
+                    onInput={(event) => {
+                        setCurrentValue(event.currentTarget.value);
+                        props.onInput!(event.currentTarget!.value);
+                    }}
                     placeholder={props.placeHolder}
                 />
 
@@ -110,6 +117,7 @@ const Input = React.forwardRef<RefInstance, Props>((props, ref) => {
                     onClick={() => {
                         setCurrentValue("");
                         inputRef.current!.value = "";
+                        props.onInput!("");
                     }}
                     onMouseDown={(event) => {
                         event.preventDefault();
