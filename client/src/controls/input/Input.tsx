@@ -35,12 +35,7 @@ interface Props {
     /**
      * Icon element
      */
-    icon?:
-        | {
-              dark: JSX.Element;
-              light: JSX.Element;
-          }
-        | false;
+    icon?: JSX.Element | false;
 }
 
 export interface RefInstance {}
@@ -95,9 +90,7 @@ const Input = React.forwardRef<RefInstance, Props>((props, ref) => {
             >
                 {props.icon && (
                     <div className={styles.icon}>
-                        {currentTheme.type == "dark"
-                            ? props.icon.dark
-                            : props.icon.light}
+                        { props.icon }
                     </div>
                 )}
 

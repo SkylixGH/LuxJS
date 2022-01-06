@@ -44,6 +44,8 @@ const TitleBar = function (props: Props) {
         }
     }
 
+    registerListeners();
+
     function handleSizeButton() {
         if (appMeta.window.state == "fullScreened") {
             app.restoreWindow();
@@ -55,8 +57,6 @@ const TitleBar = function (props: Props) {
     }
 
     useEffect(() => {
-        registerListeners();
-
         return () => {
             listeners.forEach((id) => app.removeListener(id));
             listeners = [];

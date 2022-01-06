@@ -73,10 +73,10 @@
         cursor: pointer;
         min-height: 35px;
         max-height: 35px;
-        overflow: hidden;
+        overflow: hidden; 
 
         &:hover {
-            transition: 100m;
+            transition: 100ms;
             background: var(--dynamic_primary);
 
             &:active {
