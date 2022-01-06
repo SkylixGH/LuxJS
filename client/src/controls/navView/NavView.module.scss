@@ -104,6 +104,19 @@
         transition: 200ms;
         border: none;
         border-radius: var(--radius_medium);
+        position: relative;
+        margin-bottom: 10px;
+
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            width: 30px;
+            height: 1px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            background: var(--dynamic_tertiary);
+        }
         
         &:hover {
             transition: 100ms;
