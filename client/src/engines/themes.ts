@@ -19,6 +19,7 @@ const defaultDarkTheme: Theme = {
         radius_hard: "8px",
         radius_heavy: "25px",
 
+        surface_primaryAlt: "#202020",
         surface_primary: "#222222",
         surface_secondary: "#272727",
         surface_tertiary: "#292929",
@@ -66,6 +67,7 @@ const defaultLightTheme: Theme = {
         radius_hard: "8px",
         radius_heavy: "25px",
 
+        surface_primaryAlt: "#E3E3E3",
         surface_primary: "#F1F1F1",
         surface_secondary: "#F9F9F9",
         surface_tertiary: "rgb(245, 245, 245)",

@@ -74,7 +74,7 @@ const NavView = React.forwardRef<RefInstance, Props>((props, ref) => {
         sideRail: undefined
     }, props);
 
-    const [ sideBarOpen, setSideBarOpen ] = useState(false);
+    const [ sideBarOpen, setSideBarOpen ] = useState(props.sideBar?.body!.length! > 0 ? true : false);
 
     return (
         <div className={styles._}>

@@ -172,6 +172,8 @@
     width: 100%;
     border-radius: var(--radius_hard) 0 0 0;
     background: var(--surface_secondary);
+    margin-left: 10px;
+    border-right: 10px solid var(--surface_secondary);
 }
 
 .sideBarBody {

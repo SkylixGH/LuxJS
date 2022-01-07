@@ -15,14 +15,14 @@
     }
 
     &::-webkit-scrollbar-track {
-        background: var(--surface_primary);
-        border-radius: var(--radius_medium) 0 0 var(--radius_medium);
+        background: var(--surface_primaryAlt);
+        border-radius: var(--radius_medium);
         margin: 5px 0;
     }
 
     &::-webkit-scrollbar-thumb {
         background: var(--accent_primary);
-        border: 5px solid var(--surface_primary);
+        border: 5px solid var(--surface_primaryAlt);
         border-radius: var(--radius_hard);
 
         &:hover {
