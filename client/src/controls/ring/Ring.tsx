@@ -75,9 +75,9 @@ const Ring = React.forwardRef<RefInstance, Props>((props, ref) => {
                     ref={circleRef}
                     className={styles.svgRingValue}
                     stroke="white"
-                    strokeWidth={props.size! / 7}
+                    strokeWidth={props.size! / 12}
                     fill="transparent"
-                    r={props.size! / 3}
+                    r={props.size! / 2.5}
                     cx={props.size! / 2}
                     cy={props.size! / 2}/>
             </svg>

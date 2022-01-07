@@ -238,7 +238,7 @@ export default React.forwardRef((props: any, ref: any) => {
                 },                               
             ]}>
                 <Flex padding="10px 30px" direction="column" gap="10px">
-                    <Ring size={100} />
+                    <Ring size={40} />
                     <TextBlock header={1}>Settings</TextBlock>
                 </Flex>
 

@@ -37,7 +37,7 @@ const Toggle = React.forwardRef<RefInstance, Props>((props, ref) => {
             defaultValue: false,
             onChange: () => {},
             labelPosition: "right",
-            label: null
+            label: undefined
         },
         props
     );

@@ -237,6 +237,11 @@ function startDesktopDevApp(
                         startDevApp();
                     });
 
+                    if (devApp.killed) {
+                        startDevApp();
+                        return;
+                    }
+                    
                     devApp?.kill("SIGTERM");
                 }
             });

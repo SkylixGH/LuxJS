@@ -9,6 +9,7 @@ const window = new GUIWindow({
             default: 600,
         },
     },
-});
+}); 
  
 window.start();  
+     
