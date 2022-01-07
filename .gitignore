@@ -109,3 +109,4 @@ dist
 
 # Distros
 **/dist
+!_scripts/dist
