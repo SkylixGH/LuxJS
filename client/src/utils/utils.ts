@@ -1,16 +1,26 @@
 import deepMerge from "deepmerge";
 
 /**
- * Join two objects together
- * @param baseObject The object that will have properties replaced from
- * @param secondaryObject The object replacing properties from the base object
+ * Merge two objects
+ * @param baseObject The base object with all base properties
+ * @param replacementObject The object that will replace properties from the base object
  * @returns The merged object
  */
-export function mergeObject<ObjectType>(
-    baseObject: ObjectType,
-    secondaryObject: ObjectType
-): ObjectType {
-    return deepMerge(baseObject, secondaryObject);
+export function mergeObject<ObjectType>(baseObject: ObjectType, replacementObject: ObjectType): ObjectType;
+
+ /**
+  * Merge two objects
+  * @param baseObject The base object with all base properties
+  * @param replacementObject The object that will replace properties from the base object
+  * @returns The merged object
+  */
+export function mergeObject<ObjectType, PartialObjectType>(baseObject: ObjectType, replacementObject: PartialObjectType): ObjectType;
+ 
+export function mergeObject(
+    baseObject: object,
+    replacementObject: object
+): object {
+    return deepMerge({ ...baseObject }, { ...replacementObject });
 }
 
 /**
@@ -18,7 +28,7 @@ export function mergeObject<ObjectType>(
  * @param jsonString The JSON as a string
  * @returns A promise containing the JSON object
  */
- export function jsonParse<ObjectType>(jsonString: string): Promise<ObjectType> {
+export function jsonParse<ObjectType>(jsonString: string): Promise<ObjectType> {
     return new Promise((resolve, reject) => {
         try {
             const jsonObject = JSON.parse(jsonString);
