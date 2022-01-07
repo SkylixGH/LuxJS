@@ -26,7 +26,7 @@ const ThemeRelativeElement = React.forwardRef<RefInstance, Props>((props, ref) =
         if (listeners.length == 0) {
             listeners.push(theming.on("load", () => {
                 setCurrentTheme(theming.getLoadedTheme());
-            }));
+            })); 
         }
     }
 

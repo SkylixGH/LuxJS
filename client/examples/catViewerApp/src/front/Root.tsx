@@ -146,95 +146,95 @@ export default React.forwardRef((props: any, ref: any) => {
             } : undefined} sideRail={[
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },
                 {
                     label: "Test",
-                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg?token=AUOJI7LJ65S2CI4S5GYZHWDB2ZJLS" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg?token=AUOJI7LUHC3CVNUCOTXF573B2ZJOM" />} />
+                    icon: <ThemeRelativeElement light={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Light.svg" />} dark={<img src="https://raw.githubusercontent.com/SkylixGH/Info/main/logos/Logo%20Icon%20Dark.svg" />} />
                 },                               
             ]}>
                 <Flex padding="10px 30px" direction="column" gap="10px">
