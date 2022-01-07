@@ -35,7 +35,7 @@ export function jsonParse<ObjectType>(jsonString: string): Promise<ObjectType> {
             resolve(jsonObject);
         } catch (error) {
             reject(error);
-        }
+        } 
     });
 }
 
