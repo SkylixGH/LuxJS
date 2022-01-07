@@ -13,6 +13,7 @@ const nonProjectPaths = [
     ".idea",
     "docs",
     ".vs",
+    "assets"
 ];
 
 exports.getProjectDirs = function getProjectDirs() {
