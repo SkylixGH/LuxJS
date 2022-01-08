@@ -149,52 +149,57 @@ export default class RESTHost {
             });
 
             let bodyObject: any;
-            utils.jsonParse(bodyData).then((bodyObjectThen) => {
-                bodyObject = bodyObjectThen;
-            }).catch(() => {
-                bodyObject = {};
-            });
 
             request.on("end", () => {
-                const connection = new Connection(
-                    {
-                        type: (request.method ?? "GET") as "GET" | "POST",
-                        urlInfo: url.parse(request.url ?? "/", true),
-                        maxChunks: this._settings.maxChunks!,
-                    },
-                    request,
-                    response,
-                    bodyObject
-                );
-
-                let routeRequestPath = connection.pathName
-                    .split("/")
-                    .join("/")
-                    .substring(1);
-
-                if (routeRequestPath.endsWith("/")) {
-                    routeRequestPath = routeRequestPath.slice(0, -1);
+                const logic = () => {
+                    const connection = new Connection(
+                        {
+                            type: (request.method ?? "GET") as "GET" | "POST",
+                            urlInfo: url.parse(request.url ?? "/", true),
+                            maxChunks: this._settings.maxChunks!,
+                        },
+                        request,
+                        response,
+                        bodyObject
+                    );
+    
+                    let routeRequestPath = connection.pathName
+                        .split("/")
+                        .join("/")
+                        .substring(1);
+    
+                    if (routeRequestPath.endsWith("/")) {
+                        routeRequestPath = routeRequestPath.slice(0, -1);
+                    }
+    
+                    if (connection.method == "GET") {
+                        if (
+                            this._settings.routes!.get?.includes(routeRequestPath)
+                        ) {
+                            this.emitter.emit("get", routeRequestPath, connection);
+                        } else {
+                            response.statusCode = 404;
+                            response.end();
+                        }
+                    } else {
+                        if (
+                            this._settings.routes!.post?.includes(routeRequestPath)
+                        ) {
+                            this.emitter.emit("post", routeRequestPath, connection);
+                        } else {
+                            response.statusCode = 404;
+                            response.end();
+                        }
+                    }
                 }
 
-                if (connection.method == "GET") {
-                    if (
-                        this._settings.routes!.get?.includes(routeRequestPath)
-                    ) {
-                        this.emitter.emit("get", routeRequestPath, connection);
-                    } else {
-                        response.statusCode = 404;
-                        response.end();
-                    }
-                } else {
-                    if (
-                        this._settings.routes!.post?.includes(routeRequestPath)
-                    ) {
-                        this.emitter.emit("post", routeRequestPath, connection);
-                    } else {
-                        response.statusCode = 404;
-                        response.end();
-                    }
-                }
+                utils.jsonParse(bodyData).then((bodyObjectThen) => {
+                    bodyObject = bodyObjectThen;
+                    logic();
+                }).catch(() => {
+                    bodyObject = {};
+                    logic();
+                });
             });
         };
 
