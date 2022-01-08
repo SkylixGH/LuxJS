@@ -94,7 +94,6 @@ export default class Connection {
         this._method = this._settings.type;
         this._pathName = this._settings.urlInfo.pathname ?? "/";
 
-        this.request.on("close", () => (this._closed = true));
         this.response.on("close", () => (this._closed = true));
     }
 
