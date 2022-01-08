@@ -1,7 +1,7 @@
 {
     "name": "luxjs",
     "private": true,
-    "version": "1.0.0-dev",
+    "version": "1.0.0-dev.1",
     "description": "Build, test, and deploy powerful full-stack applications with support for real-time, rest communication, cross-platform applications, and MORE!",
     "scripts": {
         "postinstall": "cd server && npm i && cd ../client && npm i && cd ..",

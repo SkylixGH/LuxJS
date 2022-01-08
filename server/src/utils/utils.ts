@@ -6,10 +6,20 @@ import mergeDeep from "merge-deep";
  * @param replacementObject The object that will replace properties from the base object
  * @returns The merged object
  */
-export function mergeObject<ObjectType>(
-    baseObject: ObjectType,
-    replacementObject: ObjectType
-): ObjectType {
+export function mergeObject<ObjectType>(baseObject: ObjectType, replacementObject: ObjectType): ObjectType;
+
+/**
+ * Merge two objects
+ * @param baseObject The base object with all base properties
+ * @param replacementObject The object that will replace properties from the base object
+ * @returns The merged object
+ */
+export function mergeObject<ObjectType, PartialObjectType>(baseObject: ObjectType, replacementObject: PartialObjectType): ObjectType;
+
+export function mergeObject(
+    baseObject: object,
+    replacementObject: object
+): object {
     return mergeDeep({ ...baseObject }, { ...replacementObject });
 }
 
