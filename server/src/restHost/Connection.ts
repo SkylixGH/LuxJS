@@ -32,7 +32,7 @@ export interface Settings {
     maxChunks: RESTHostSettings["maxChunks"];
 }
 
-export default class Connection {
+export default class Connection<BodyDataType, QueryDataType> {
     /**
      * Connection settings
      */
@@ -66,12 +66,12 @@ export default class Connection {
     /**
      * Response body
      */
-    private _body: string;
+    private _body: BodyDataType;
 
     /**
      * Request query parameters
      */
-    private _query: { [index: string]: string | string[] | undefined };
+    private _query: QueryDataType;
 
     /**
      * A request connection
@@ -84,12 +84,12 @@ export default class Connection {
         settings: Settings,
         request: IncomingMessage,
         response: ServerResponse,
-        body: string
+        body: BodyDataType
     ) {
         this.response = response;
         this.request = request;
         this._body = body;
-        this._query = { ...(settings.urlInfo.query ?? {}) };
+        this._query = { ...(settings.urlInfo.query ?? {}) } as unknown as QueryDataType;
         this._settings = settings;
         this._method = this._settings.type;
         this._pathName = this._settings.urlInfo.pathname ?? "/";
@@ -108,14 +108,14 @@ export default class Connection {
     /**
      * Request body
      */
-    public get body(): string {
+    public get body(): BodyDataType {
         return this._body;
     }
 
     /**
      * Request query parameters
      */
-    public get query(): { [index: string]: string | string[] | undefined } {
+    public get query(): QueryDataType {
         return this._query;
     }
 

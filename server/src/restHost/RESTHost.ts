@@ -148,6 +148,13 @@ export default class RESTHost {
                 bodyData += chunk.toString();
             });
 
+            let bodyObject: any;
+            utils.jsonParse(bodyData).then((bodyObjectThen) => {
+                bodyObject = bodyObjectThen;
+            }).catch(() => {
+                bodyObject = {};
+            });
+
             request.on("end", () => {
                 const connection = new Connection(
                     {
@@ -157,7 +164,7 @@ export default class RESTHost {
                     },
                     request,
                     response,
-                    bodyData
+                    bodyObject
                 );
 
                 let routeRequestPath = connection.pathName
@@ -252,9 +259,9 @@ export default class RESTHost {
      * @param event Event name
      * @param listener Event callback
      */
-    public on(
+    public on<BodyDataType, QueryDataType>(
         event: "get",
-        listener: (pathName: string, connection: Connection) => void
+        listener: (pathName: string, connection: Connection<BodyDataType, QueryDataType>) => void
     ): string;
 
     /**
@@ -262,9 +269,9 @@ export default class RESTHost {
      * @param event Event name
      * @param listener Event callback
      */
-    public on(
+    public on<BodyDataType, QueryDataType>(
         event: "post",
-        listener: (pathName: string, connection: Connection) => void
+        listener: (pathName: string, connection: Connection<BodyDataType, QueryDataType>) => void
     ): string;
 
     public on(event: any, listener: any): string {
@@ -276,9 +283,9 @@ export default class RESTHost {
      * @param event Event name
      * @param listener Event callback
      */
-    public once(
+    public once<BodyDataType, QueryDataType>(
         event: "get",
-        listener: (pathName: string, connection: Connection) => void
+        listener: (pathName: string, connection: Connection<BodyDataType, QueryDataType>) => void
     ): string;
 
     /**
@@ -286,9 +293,9 @@ export default class RESTHost {
      * @param event Event name
      * @param listener Event callback
      */
-    public once(
+    public once<BodyDataType, QueryDataType>(
         event: "post",
-        listener: (pathName: string, connection: Connection) => void
+        listener: (pathName: string, connection: Connection<BodyDataType, QueryDataType>) => void
     ): string;
 
     public once(event: any, listener: any): string {
