@@ -7,6 +7,7 @@ import subtract16Regular from "@iconify/icons-fluent/subtract-16-regular";
 import fullScreenMinimize24Regular from "@iconify/icons-fluent/full-screen-minimize-24-regular";
 import { app } from "../../../main";
 import { useEffect, useState } from "react";
+import React from "react";
 
 interface Props {
     /**
