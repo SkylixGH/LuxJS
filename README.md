@@ -1,3 +1,5 @@
+: END OF LIFE use https://github.com/skylixgh/nexts <-- Better replacment, much more stable
+
 ![](https://raw.githubusercontent.com/SkylixGH/LuxJS/main/assets/LuxJS%20Banner%20Image.svg)
 ![](https://tokei.rs/b1/github/devskylix/luxjs)
 
